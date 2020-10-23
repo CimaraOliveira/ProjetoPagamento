@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8"/></head>
+<body>
+	    <section class="layout-content" layout:fragment="corpo">
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Compra de Passagens</span>
+	                    </li>
+	                </ul>
+	                <a class="btn btn-primary btn-md" href="#" role="button">
+	                    <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
+	                    <span>Detalhes</span>
+	                </a>
+	            </div>
+	        </nav>
+	
+	        <div class="container">
+
+
+                
+          <div th:replace="fragments/alert"></div> 
+		
+		    <div class="container">
+		       <div class="card card-register mx-auto mt-5">
+		       <div class="card-header"><i class="fa-fighter-jet"></i> Comprar Passagem : Cartao</div> 
+		       <!-- <span class="fa-fighter-jet"></span> -->
+		           <div class="card-body">					
+
+            
+	       <form class="form-signin was-validated" method="post" th:object="${cartao}" th:action="@{/compras/salvarCartao}">
+		   <div class="text-center mb-4">
+	       </div>	
+							
+			<div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome"  required="">
+                <small class="text-muted">Nome completo, como mostrado no cartão.</small>
+            </div>
+			
+			
+		    <div class="col-md-6 mb-7">
+              <label for="email">Email</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <input type="text" class="form-control" id="email" placeholder="Example@email" required="">
+               <!-- <small class="text-muted">Nome completo, como mostrado no cartão.</small> -->
+                
+              </div>
+             </div>
+
+           
+             <div class="col-md-6 mb-3">
+                <label for="numero">Número do cartão de crédito</label>
+                <input type="text" class="form-control" id="numero" required="">
+                <small class="text-muted">O número do cartão de crédito é obrigatório.</small>
+             </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label for="datavalidade">Data de expiração</label>
+                <input type="LocalDate" class="form-control" id="datavalidade"  required="">
+                <small class="text-muted">Data de expiração é obrigatória.</small>
+            </div>
+              
+            <div class="col-md-3 mb-3">
+                <label for="cvv">CVV</label>
+                <input type="text" class="form-control" id="cvv"  required="">
+                <small class="text-muted">Código de segurança obrigatório.</small>
+            </div>
+            </div>
+                 
+	         <button type="submit" class="btn btn-primary btn-sm">Finalizar</button>
+	        </form>
+	        </div>
+		
+				
+				<!-- <input type="hidden" id="id" th:field="*{id}"/> -->
+				
+			</div>
+          
+                
+                </div>
+              </div>                     
+                
+                
+                
+         <div th:replace="fragments/modal :: modal"></div>
+          <div class="table-responsive">
+	            
+	      
+	         
+	      </div>
+	      </section>
+</body>
+</html>
+        

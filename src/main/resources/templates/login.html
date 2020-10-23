@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title> Login</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="Compras de passagens online" />
+<link rel="icon" th:href="@{/image/favicon.ico}" />
+<!-- Icons fontawesome -->
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/style-login.css(v=${version})}" rel="stylesheet" />
+</head>
+<body>
+    <div th:replace="fragments/alert"></div> 
+	<form class="form-signin was-validated" method="post"
+	      th:action="@{/login}"> 
+		<div class="text-center mb-4">
+			<img class="mb-4" th:src="@{/image/aviao.png}" alt=""
+				width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">Passagens aéreas</h1>
+
+			<p class="font-weight-lighter">Seja Bem-Vindo.</p>
+			<p class="text-muted">Realize seu login para continuar</p>					
+			<div th:if="${alerta != null}" th:class="${alerta == 'erro'} ? 'alert alert-danger' : 'alert alert-success'"
+				 role="alert">
+			  <h4 th:text="${titulo}" class="alert-heading">Credenciais...</h4>
+			  <p th:text="${texto}">Login ou Senha Incorretos!</p>
+			  <hr>
+			  <p class="mb-0"><small th:text="${subtexto}">Acesso permitido</small></p>
+			</div>
+		</div>
+
+		<div class="form-label-group">
+			<input type="text" id="inputEmail" class="form-control"
+				placeholder="Email address" name="username" required autofocus>
+			<label for="inputEmail">Email</label>
+			<div class="invalid-feedback">Email cadastrado como login.</div>
+		</div>
+
+		<div class="form-label-group">
+			<input type="password" id="inputPassword" class="form-control"
+				placeholder="Password" name="password" required> 
+			<label for="inputPassword">Senha</label>
+			<div class="invalid-feedback">Digite sua senha.</div>	
+		</div>
+
+		<div class="checkbox mb-3">
+			<label> <input type="checkbox" id="remember-me" name="remember-me" />
+				Remember me
+			</label>
+		</div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+		<hr>
+		<nav class="nav nav-pills flex-column flex-sm-row">
+			 <a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/usuario/novo/cadastro}"><i class="far fa-arrow-alt-circle-right"></i>&nbsp;Novo cadastro</a>
+						
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/usuario/recuperar/senha}"><i class="fas fa-key"></i>&nbsp;Recuperar senha</a>
+	    </nav>
+		<p class="mt-5 mb-3 text-muted text-center">Passagens Aéreas&copy; 2020</p>
+	</form>
+</body>
+</html>
+
+
+
+
+<!-- 			<div class="form-row">
+						<a class="nav-item"></a><a class="nav-link " href="/user/cadastrar">
+						<i class="oi oi-person"></i> <span>Inscreva-se</span></a>
+						<a class="nav-item"></a><a class="nav-link " href="#"> 
+						<span>Recuperar sua senha?</span></a>
+					</div>
+				</form>
+			</div>
+		</div>
+</div>
+</body>
+</html>-->

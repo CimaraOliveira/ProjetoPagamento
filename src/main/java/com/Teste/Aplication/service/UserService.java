@@ -1,0 +1,124 @@
+package com.Teste.Aplication.service;
+
+import java.util.Collection;
+
+
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.Teste.Aplication.model.Role;
+import com.Teste.Aplication.model.User;
+import com.Teste.Aplication.repository.UserRepository;
+
+
+
+@Service
+public class UserService implements UserDetailsService{
+
+	@Autowired
+	private UserRepository repository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Transactional(readOnly = false)
+	public void salvar(User usuario) {
+		repository.save(usuario);
+	}
+	
+	@Transactional(readOnly = false)
+	public void salvarCadastro(User user){
+		String crypt = new BCryptPasswordEncoder().encode(user.getSenha());
+		user.setSenha(crypt);
+		repository.save(user);	
+		
+		//emailDeConfirmacaoDeCadastro(user.getEmail());
+	}
+	
+	public User findById(Long id) {
+		return repository.findById(id).get();  
+	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+	
+	public List<User> findAll() {
+		return repository.findAll();
+	}
+		
+	@Transactional(readOnly = false)
+	public void editar(User id) {
+     id.setId(id.getId());
+     repository.saveAndFlush(id);
+     
+	}
+		
+	
+	@Transactional(readOnly = false)
+	public void excluir(Long id) {
+        repository.deleteById(id);
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public User getEmail(String email) {
+		return repository.findByEmail(email);
+	}
+	
+	@Transactional(readOnly = true)
+	public User findByNome(String username) {
+		return repository.findByNome(username);
+	}
+	
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserDetails user = repository.findByEmail(username);
+		org.springframework.security.core.userdetails.User userFinal = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getPermissoes(user));
+
+		return userFinal;
+	}
+
+	private Collection<? extends GrantedAuthority> getPermissoes(UserDetails user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+		
+		Set<Role> permissoes =  ((User) user).getRole();
+		for(Role r : permissoes ) {
+			 authorities.add(new SimpleGrantedAuthority(r.getNome().toUpperCase()));
+		}
+		
+		return authorities;
+	}
+	
+	public boolean verificarSenha(String senha, User user) {
+		return passwordEncoder.matches(senha, user.getPassword());
+	}
+	
+	/*@Transactional(readOnly = false)
+	public void pedidoRedefinicaoDeSenha(String email) throws MessagingException {
+		User user = getEmail(email).orElse
+				.orElseThrow(() -> new UsernameNotFoundException("User " + email + " não encontrado."));;
+		
+		String verificador = RandomStringUtils.randomAlphanumeric(6);
+		
+		usuario.setCodigoVerificador(verificador);
+		
+		emailService.enviarPedidoRedefinicaoSenha(email, verificador);
+	}*/
+	
+} 
+	

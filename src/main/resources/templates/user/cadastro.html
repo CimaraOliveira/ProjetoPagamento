@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8"/></head>
+<body>
+	
+	    <section class="layout-content" layout:fragment="corpo">
+	
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Cadastrar Usuário</span>
+	                    </li>
+	                </ul>
+	                <a class="btn btn-primary btn-md" th:href="@{/usuario/listar}" role="button">
+	                    <span class="oi oi-spreadsheet" title="Listar" aria-hidden="true"></span>
+	                    <span>Listar Usuarios</span>
+	                </a>
+	            </div>
+	        </nav>
+	
+	        <div class="container" id="cadastro">
+	        
+	         	<div th:replace="fragments/alert"></div> 
+	        	
+	        
+	            <form th:action="@{/usuario/salvar}" th:object="${user}" method="POST">
+	               
+	                    <div class="form-group col-md-6">
+	                        <label for="nome">Nome</label>
+	                        <input type="text" class="form-control" id="nome"
+	                               autofocus="autofocus" th:field="*{nome}" required/>
+	                        <div class="invalid-feedback"></div>
+	                    </div>
+	                    
+ 						
+	                    
+	                   <div class="form-group col-md-6">
+	                        <label for="email">E-Mail</label>
+	                        <input type="email" class="form-control" id="email" 
+	                               autofocus="autofocus" th:field="*{email}" required/>
+	                        <div class="invalid-feedback"></div>
+	                    </div>
+	                    <div class="form-group col-md-3">
+	                        <label for="senha">Senha</label> 
+	                        <input type="password" class="form-control" id="senha" 
+	                               autofocus="autofocus" th:field="*{senha}" required/>
+	                        <div class="invalid-feedback"></div>
+	                    </div>
+	                    
+	                    <!-- <div class="form-group col-md-3">
+	                        <label for="confirmarSenha">Confirmar Senha</label> 
+	                        <input type="password" class="form-control" id="confirmarSenha" 
+	                               autofocus="autofocus" required/>
+	                        <div class="invalid-feedback"></div>
+	                    </div>  -->
+	           
+	                <input type="hidden" id="id" th:field="*{id}"/>
+	                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+	            </form>
+                </div>
+              
+             <!--  <div class="navbar-wrapper header">
+          	<a class="btn btn-primary" th:href="@{/usuario/cadastrar}">
+               		<i class="oi oi-caret-right"></i>
+                   	<span>Cadastrar Usuários</span> 
+   		        </a>
+            <a class="btn btn-primary" href="/usuario/lista" >
+                <span class="oi oi-spreadsheet" aria-hidden="true"></span>
+                <span>Listar Usuarios</span>
+            </a>
+          </div> -->
+       
+	    </section>
+</body>
+</html>	
+
+

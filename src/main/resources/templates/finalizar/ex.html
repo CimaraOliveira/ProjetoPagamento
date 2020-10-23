@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8"/></head>
+<body>
+         <!-- A MESMA FUNCIONALIDADE DE PAGAMENTO-->
+         
+         
+	    <section class="layout-content" layout:fragment="corpo">
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Compra de Passagens</span>
+	                    </li>
+	                </ul>
+	                <a class="btn btn-primary btn-md" href="#" role="button">
+	                    <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
+	                    <span>Detalhes</span>
+	                </a>
+	            </div>
+	        </nav>
+	
+	        <div class="container">
+
+
+                
+          <div th:replace="fragments/alert"></div> 
+		
+		    <div class="container">
+		       <div class="card card-register mx-auto mt-5">
+		       <div class="card-header"><i class="fa-fighter-jet"></i> Comprar Passagem </div> 
+		       <!-- <span class="fa-fighter-jet"></span> -->
+		           <div class="card-body">					
+
+            
+	       <form class="form-signin was-validated" method="post" th:action="@{#}">
+		   <div class="text-center mb-4">
+	       </div>	
+							
+			
+             <div class="form-group">
+             <div class="form-row">
+             <div class="col-md-6">
+             <small class="form-text text-muted">Informe a origem</small>
+                <input type="text" id="origem" class="form-control" 
+	                    placeholder="Viajar de"  name="origem"  required autofocus="autofocus">
+	            
+	        </div>
+	        
+	        <div class="col-md-6">
+	        <small class="form-text text-muted">Informe o Destino</small>
+	            <input type="text" id="destino" class="form-control" 
+	                    placeholder="Para"  name="destino"  required autofocus="autofocus">
+	            
+	           
+	        </div>
+	        </div>
+	        </div>
+	        
+	        
+	      <div class="form-group">
+             <div class="form-row">
+             <div class="col-md-6">
+	        	   <small class="form-text text-muted">Informe a Data de Ida</small>
+					<input class="form-control" type="date" id="data_ida"  required autofocus="autofocus"/>
+					 				
+			  </div>
+		     				 
+		     <div class="col-md-6">								
+				<small class="form-text text-muted">Informe a Data de Volta</small>
+				<input class="form-control" type="date" id="data_volta"  autofocus="autofocus" required/>
+			 </div>
+		    </div> 
+		  </div>   
+		    
+	     <div class="form-group col-md-4">
+	        
+	        <small class="form-text text-muted">Informe a Quantidade</small>
+                <input type="text" id="quantidade" class="form-control" 
+	                    placeholder="Quantidade"  name="quantidade" autofocus="autofocus" required >
+	                    
+	        
+	     </div>
+	        
+	             <button type="submit" class="btn btn-primary btn-sm">Comprar</button>
+	        </form>
+	        </div>
+		
+				
+				<!-- <input type="hidden" id="id" th:field="*{id}"/> -->
+				
+			</div>
+          
+                
+                </div>
+              </div>
+            
+           
+                                        
+                
+                
+                
+                
+                
+   
+   
+   
+          <div th:replace="fragments/modal :: modal"></div>
+          <div class="table-responsive">
+	            
+	      
+	         
+	      </div>
+	      </section>
+</body>
+</html>
+        
