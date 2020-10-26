@@ -2,6 +2,12 @@ package com.Teste.Aplication.model;
 
 
 import javax.persistence.Column;
+
+
+
+
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,9 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 public class Role implements GrantedAuthority{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id

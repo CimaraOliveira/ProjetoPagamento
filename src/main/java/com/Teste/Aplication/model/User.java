@@ -2,6 +2,10 @@ package com.Teste.Aplication.model;
 
 import java.util.Collection;
 
+
+
+
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,11 +16,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @SuppressWarnings("serial")
@@ -48,11 +55,11 @@ public class User implements UserDetails{
 	private Set<Role> role = new HashSet<Role>();
 	
 	private boolean accountNonExpired;
-
+	
 	private boolean accountNonLocked;
-
+	
 	private boolean credentialsNonExpired;
-
+	
 	private boolean enabled;
 	
 	
@@ -89,12 +96,11 @@ public class User implements UserDetails{
 		this.senha = senha;
 	}
 	
-	
 
 	public Set<Role> getRole() {
 		return role;
 	}
-
+	
 	public void setRole(Set<Role> role) {
 		this.role = role;
 	}
@@ -102,7 +108,7 @@ public class User implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<>();
-		authorities.addAll(getRole());
+		authorities.addAll((Collection<? extends GrantedAuthority>) getRole());
 		return authorities;
 	}
 

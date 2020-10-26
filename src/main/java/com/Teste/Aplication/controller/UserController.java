@@ -92,9 +92,7 @@ public class UserController{
 		}
         attr.addFlashAttribute("success", "Usuário Cadastrado com sucesso!");
          return "login"; 
-        
-        
-           // return "redirect:/usuario/cadastro/realizado";
+         
 	}
 	
 	//////////////////////////////

@@ -1,6 +1,8 @@
 package com.Teste.Aplication.controller;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +53,7 @@ public class CompraController {
 	
 	@GetMapping("/cartao") 
 	public String cartao(Compra compra) { 
+		
 		return "compra/cartao";           
 	} 
 	
@@ -68,12 +71,13 @@ public class CompraController {
 		
 	}*/
 	
-	@PostMapping("/salvarExemplo") 
+	//Funcionando
+	/*@PostMapping("/salvarExemplo") 
 	public String salvarExemplo(Compra compra,RedirectAttributes attr, @RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
 		if(tipoPagamento.equals(TipoPagamento.CARTAO)) {
 			
 			compraService.save(compra);
-			attr.addFlashAttribute("success", "Teste1!");
+			//attr.addFlashAttribute("success", "Teste1!");
 			return "redirect:/compras/cartao";
 			
 			
@@ -88,41 +92,39 @@ public class CompraController {
 		attr.addFlashAttribute("success","Operação realizada com sucesso!");
 		return "redirect:/compras/ex";
 		
-	}
+	}*/
+	
+	
+	
 	
 	@PostMapping("/salvar")   
-	public String salvar(Compra compra, @PathVariable("id") Long id, @RequestParam("tipoPagamento") TipoPagamento tipoPagamento,RedirectAttributes attr) {
-		
-		//Compra pag = compraService.findByIdCompra(id);
-		Compra pag = compra.getCompra();
-		
-		//if(TipoPagamento.CARTAO.equals(compra.getTipoPagamento())) {
-		if(pag.getTipoPagamento() == tipoPagamento.CARTAO) {
-			//Cartao cartao = pag .getCartao();
-			//cartaoService.salvarCartao(cartao);
+	public String salvarExemplo(Compra compra,RedirectAttributes attr, @RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
+		if(tipoPagamento.equals(TipoPagamento.CARTAO)) {
+			
+			compraService.save(compra);
 			//attr.addFlashAttribute("success", "Teste1!");
-	    	return "redirect:/compras/cartao";
+			return "redirect:/compras/cartao";
+			
+			
+		}else if(tipoPagamento.equals(TipoPagamento.BOLETO)) {
+			Boleto boleto = boletoService.gerarBoleto();
+			attr.addFlashAttribute("success", "Boleto gerado com sucesso!");
+			compraService.save(compra);
+			return "compra/boleto";
+			
 		}
-		//else if(pag .getTipoPagamento() == tipoPagamento.BOLETO) {
-		//else if(TipoPagamento.BOLETO.equals(compra.getTipoPagamento())) {
-		else if(pag .getTipoPagamento() == tipoPagamento.BOLETO) {
-			////Boleto boleto = boletoService.gerarBoleto();
-			//pag .setBoleto(boletoService.salvarBoleto(boleto));
-			//attr.addFlashAttribute("success", "Boleto gerado com sucesso!");
-			return "compra/exemplo";
-		}
+		//compraService.save(compra);
+		//attr.addFlashAttribute("success","Operação realizada com sucesso!");
+		return "redirect:/compras/ex";
 		
-	     compra = compraService.save(pag);
-		return "redirect:/compras/comprar";
-		        
-	} 
+	}
 	
 	
 	
 	@PostMapping("/salvarCartao") 
-	public String salvarCartao(CartaoCredito cartao) { 
-		CartaoCredito c = new CartaoCredito();
-		cartaoService.salvarCartao(c);
+	public String salvarCartao(@Valid CartaoCredito cartao) { 
+		//CartaoCredito c = new CartaoCredito();
+		cartaoService.salvarCartao(cartao);
 		return "/home";           
 	} 
 	
