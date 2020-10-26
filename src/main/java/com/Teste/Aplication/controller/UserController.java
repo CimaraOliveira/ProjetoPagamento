@@ -29,8 +29,7 @@ public class UserController{
 	@GetMapping("/cadastrar")    
 	public String cadastrar(User user) {
 		return "user/cadastro";   
-	}  
-	  
+	}  	  
 	  
 	@PostMapping("/salvar") 
 	public String salvar(@Valid User user,BindingResult result, RedirectAttributes attr) {

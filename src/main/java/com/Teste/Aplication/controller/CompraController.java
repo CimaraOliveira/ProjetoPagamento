@@ -191,12 +191,5 @@ public class CompraController {
 		 return "redirect:/compras/comprar";
 			
 		
-	}*/
-	
-	
-	
-	
-	
-	
-	                    
+	}*/	                    
 }
