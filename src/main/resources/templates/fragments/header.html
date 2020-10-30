@@ -4,15 +4,23 @@
 <body>
 	<header th:fragment="cabecalho">
 		<nav class="navbar navbar-inverse navbar navbar-dark bg-dark fixed-top">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="btn btn-dark navbar-toggle pull-left">
-						<i class="oi oi-menu"></i>
-					</button>
-					<a class="navbar-brand " href="#">Sistema Aéreo</a>
-				</div>
+			
+			<div class="navbar-header">
+				<button type="button" class="btn btn-dark navbar-toggle pull-left">
+					<i class="oi oi-menu"></i>
+				</button>
+					<a class="navbar-brand " href="#">Sistema de Passagens</a>
 			</div>
+			
+			
+		<nav class="navbar-nav ml-auto" >
+		    <a class="nav-link" href="/login">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </nav>
+			
 		</nav>
+		
+		
 	</header>
 </body>
 </html>

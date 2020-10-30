@@ -32,8 +32,8 @@
 		           <div class="card-body">					
           
           <!-- th:object="${compra}" -->            
-	      <!--  <form  th:action="@{/compras/salvarExemplo}"  th:object="${compra}" method="POST"> <form  th:action="@{/compras/salvarExemplo}"  th:object="${compra}" method="POST">-->
-	       <form  th:action="@{/compras/salvar}"  th:object="${compra}" method="POST">
+	      <!--<form  th:action="@{/compras/salvarformaPagamento}"  th:object="${compra}" method="POST"> <form  th:action="@{/compras/formaPagamento}"  th:object="${compra}" method="POST"> -->
+	      <form  th:action="@{/compras/salvar}"  th:object="${compra}" method="POST">
 		   
 		 <div class="text-center mb-4">
 	     </div>	
@@ -53,9 +53,9 @@
 				 <small class="form-text text-muted">Escolha o valor</small>
 					<select id="valor"  name="valor" class="form-control">				  
 						<option value="0">0</option>
-						<option value="100">1000</option>
-						<option value="200">2000</option>
-						<option value="300">3000</option>
+						<option value="1000">1000</option>
+						<option value="2000">2000</option>
+						<option value="3000">3000</option>
 					</select>
 		</div><br>
 		

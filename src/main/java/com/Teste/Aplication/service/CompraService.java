@@ -24,16 +24,5 @@ public class CompraService {
 		return repository.findByIdCompra(id);  
 	}
 	
-	/*@Transactional(readOnly = false)
-	public void salvarCompra(Compra compra){
-		//String crypt = new BCryptPasswordEncoder().encode(user.getSenha());
-		//compra.setSenha(crypt);
-		compra.setQuantidade(compra.getQuantidade());
-		compra.setValor(compra.getValor());
-		
-		
-		//repository.save(compra);*/	
-		
-		//emailDeConfirmacaoDeCadastro(user.getEmail());
-	//}
+	
 }

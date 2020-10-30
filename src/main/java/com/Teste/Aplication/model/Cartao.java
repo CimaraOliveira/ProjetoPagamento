@@ -1,43 +1,70 @@
 package com.Teste.Aplication.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 @Table(name = "cartao")
-public class CartaoCredito implements Serializable {
+public class Cartao implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_cartao;
 	private String nome;
 	private String numero;
-	private Date dataValidade;
+	
+	//@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataValidade;
+	
+	/*@Temporal(TemporalType.DATE)
+	@Column(name = "dataValidade")
+	private Date dataValidade; */
+	
+	@OneToMany(mappedBy = "cartao")
+	@JsonIgnore
+	private List<Compra>compras;
+	
 	
 	@Column(length = 3)
 	private String cvv;
-	private String email;
-	public CartaoCredito(Long id_cartao, String nome, String numero, Date dataValidade, String cvv) {
+	
+	
+	
+	
+	
+	public Cartao(Long id_cartao, String nome, String numero, LocalDate dataValidade, List<Compra> compras,
+			String cvv) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
 		this.numero = numero;
 		this.dataValidade = dataValidade;
+		this.compras = compras;
 		this.cvv = cvv;
 	}
-	
-	public CartaoCredito() {
+
+	public Cartao() {
 
 	}
 
@@ -65,13 +92,15 @@ public class CartaoCredito implements Serializable {
 		this.numero = numero;
 	}
 
-	public Date getDataValidade() {
+	public LocalDate getDataValidade() {
 		return dataValidade;
 	}
 
-	public void setDataValidade(Date dataValidade) {
+	public void setDataValidade(LocalDate dataValidade) {
 		this.dataValidade = dataValidade;
 	}
+	
+	
 
 	public String getCvv() {
 		return cvv;
@@ -83,6 +112,14 @@ public class CartaoCredito implements Serializable {
 	
 	
 
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
+	}
+
 	public Long getId_cartao() {
 		return id_cartao;
 	}
@@ -91,11 +128,11 @@ public class CartaoCredito implements Serializable {
 		this.id_cartao = id_cartao;
 	}
 
-	public String getEmail() {
-		return email;
+	@Override
+	public String toString() {
+		return "CartaoCredito [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", dataValidade="
+				+ dataValidade + ", cvv=" + cvv + "]";
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
+	
 }

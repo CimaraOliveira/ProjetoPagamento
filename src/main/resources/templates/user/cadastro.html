@@ -25,7 +25,8 @@
 	         	<div th:replace="fragments/alert"></div> 
 	        	
 	        
-	            <form th:action="@{/usuario/salvar}" th:object="${user}" method="POST">
+	            <!--<form th:action="@{/usuario/salvar}" th:object="${user}" method="POST"> -->
+	            <form  th:action="${usuario.id == null} ?  @{/usuario/salvar} : @{/usuario/editar}" th:object="${usuario}" method="POST">
 	               
 	                    <div class="form-group col-md-6">
 	                        <label for="nome">Nome</label>
@@ -60,18 +61,7 @@
 	                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 	            </form>
                 </div>
-              
-             <!--  <div class="navbar-wrapper header">
-          	<a class="btn btn-primary" th:href="@{/usuario/cadastrar}">
-               		<i class="oi oi-caret-right"></i>
-                   	<span>Cadastrar Usuários</span> 
-   		        </a>
-            <a class="btn btn-primary" href="/usuario/lista" >
-                <span class="oi oi-spreadsheet" aria-hidden="true"></span>
-                <span>Listar Usuarios</span>
-            </a>
-          </div> -->
-       
+                     
 	    </section>
 </body>
 </html>	

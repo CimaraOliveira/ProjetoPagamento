@@ -30,9 +30,9 @@ public class Compra implements Serializable{
 	private Long idCompra;	
 
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "idCartao")
-	private CartaoCredito cartao;
+	private Cartao cartao;
 	
 	@OneToOne
 	@JoinColumn(name = "idBoleto")
@@ -43,10 +43,10 @@ public class Compra implements Serializable{
 	
 	private int quantidade;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "compra_id")
 	@JsonIgnore
-	public Compra compra; 
+	public Compra compra; */
 	
 	
 	//@Enumerated(EnumType.STRING)
@@ -58,20 +58,23 @@ public class Compra implements Serializable{
 		
 	}
 	
-	public Compra(Long idCompra , TipoPagamento tipoPagamento, CartaoCredito cartao, Boleto boleto, double valor,
-			int quantidade, Compra compra) {
+	
+
+	
+	public Compra(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade,
+			TipoPagamento tipoPagamento) {
 		super();
-		this.idCompra = idCompra ;
-		this.tipoPagamento = tipoPagamento;
+		this.idCompra = idCompra;
 		this.cartao = cartao;
 		this.boleto = boleto;
 		this.valor = valor;
 		this.quantidade = quantidade;
-		this.compra = compra;
+		this.tipoPagamento = tipoPagamento;
 	}
 
 
-	
+
+
 	public double getValor() {
 		return valor;
 	}
@@ -96,19 +99,27 @@ public class Compra implements Serializable{
 		this.idCompra  = idCompra ;
 	}
 
-	public Compra getCompra() {
-		return compra;
+	
+
+	public Long getIdCompra() {
+		return idCompra;
 	}
 
-	public void setCompra(Compra compra) {
-		this.compra = compra;
+
+
+
+	public void setIdCompra(Long idCompra) {
+		this.idCompra = idCompra;
 	}
 
-	public CartaoCredito getCartao() {
+
+
+
+	public Cartao getCartao() {
 		return cartao;
 	}
 
-	public void setCartao(CartaoCredito cartao) {
+	public void setCartao(Cartao cartao) {
 		this.cartao = cartao;
 	}
 
@@ -128,65 +139,5 @@ public class Compra implements Serializable{
 		this.tipoPagamento = tipoPagamento;
 	}
 
-	
-	
-	
-	/*private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id_compra;
-	
-    private int quantidade;
-	
-	@OneToMany(mappedBy = "compra")
-	@JsonIgnore
-	public List<Pagamento> pagamentos;
-	
-	
-	
-	public Compra() {
-		super();
-	}
-
-	public Compra(Long id_compra, int quantidade, List<Pagamento> pagamentos) {
-		super();
-		this.id_compra = id_compra;
-		this.quantidade = quantidade;
-		this.pagamentos = pagamentos;
-	}
-
-	public Long getId_compra() {
-		return id_compra;
-	}
-
-	public void setId_compra(Long id_compra) {
-		this.id_compra = id_compra;
-	}
-
-	/*public double getPreco() { 
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
-    
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public List<Pagamento> getPagamentos() {
-		return pagamentos;
-	}
-
-	public void setPagamentos(List<Pagamento> pagamentos) {
-		this.pagamentos = pagamentos;
-	}*/
-
-	
-	
+		
 }

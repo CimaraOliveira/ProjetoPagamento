@@ -1,6 +1,7 @@
 package com.Teste.Aplication.model;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -130,26 +131,12 @@ public class Pagamento implements Serializable{
 	
     private double valor;
 	
-	private int quantidade;
-	
 	private LocalDate dataCadastro;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "compra_id")
 	public Compra compra;
 	
-	
-	/*@OneToOne
-	@JoinColumn(name = "idCartao")
-	private CartaoCredito cartao;
-	
-	@OneToOne
-	@JoinColumn(name = "idBoleto")
-	private Boleto boleto;*/
-	
-	
-	
-
 	public Pagamento() {
 		super();
 		
@@ -161,7 +148,6 @@ public class Pagamento implements Serializable{
 		this.idPagamento = idPagamento;
 		this.tipoPagamento = tipoPagamento;
 		this.valor = valor;
-		this.quantidade = quantidade;
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -179,14 +165,6 @@ public class Pagamento implements Serializable{
 
 	public void setValor(double valor) {
 		this.valor = valor;
-	}
-
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
 	}
 
 	public Long getIdPagamento() {

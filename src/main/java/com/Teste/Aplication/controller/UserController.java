@@ -51,13 +51,13 @@ public class UserController{
 		
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("user", service.findById(id));
+		model.addAttribute("usuario", service.findById(id));
 		return "user/cadastro";
 		
 	}
 	
 	@PostMapping("/editar")
-	public String editar(@Valid User user, BindingResult result, RedirectAttributes attr) {
+	public String editar1(@Valid User user, BindingResult result, RedirectAttributes attr) {
 		
 		if (result.hasErrors()) {
 			return "user/cadastro";
@@ -102,6 +102,7 @@ public class UserController{
 	    return "fragments/mensagem";    
 	 } */ 
    
+	
 	
 	@GetMapping("/recuperar/senha")
 	public String editarSenha() {
