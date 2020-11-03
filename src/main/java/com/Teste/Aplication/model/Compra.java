@@ -45,7 +45,7 @@ public class Compra implements Serializable{
 	@JoinColumn(name = "compra_id")
 	@JsonIgnore
 	public Compra compra; 
-	
+	 
 	
 	//@Enumerated(EnumType.STRING)
 	private TipoPagamento tipoPagamento;
