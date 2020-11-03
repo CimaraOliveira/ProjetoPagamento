@@ -33,24 +33,15 @@ public class Cartao implements Serializable {
 	private Long id_cartao;
 	private String nome;
 	private String numero;
-	
-	//@DateTimeFormat(iso = ISO.DATE)
-	private LocalDate dataValidade;
-	
-	/*@Temporal(TemporalType.DATE)
-	@Column(name = "dataValidade")
-	private Date dataValidade; */
-	
-	@OneToMany(mappedBy = "cartao")
-	@JsonIgnore
-	private List<Compra>compras;
-	
-	
 	@Column(length = 3)
 	private String cvv;
 	
-	
-	
+	//@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataValidade;
+		
+	@OneToMany(mappedBy = "cartao")
+	@JsonIgnore
+	private List<Compra>compras;
 	
 	
 	public Cartao(Long id_cartao, String nome, String numero, LocalDate dataValidade, List<Compra> compras,
@@ -100,8 +91,6 @@ public class Cartao implements Serializable {
 		this.dataValidade = dataValidade;
 	}
 	
-	
-
 	public String getCvv() {
 		return cvv;
 	}
@@ -109,8 +98,6 @@ public class Cartao implements Serializable {
 	public void setCvv(String cvv) {
 		this.cvv = cvv;
 	}
-	
-	
 
 	public List<Compra> getCompras() {
 		return compras;

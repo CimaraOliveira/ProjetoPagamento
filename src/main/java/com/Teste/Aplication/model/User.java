@@ -6,6 +6,7 @@ import java.util.Collection;
 
 
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,20 +17,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-@SuppressWarnings("serial")
+
 @Entity
 @Table(name = "usuario")
 public class User implements UserDetails{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8798096104982666697L;
+
 	public User() {
 		this.enabled = true;
 		this.accountNonExpired = true;
@@ -50,11 +54,7 @@ public class User implements UserDetails{
 	@Column(nullable = false, length = 255)
 	private String senha;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToMany
-	private Set<Role> role = new HashSet<Role>();
-	
-	private boolean accountNonExpired;
+    private boolean accountNonExpired;
 	
 	private boolean accountNonLocked;
 	
@@ -62,7 +62,9 @@ public class User implements UserDetails{
 	
 	private boolean enabled;
 	
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany
+	private Set<Role> role = new HashSet<Role>();	
 
 	public Long getId() {
 		return id;
@@ -94,9 +96,15 @@ public class User implements UserDetails{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}	
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		authorities.addAll((Collection<? extends GrantedAuthority>) getRole());
+		return authorities;
 	}
 	
-
 	public Set<Role> getRole() {
 		return role;
 	}
@@ -105,13 +113,30 @@ public class User implements UserDetails{
 		this.role = role;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		authorities.addAll((Collection<? extends GrantedAuthority>) getRole());
-		return authorities;
+	public void setUsername(String username) {
+		this.email= username;
 	}
 
+	public void setPassword(String password) {
+		this.senha = password;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+	
 	@Override
 	public String getPassword() {
 		return this.senha;
@@ -121,7 +146,7 @@ public class User implements UserDetails{
 	public String getUsername() {
 		return this.email;
 	}
-
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return this.accountNonExpired;
@@ -138,12 +163,11 @@ public class User implements UserDetails{
 		return this.credentialsNonExpired;
 	}
 
-	@Override
 	public boolean isEnabled() {
-		return this.enabled;
+		return enabled;
 	}
 
-	public String getRoleString() {
+	/*public String getRoleString() {
 		String txt="";
 		if(role!=null) {
 			for(Role r: role) {
@@ -151,6 +175,9 @@ public class User implements UserDetails{
 			}
 		}
 		return txt;
+	}*/
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	
 }

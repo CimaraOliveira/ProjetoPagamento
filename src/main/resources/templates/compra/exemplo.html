@@ -1,9 +1,3 @@
-
-
-
-<p>Compra Realizada com sucesso! verifique seu email</p>
-
-
 <!DOCTYPE html>
 <html layout:decorate="~{layout}">
 <head><meta charset="UTF-8"/></head>
@@ -43,43 +37,20 @@
 		 <div class="text-center mb-4">
 	     </div>	
 	                  
-	     <div class="form-group">
-	     <div class="col-md-6">
-	         <small class="form-text text-muted">Informe a Quantidade</small>
-             <input type="text" id="quantidade" class="form-control" 
-	                name="quantidade" autofocus="autofocus"  required > <!-- th:field="*{quantidade}" -->
-	     </div>
-	     <div class="invalid-feedback"></div>
-	     </div>
-	     
-	           
-	     
+	     	           
+	     <div id="formas-pagamento-panel" class="panel-group" role="tablist" 
+          aria-multiselectable="true">
+         <span ng-repeat="formaPgto in carrinho.pModel.listaFormasPgto" class="ng-scope">
+         <div class="panel panel-default ng-scope" ng-if="formaPgto.tipo.id==1 || formaPgto.tipo.id==5 || formaPgto.tipo.id==7">
+         <div class="panel-heading" ng-click="selecionarForma(formaPgto)">
+         <a href="" role="button" data-toggle="collapse" data-parent="#formas-pagamento-panel"
+          data-target="#forma-pagamento-panel0">
+         <h4 class="panel-title ng-binding"><span ng-switch="formaPgto.integracao">
 	    <div class="col-md-8">
-				 <small class="form-text text-muted">Escolha o valor</small>
-					<select id="preco"   name="preco" class="form-control">				  
-						<option value="0"></option>
-						<option value="100">100</option>
-						<option value="200">200</option>
-						<option value="300">300</option>
-					</select>
-		</div><br>
 				
-				<p>Escolha Forma de Pagamento</p>
-								
-				 <!--  --><div>
-				 <div class="form-group">                 
-	             <div class="d-block my-3"> 
-				 <input type="radio" id="boleto" name="compra.tipoPagamento">
-                 <label for="boleto">Boleto</label><br>
-                 </div>
-                 </div>
-                 
-                 <div class="form-group">
-                 <input type="radio" id="cartao" name="compra.tipoPagamento">
-                 <label for="cartao">Cartão</label><br>
-                 </div>
-                 </div>
 						 
+						 
+          
 						 
 	          <button type="submit" class="btn btn-primary btn-sm">Comprar</button>
 	      </form>
@@ -94,10 +65,16 @@
            </div>
               </div>
               
+              
    
    
           <div th:replace="fragments/modal :: modal"></div>
           <div class="table-responsive">
+	            
+	            
+	            
+	            
+	            
 	            
 	      
 	         

@@ -5,14 +5,11 @@ import java.io.Serializable;
 
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.Teste.Aplication.Enuns.TipoPagamento;
@@ -34,7 +31,8 @@ public class Compra implements Serializable{
 	@JoinColumn(name = "idCartao")
 	private Cartao cartao;
 	
-	@OneToOne
+	//@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "idBoleto")
 	private Boleto boleto;
 	
@@ -43,10 +41,10 @@ public class Compra implements Serializable{
 	
 	private int quantidade;
 	
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "compra_id")
 	@JsonIgnore
-	public Compra compra; */
+	public Compra compra; 
 	
 	
 	//@Enumerated(EnumType.STRING)
@@ -56,11 +54,7 @@ public class Compra implements Serializable{
 	public Compra() {
 		super();
 		
-	}
-	
-	
-
-	
+	}	
 	public Compra(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade,
 			TipoPagamento tipoPagamento) {
 		super();
@@ -71,9 +65,6 @@ public class Compra implements Serializable{
 		this.quantidade = quantidade;
 		this.tipoPagamento = tipoPagamento;
 	}
-
-
-
 
 	public double getValor() {
 		return valor;
@@ -97,23 +88,15 @@ public class Compra implements Serializable{
 
 	public void setId(Long idCompra ) {
 		this.idCompra  = idCompra ;
-	}
-
-	
+	}	
 
 	public Long getIdCompra() {
 		return idCompra;
 	}
 
-
-
-
 	public void setIdCompra(Long idCompra) {
 		this.idCompra = idCompra;
 	}
-
-
-
 
 	public Cartao getCartao() {
 		return cartao;

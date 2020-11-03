@@ -11,6 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	//pegando usuario do banco de dados
 	//@Query("select u from usuario u where u.email like :email")
 	//User findByEmail(@Param("email") String email);
+	
 
 	User findByNome(String username);
 	

@@ -29,14 +29,14 @@
 		  <div class="card-body">					
 
             
-	   <form class="form-signin was-validated" method="post" th:object="${cartao}" th:action="@{/cartao/salvarCartao}">
+	   <form class="form-signin was-validated" method="post" th:object="${cartao}"  th:action="@{/cartao/salvarCartao}">
 		   <div class="text-center mb-4">
 	       </div>
               
         <div class="col-md-6 mb-3">
 	       <label for="numero">Número do cartão de crédito</label>
 	         <input type="text" id="numero" class="form-control" 
-	                name="numero" autofocus="autofocus"  required > 
+	                name="numero" autofocus="autofocus" onkeypress="valida_cartao" required > 
 	                 
 	     </div>
 	     <div class="invalid-feedback"></div>
@@ -81,7 +81,7 @@
 	     </div>
 	     
 	     
-	      <button type="submit" class="btn btn-primary btn-sm">Finalizar</button>
+	      <button type="submit" onClick=" getCardFlag" class="btn btn-primary btn-sm">Finalizar</button>
 	     
 	  
 	     </form>
@@ -100,6 +100,132 @@
 	         
 	      </div>
 	      </section>
+	    
+	    <!--getCardFlag: function(cardnumber) {
+        var cardnumber = cardnumber.replace(/[^0-9]+/g, '');
+
+        var cards = {
+            visa      : /^4[0-9]{12}(?:[0-9]{3})/,
+            mastercard : /^5[1-5][0-9]{14}/,
+            diners    : /^3(?:0[0-5]|[68][0-9])[0-9]{11}/,
+            amex      : /^3[47][0-9]{13}/,
+            discover  : /^6(?:011|5[0-9]{2})[0-9]{12}/,
+            hipercard  : /^(606282\d{10}(\d{3})?)|(3841\d{15})/,
+            elo        : /^((((636368)|(438935)|(504175)|(451416)|(636297))\d{0,10})|((5067)|(4576)|(4011))\d{0,12})/,
+            jcb        : /^(?:2131|1800|35\d{3})\d{11}/,       
+            aura      : /^(5078\d{2})(\d{2})(\d{11})$/     
+        };
+
+        for (var flag in cards) {
+            if(cards[flag].test(cardnumber)) {
+                return flag;
+            }
+        }       
+
+        return false;
+    }
+
+}-->
+  <script language=javascript type="text/javascript">
+<!-- function valida_cartao($cartao, $cvc=false){
+	$cartao = preg_replace("/[^0-9]/", "", $cartao);
+	if($cvc) $cvc = preg_replace("/[^0-9]/", "", $cvc);
+
+	$cartoes = array(
+			'visa'		 => array('len' => array(13,16),    'cvc' => 3),
+			'mastercard' => array('len' => array(16),       'cvc' => 3),
+			'diners'	 => array('len' => array(14,16),    'cvc' => 3),
+			'elo'		 => array('len' => array(16),       'cvc' => 3),
+			'amex'	 	 => array('len' => array(15),       'cvc' => 4),
+			'discover'	 => array('len' => array(16),       'cvc' => 4),
+			'aura'		 => array('len' => array(16),       'cvc' => 3),
+			'jcb'		 => array('len' => array(16),       'cvc' => 3),
+			'hipercard'  => array('len' => array(13,16,19), 'cvc' => 3),
+	);
+	alert("erro");
+
+	
+	switch($cartao){
+		case (bool) preg_match('/^(636368|438935|504175|451416|636297)/', $cartao) :
+			$bandeira = 'elo';			
+		break;
+
+		case (bool) preg_match('/^(606282)/', $cartao) :
+			$bandeira = 'hipercard';			
+		break;
+
+		case (bool) preg_match('/^(5067|4576|4011)/', $cartao) :
+			$bandeira = 'elo';			
+		break;
+
+		case (bool) preg_match('/^(3841)/', $cartao) :
+			$bandeira = 'hipercard';			
+		break;
+
+		case (bool) preg_match('/^(6011)/', $cartao) :
+			$bandeira = 'discover';			
+		break;
+
+		case (bool) preg_match('/^(622)/', $cartao) :
+			$bandeira = 'discover';			
+		break;
+
+		case (bool) preg_match('/^(301|305)/', $cartao) :
+			$bandeira = 'diners';			
+		break;
+
+		case (bool) preg_match('/^(34|37)/', $cartao) :
+			$bandeira = 'amex';			
+		break;
+
+		case (bool) preg_match('/^(36,38)/', $cartao) :
+			$bandeira = 'diners';			
+		break;
+
+		case (bool) preg_match('/^(64,65)/', $cartao) :
+			$bandeira = 'discover';			
+		break;
+
+		case (bool) preg_match('/^(50)/', $cartao) :
+			$bandeira = 'aura';			
+		break;
+
+		case (bool) preg_match('/^(35)/', $cartao) :
+			$bandeira = 'jcb';			
+		break;
+
+		case (bool) preg_match('/^(60)/', $cartao) :
+			$bandeira = 'hipercard';			
+		break;
+
+		case (bool) preg_match('/^(4)/', $cartao) :
+			$bandeira = 'visa';			
+		break;
+
+		case (bool) preg_match('/^(5)/', $cartao) :
+			$bandeira = 'mastercard';			
+		break;
+	}
+
+	$dados_cartao = $cartoes[$bandeira];
+	if(!is_array($dados_cartao)) return array(false, false, false);
+  
+	// $valid     = true;
+	 //$valid_cvc = false;
+	 
+	 if($valid = true){
+		 alert ("As duas senhas conferem")
+	 }else{
+		 alert ("As duas senhas nao conferem")
+	 }
+
+	if(!in_array(strlen($cartao), $dados_cartao['len'])) $valid = false;
+	if($cvc AND strlen($cvc) <= $dados_cartao['cvc'] AND strlen($cvc) !=0) $valid_cvc = true;
+	return array($bandeira, $valid, $valid_cvc);
+}-->
+	   
+</script>
+
 </body>
 </html>
         

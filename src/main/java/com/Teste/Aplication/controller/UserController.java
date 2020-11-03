@@ -3,6 +3,7 @@ package com.Teste.Aplication.controller;
 
 import javax.validation.Valid;
 
+
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.model.User;
@@ -36,20 +38,30 @@ public class UserController{
 		if(result.hasErrors()) { 
 			return "user/cadastro";
 		}
-		String senha = user.getSenha();
-		user.setSenha(new BCryptPasswordEncoder().encode(senha));
-		service.salvar(user);
-		attr.addFlashAttribute("success", "Usuário Cadastrado com sucesso!");
-		return "redirect:/usuario/cadastrar";  
+		
+			String senha = user.getSenha();
+			user.setSenha(new BCryptPasswordEncoder().encode(senha));
+			service.salvar(user);
+			attr.addFlashAttribute("success", "Usuário Cadastrado com sucesso!");
+			 
+		
+		return "redirect:/usuario/cadastrar";
 	} 
 	 
-	/*@GetMapping("/listar")
+	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		model.addAttribute("usuario", service.findAll());
 		return "user/lista";  
-	}  */	
-		
-	@GetMapping("/editar/{id}")
+	}  
+	
+	@GetMapping("/listar/id")
+	public String listarPorId(ModelMap model, @RequestParam("id") Long id) {
+		model.addAttribute("usuario", service.findById(id));
+		return "user/lista";
+	}
+	
+	
+	/*@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("usuario", service.findById(id));
 		return "user/cadastro";
@@ -57,7 +69,7 @@ public class UserController{
 	}
 	
 	@PostMapping("/editar")
-	public String editar1(@Valid User user, BindingResult result, RedirectAttributes attr) {
+	public String editar(@Valid User user, BindingResult result, RedirectAttributes attr) {
 		
 		if (result.hasErrors()) {
 			return "user/cadastro";
@@ -65,8 +77,24 @@ public class UserController{
 		service.editar(user);
 		attr.addFlashAttribute("success", "Dados alterados com sucesso!");
 		return "redirect:/usuario/cadastrar";
+	}*/
+	
+	@GetMapping("/editar/{id}")
+	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("usuario", service.findById(id));
+		return "user/cadastro";
 	}
 	
+	@PostMapping("/editar")
+	public String editar(User user, RedirectAttributes attr) {
+		String senha = user.getSenha();
+		user.setSenha(new BCryptPasswordEncoder().encode(senha));
+		service.editar(user);
+		attr.addFlashAttribute("success", "Seus dados foram alterados com sucesso!");
+		return "redirect:/usuario/cadastrar";
+	}	
+	
+	//não vamos excluir
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		service.excluir(id);
@@ -94,14 +122,11 @@ public class UserController{
          
 	}
 	
-	//////////////////////////////
-	
 	/*@GetMapping("/cadastro/realizado")
 	public String cadastroRealizado() {
 
 	    return "fragments/mensagem";    
 	 } */ 
-   
 	
 	
 	@GetMapping("/recuperar/senha")
