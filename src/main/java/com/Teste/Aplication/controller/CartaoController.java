@@ -41,23 +41,7 @@ public class CartaoController {
 		id = Long.parseLong(attr); // recebe o id da compra
 		return "compra/cartao";           
 	} 
-	//correto
-	/*@PostMapping("/salvarCartao") 
-	public String salvarCartao(@Valid Cartao cartao,RedirectAttributes attr,String numero, String cvv) { 
-			
-		if((validarNumeroCartao(numero)==false) || (validarCvvCartao(cvv) == false)) {
-			attr.addFlashAttribute("fail", "Dados Inválidos tente novamente!");
-			return "redirect:/cartao/cartao";
-			
-			
-		}
 		
-		cartaoService.salvarCartao(cartao);
-		attr.addFlashAttribute("success", "Compra realizada com sucesso");
-		return "redirect:/cartao/cartao";
-					
-	} */
-	
 	@PostMapping("/salvarCartao") 
 	public String salvarCartao(@Valid Cartao cartao,BindingResult result, RedirectAttributes attr,String numero, String cvv) { 
 		if(result.hasErrors()) {
@@ -76,7 +60,7 @@ public class CartaoController {
 		    	compraService.saveAndFlush(compra); // atualiza a compra
 		    	attr.addFlashAttribute("success", "Compra realizada com sucesso");
 		    }
-		//}
+		
 		
 		return "redirect:/";		
 	} 
