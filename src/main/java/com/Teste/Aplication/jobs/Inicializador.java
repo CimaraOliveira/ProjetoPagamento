@@ -24,21 +24,14 @@ public class Inicializador implements ApplicationListener<ContextRefreshedEvent>
 		System.out.println("|*************************************|");
 		
 		
-		User user = new User();
+		User user = userService.findByNome("cleo");
 		user.setNome("Cleo");
 		user.setEmail("cleo@gmail.com");
 		user.setSenha(new BCryptPasswordEncoder().encode("123123"));
 		user.getRole();
 		userService.salvarCadastro(user);
 		
-		User user2 = new User();
-		user2.setNome("Mario Santos");
-		user2.setEmail("santoso@gmail.com");
-		user2.setSenha(new BCryptPasswordEncoder().encode("12345"));
-		userService.salvarCadastro(user2);
-		
-		
-		
+				
 	}
 
 }
