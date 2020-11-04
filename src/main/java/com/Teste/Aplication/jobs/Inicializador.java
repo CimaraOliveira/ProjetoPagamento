@@ -23,15 +23,16 @@ public class Inicializador implements ApplicationListener<ContextRefreshedEvent>
 		System.out.println("	Jobs - Initializing User		");
 		System.out.println("|*************************************|");
 		
+		User user = userService.findByNome("Cleo");
 		
-		User user = userService.findByNome("cleo");
-		user.setNome("Cleo");
-		user.setEmail("cleo@gmail.com");
-		user.setSenha(new BCryptPasswordEncoder().encode("123123"));
-		user.getRole();
-		userService.salvarCadastro(user);
-		
-				
+		if(user == null) {
+			user = new User();
+			user.setNome("Cleo");
+			user.setEmail("cleo@gmail.com");
+			user.setSenha("123123");
+			user.getRole();
+			userService.salvarCadastro(user); 
+		}
 	}
 
 }
