@@ -1,8 +1,9 @@
 package com.Teste.Aplication.controller;
 
 
-import javax.validation.Valid;
+import java.util.Random;
 
+import javax.validation.Valid;
 
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.model.User;
+import com.Teste.Aplication.model.Email;
 import com.Teste.Aplication.service.UserService;
 
 @Controller 	
@@ -135,29 +138,27 @@ public class UserController{
 	}
 	
 	
-	// form de pedido de recuperar senha
-    /*@GetMapping("/p/recuperar/senha")
-    public String redefinirSenha(String email, ModelMap model) throws MessagingException {
-    	service.pedidoRedefinicaoDeSenha(email);
-    	model.addAttribute("sucesso", "Em instantes você reberá um e-mail para "
-    			+ "prosseguir com a redefinição de sua senha.");
-    	model.addAttribute("usuario", new Usuario(email));
-    	return "usuario/recuperar-senha";
-    }*/
-    
-    // salvar a nova senha via recuperacao de senha
-   /* @PostMapping("/p/nova/senha")
-    public String confirmacaoDeRedefinicaoDeSenha(Usuario usuario, ModelMap model) {
-    	Usuario u = service.buscarPorEmail(usuario.getEmail());
-    	if (!usuario.getCodigoVerificador().equals(u.getCodigoVerificador())) {
-    		model.addAttribute("falha", "Código verificador não confere.");
-    		return "usuario/recuperar-senha";
-    	}
-    	u.setCodigoVerificador(null);
-    	service.alterarSenha(u, usuario.getSenha());
-    	model.addAttribute("alerta", "sucesso");
-    	model.addAttribute("titulo", "Senha redefinida!");
-    	model.addAttribute("texto", "Você já pode logar no sistema.");
-    	return "login";
-    }*/ 
+	@PostMapping("/update")
+	public ModelAndView update(@RequestParam("email") String email) {
+		
+		User u = service.getEmail(email);
+		ModelAndView view = new ModelAndView("login");
+		if(u == null) {
+			
+				view.addObject("error", "Email não está cadastrado no sistema!");
+		}else {
+			Random r = new Random();
+			String novaSenhaGerada = Integer.toString(Math.abs(r.nextInt()), 36).substring(0, 6);
+			System.out.println(novaSenhaGerada);
+			u.setSenha(novaSenhaGerada);
+			service.add(u);
+			Email email2 = new Email();//Email email = new Email();
+			email2.setTo(u.getEmail());
+			//sendEmail.sendNovaSenhaEmail(email2, novaSenhaGerada);///dando um erro aqui
+			view.addObject("mensagem", "Nova senha gerada!!!");
+		}
+		return view;		
+	}
+	
+	
 }
