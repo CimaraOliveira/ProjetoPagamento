@@ -8,6 +8,7 @@ import java.util.Collection;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -54,6 +56,9 @@ public class User implements UserDetails{
 	@Column(nullable = false, length = 255)
 	private String senha;
 	
+	@OneToMany(mappedBy = "usuario")
+	public List<Compra> compras;
+	
     private boolean accountNonExpired;
 	
 	private boolean accountNonLocked;
@@ -64,7 +69,7 @@ public class User implements UserDetails{
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany
-	private Set<Role> role = new HashSet<Role>();	
+	private Set<Role> role = new HashSet<Role>();
 
 	public Long getId() {
 		return id;
@@ -101,7 +106,7 @@ public class User implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<>();
-		authorities.addAll((Collection<? extends GrantedAuthority>) getRole());
+		authorities.addAll(getRole());
 		return authorities;
 	}
 	
@@ -180,4 +185,16 @@ public class User implements UserDetails{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
+	}
+	
+	
+
+	
 }

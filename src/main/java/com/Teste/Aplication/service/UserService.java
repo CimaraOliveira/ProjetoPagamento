@@ -8,9 +8,12 @@ import java.util.Collection;
 
 
 
+
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -91,9 +94,11 @@ public class UserService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println(username);
 		UserDetails user = repository.findByEmail(username);
 		org.springframework.security.core.userdetails.User userFinal = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getPermissoes(user));
-
+        System.out.println(userFinal.getAuthorities());
+       
 		return userFinal;
 	}
 
@@ -108,21 +113,12 @@ public class UserService implements UserDetailsService{
 		return authorities;
 	}
 	
-	public boolean verificarSenha(String senha, User user) {
-		return passwordEncoder.matches(senha, user.getPassword());
+	@Transactional(readOnly = false)
+	public void alterarSenha(User user, String senha) {
+		user.setSenha(new BCryptPasswordEncoder().encode(senha));
+		repository.save(user);
 	}
-	
-	/*@Transactional(readOnly = false)
-	public void pedidoRedefinicaoDeSenha(String email) throws MessagingException {
-		User user = getEmail(email).orElse
-				.orElseThrow(() -> new UsernameNotFoundException("User " + email + " não encontrado."));;
-		
-		String verificador = RandomStringUtils.randomAlphanumeric(6);
-		
-		usuario.setCodigoVerificador(verificador);
-		
-		emailService.enviarPedidoRedefinicaoSenha(email, verificador);
-	}*/
+
 	
 } 
 	

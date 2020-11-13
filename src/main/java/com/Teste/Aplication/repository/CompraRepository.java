@@ -9,4 +9,6 @@ public interface CompraRepository extends JpaRepository<Compra, Long>{
 
 	Compra findByIdCompra(Long id);
 
-	}
+	
+
+}

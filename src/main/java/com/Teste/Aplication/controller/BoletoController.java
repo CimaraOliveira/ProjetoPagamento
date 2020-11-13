@@ -16,7 +16,7 @@ public class BoletoController {
 	private BoletoService boletoService;
 	
 
-	@GetMapping("/ex") 
+	@GetMapping("/ex")  
 	public String ex(Compra compra) { 
 		return "compra/ex";           
 	} 

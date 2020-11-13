@@ -2,8 +2,10 @@
 <html layout:decorate="~{layout}">
 <head><meta charset="UTF-8"/></head>
 <body>
-	
-	    <section class="layout-content" layout:fragment="corpo">
+
+
+       
+         <section class="layout-content" layout:fragment="corpo">
 	
 	        <nav class="navbar navbar-expand-md bg-light">
 	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -13,25 +15,42 @@
 	                        <span>Dados do Usuário</span>
 	                    </li>
 	                </ul>
-	               
 	            </div>
 	        </nav>
 	
-	       
+	        <div class="container" id="listagem">
+	
+				<div th:replace="fragments/alert"></div>
+				<div sec:authorize="hasAuthority('USER','ADMIN')"></div>
+	
+	            <div class="table-responsive">
+					<table class="table table-striped table-hover table-sm">
+					    <thead>
+					    <tr>
+					        <th>Nome</th>
+					        <th>Email</th>
+					        <th>Ação</th>
+					    </tr>
+					    </thead>
+					    <tbody>
+					     <tr th:each="user : ${usuario}">
+					         <!-- <td th:text="${user.id}"></td> -->
+					         <td th:text="${user.nome}"></td>
+					         <td th:text="${user.email}"></td>
+					         <td colspan="2">
+					              <a class="btn btn-info btn-sm" th:href="@{/user/editar/{id} (id=${user.id}) }" role="button">
+					                 <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+					             </a> 
+					             					             
+					         </td>
+					     </tr>
+					    </tbody>
+					</table>
+	            </div>
+	        </div>
 	        
-	         	<div th:replace="fragments/alert"></div> 
-	        	
-	        <tbody>
-			<tr th:each="user : ${usuario}">
-				<td><span th:text="${user.nome}"></span></td>
-				<td><span th:text="${user.email}"></span></td>
-                
-                
-  			</tr>
-		</tbody>
-                     
+						
 	    </section>
+
 </body>
-</html>	
-
-
+</html>		

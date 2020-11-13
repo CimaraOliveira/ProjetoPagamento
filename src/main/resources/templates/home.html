@@ -15,32 +15,45 @@
 			</div>
 		</nav>
 		
-		<div class="container">
-			<div id="list-home" class="row">
-				<div class="col-4">
-					<div class="list-group" id="list-tab" role="tablist">
-						<a class="list-group-item list-group-item-action active"
-							id="list-spring-boot-list" data-toggle="list" href="#spring-boot"
-							role="tab" aria-controls="spring-boot">Spring-Boot</a> <a
-							class="list-group-item list-group-item-action" id="list-sts-list"
-							data-toggle="list" href="#sts" role="tab" aria-controls="sts">Spring
-							Tool Suite</a> <a class="list-group-item list-group-item-action"
-							id="list-thymeleaf-list" data-toggle="list" href="#thymeleaf"
-							role="tab" aria-controls="thymeleaf">Thymeleaf</a> <a
-							class="list-group-item list-group-item-action"
-							id="list-webjars-list" data-toggle="list" href="#webjars"
-							role="tab" aria-controls="webjars">WebJars</a> <a
-							class="list-group-item list-group-item-action"
-							id="list-hibernate-list" data-toggle="list" href="#hibernate"
-							role="tab" aria-controls="hibernate">Hibernate</a> <a
-							class="list-group-item list-group-item-action"
-							id="list-bootstrap-list" data-toggle="list" href="#bootstrap"
-							role="tab" aria-controls="bootstrap">Bootstrap 4</a>
-					</div>
-				</div>
-			
-			</div>
-		</div>
+		
+		<div class="row">
+		
+		<div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card text-white bg-info o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-cutlery"></i>
+              </div>
+              <div class="mr-5">Detalhes</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" th:href="@{/compras/detalhes}">
+              <span class="float-left">Histórico</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+		
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card text-white bg-primary o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-comments"></i>
+              </div>
+              <div class="mr-5">Comprar</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" th:href="@{/compras/comprar}">
+              <span class="float-left">Fazer Compra</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+        
+        
+      </div>
 		 
 	</section>		
 </body>

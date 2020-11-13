@@ -19,10 +19,10 @@ public class CompraService {
 		 repository.save(compra);
 	}
 	
-	@Transactional(readOnly = true)
 	public Compra findByIdCompra(Long id) {
 		return repository.findByIdCompra(id);  
 	}
 	
+		
 	
 }

@@ -1,6 +1,7 @@
 package com.Teste.Aplication.model;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 

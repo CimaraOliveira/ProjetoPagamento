@@ -17,15 +17,6 @@ public class Boleto {
 	private Long idBoleto;
 	private Integer numeroBoleto;
 	private LocalDate dataValidade;
-	private LocalDate dataVencimento;
-	private Integer CEP;
-	private String cidade;
-	private String Logradouro;
-	private String Uf;
-	private String bairo;
-	private String localidade;
-	private float valor;
-	
 	public Long getIdBoleto() {
 		return idBoleto;
 	}

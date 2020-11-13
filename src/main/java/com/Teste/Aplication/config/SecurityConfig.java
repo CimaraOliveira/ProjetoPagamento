@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -25,19 +26,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		// acessos publicos liberados
 		http.authorizeRequests()
+		 .antMatchers("/fragments/**").permitAll()
 		   .antMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
-		   .antMatchers("/", "/home").permitAll()
-		  // .antMatchers("/user/**").permitAll()///////////
-		   
+		   .antMatchers("/home","/user/detalhes/id").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/compra/**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/compra/pagamento**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/user/cadastrar/cadastro").permitAll()
+		   .antMatchers("/user/cadastrar/").permitAll()
+		   .antMatchers("/", "/user/detalhes").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/user/detalhes","/user/editar").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/compras/**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/compras/comprar/**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/cartao/**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("http://**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("https://**").hasAnyAuthority("USER","ADMIN")
+		   .antMatchers("/user/**").permitAll()
+		   .antMatchers(HttpMethod.POST, "/user/salvar").permitAll()
+		   .antMatchers(HttpMethod.GET, "/").permitAll()
+		   .antMatchers(HttpMethod.GET, "/cadastrar").permitAll()
 		   .anyRequest().authenticated()
 		   
-		   //.and().formLogin().loginPage("/entrar").permitAll()///////////
-		   //.successForwardUrl("/home").and().logout().permitAll()/////////////
+		   .antMatchers("layout").permitAll()
+		   .antMatchers("/static/**").permitAll()
+		   .antMatchers("/resources/**").permitAll()
+		   .antMatchers("/css/**").permitAll()
+		   .antMatchers("/js/**").permitAll()
+		   .anyRequest().authenticated() 
+		   
+		   //.antMatchers("/user/**").permitAll()///////////
+		   
+		   
+		   
+		   ///.and().formLogin().loginPage("/entrar").permitAll()///////////
+		   ///.successForwardUrl("/home").and().logout().permitAll()/////////////
 		   
 		   .and()
 		       .formLogin()
-		       .loginPage("/login")
-		       .defaultSuccessUrl("/", true)
+		       .loginPage("/").permitAll()
+		       .successForwardUrl("/home")
 		       .failureUrl("/login-error")
 		       .permitAll()
 		    .and()
@@ -48,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.accessDeniedPage("/acesso-negado")
 			.and()
 				.rememberMe();
+		http.csrf().disable();
 		
 	}
 

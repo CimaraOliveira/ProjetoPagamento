@@ -1,16 +1,23 @@
 package com.Teste.Aplication.model;
 
 import java.io.Serializable;
-
-
+import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,24 +38,20 @@ public class Compra implements Serializable{
 	@JoinColumn(name = "idCartao")
 	private Cartao cartao;
 	
-	//@OneToOne
 	@ManyToOne
 	@JoinColumn(name = "idBoleto")
 	private Boleto boleto;
-	
 	
 	private double valor;
 	
 	private int quantidade;
 	
-	@ManyToOne
-	@JoinColumn(name = "compra_id")
-	@JsonIgnore
-	public Compra compra; 
-	 
-	
 	//@Enumerated(EnumType.STRING)
 	private TipoPagamento tipoPagamento;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "usuario_id")
+	public User usuario;
 	
     
 	public Compra() {
@@ -121,6 +124,13 @@ public class Compra implements Serializable{
 	public void setTipoPagamento(TipoPagamento tipoPagamento) {
 		this.tipoPagamento = tipoPagamento;
 	}
-
-		
+	public User getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
+	}
+	
+	
+				
 }

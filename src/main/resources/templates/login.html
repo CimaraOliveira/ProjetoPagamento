@@ -33,7 +33,7 @@
 <body>
     <div th:replace="fragments/alert"></div> 
 	<form class="form-signin was-validated" method="post"
-	      th:action="@{/login}"> 
+	      action="/"> 
 		<div class="text-center mb-4">
 			<img class="mb-4" th:src="@{/image/aviao.png}" alt=""
 				width="72" height="72">
@@ -72,9 +72,9 @@
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 		<hr>
 		<nav class="nav nav-pills flex-column flex-sm-row">
-			 <a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/usuario/novo/cadastro}"><i class="far fa-arrow-alt-circle-right"></i>&nbsp;Cadastrar-se</a>
+			 <a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/user/novo/cadastro}"><i class="far fa-arrow-alt-circle-right"></i>&nbsp;Cadastrar-se</a>
 						
-			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/usuario/recuperar/senha}"><i class="fas fa-key"></i>&nbsp;Recuperar senha</a>
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/editar/senha}"><i class="fas fa-key"></i>&nbsp;Recuperar senha</a>
 	    </nav>
 		<p class="mt-5 mb-3 text-muted text-center">Sistema de Passagens&copy; 2020</p>
 	</form>

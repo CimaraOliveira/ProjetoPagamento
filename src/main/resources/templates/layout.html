@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
 	<title>Site</title>
 	<meta charset="UTF-8" />
@@ -47,6 +48,9 @@
 	<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/request.js}"></script>
+	<script th:src="@{/js/validate-card.js}"></script>
+	<script th:src="@{/js/exemplo.js}"></script>
 	<script type="text/javascript">
 	    
 		$(function() {

@@ -1,6 +1,7 @@
 package com.Teste.Aplication.model;
 
 
+
 import javax.persistence.Column;
 
 
@@ -25,17 +26,10 @@ public class Role implements GrantedAuthority{
 	@GeneratedValue
     private Long id; 
     
-    @Column(unique = false)
+    @Column(unique = true)
     private String nome;
     
-    public Role(Long id, String nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		
-	}
-    
-	@Override
+   	@Override
 	public String getAuthority() {
 		return nome;
 	}

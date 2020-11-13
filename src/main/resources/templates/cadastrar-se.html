@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
 <title>Cadastre-se</title>
 <meta charset="UTF-8" />
@@ -37,7 +38,7 @@
 <body>	
      <div th:replace="fragments/alert"></div> 
 	<form class="form-signin was-validated" method="POST" 
-	      th:action="@{/usuario/salvar/novo}" th:object="${user}">	
+	      th:action="@{/user/salvar/novo}" th:object="${user}">	
 		<div class="text-center mb-4">
 			<img class="mb-4" th:src="@{/image/aviao.png}" alt=""
 				width="72" height="72">
@@ -86,7 +87,7 @@
 		<button class="btn btn-lg btn-info btn-block" type="submit">Confirmar</button>
 		<hr>
 		<nav class="nav nav-pills flex-column flex-sm-row">
-			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/login}">
+			<a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/}">
 				<i class="fas fa-home"></i>&nbsp;Login</a>
 		</nav>
 		<p class="mt-5 mb-3 text-muted text-center">Sistema de Passagens 2020&copy; 2020</p>

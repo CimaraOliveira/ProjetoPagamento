@@ -4,9 +4,16 @@ package com.Teste.Aplication.service;
 
 
 
+import java.time.LocalDate;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Teste.Aplication.Enuns.TipoBandeira;
 import com.Teste.Aplication.model.Cartao;
 import com.Teste.Aplication.repository.CartaoRepository;
 
@@ -19,40 +26,94 @@ public class CartaoService {
 	public Cartao salvarCartao(Cartao cartao) {
 	    return repository.save(cartao);
 	}
-	/*public boolean validarNumeroCartao(String numero) {
-	Integer numString;
-	int soma = 0;
-	if (numero.length() <= 15) {
-		for (int i = 0; i < numero.length(); i++) {
-			numString = Integer.parseInt(numero.substring(i, i + 1));
-			if (i % 2 == 0) {
-				soma += numString;
-			} else {
-				if ((numString * 2) > 9) {
-					soma += ((numString * 2) - 9);
-				} else {
-					soma += (numString * 2);
-				}
+	
+	public  boolean validarCartao(String numero) {
+		int s1 = 0, s2 = 0;
+		String reverse = new StringBuffer(numero).reverse().toString();
+		for (int i = 0 ;i < reverse.length();i++) {
+			int digit = Character.digit(reverse.charAt(i), 10);
+			if(i % 2 == 0) { s1 += digit; }
+			else {
+				s2 += 2 * digit;
+				if (digit >= 5) { s2 -= 9; }
 			}
+			
 		}
+		return (s1 + s2) % 10 == 0;
+		
 	}
 	
-	if (numero.length() >= 16) {
-		for (int i = 0; i < numero.length(); i++) {
-			numString = Integer.parseInt(numero.substring(i, i + 1));
-			if (i % 2 == 0) {
-				if (numString * 2 > 9) {
-					soma += (numString * 2 - 9);
-				} else {
-					soma += (numString * 2);
-				}
-			} else {
-				soma += numString;
-			}
+	public boolean validarCvvCartao(String cvv) {
+		if (Objects.isNull(cvv)) {
+			return false;
 		}
+
+		try {
+			cvv = cvv.trim();
+			if (Integer.parseInt(cvv) < 1 || cvv.length() != 3) {
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
 	}
-	return soma % 10 == 0;
-}*/
+
+	
+	public boolean validarDataValidade(LocalDate dataValidade) {
+		if (Objects.isNull(dataValidade) || LocalDate.now().isAfter(dataValidade)) {
+			return false;
+		}
+		return true;
+	}
+
+	
+	
+	
+	/*
+	    	
+	public boolean validarCvvCartao(String cvv) {
+		if (Objects.isNull(cvv)) {
+			return false;
+		}
+
+		try {
+			cvv = cvv.trim();
+			if (Integer.parseInt(cvv) < 1 || cvv.length() != 3) {
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+	*/
+	/*public boolean validarNumeroCartao(String numero) {
+	 * 
+	 * /*int s1 = 0, s2 = 0;
+		
+		String reverse = new StringBuffer(numero).reverse().toString();
+		for (int i = 0 ;i < reverse.length();i++) {
+			int digit = Character.digit(reverse.charAt(i), 10);
+			if(i % 2 == 0) { 
+				s1 += digit; 
+			}
+			else {
+				s2 += 2 * digit;
+				if (digit >= 5) { 
+					s2 -= 9;
+				}
+			}
+			
+		}
+		
+		
+		return (s1 + s2) % 10 == 0;
+		
+       
+	}*/
+	
+
 
 	/*public boolean validarDataValidade(LocalDate dataValidade) {//LocalDate
 		if (Objects.isNull(dataValidade) || LocalDate.now().isAfter(dataValidade)) {

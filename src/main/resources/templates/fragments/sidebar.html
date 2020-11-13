@@ -4,7 +4,7 @@
 <body>
 			<nav class="sidebar sidebar-open" th:fragment="nav-sidebar">
 				<ul class="nav nav-pills">
-					<li class="nav-item"><a class="nav-link " href="/"> <i
+					<li class="nav-item"><a class="nav-link " href="/home"> <i
 							class="oi oi-home"></i> <span>Home</span>
 					</a></li>
 				</ul>
@@ -12,15 +12,11 @@
 				<ul class="nav nav-pills">
 					<li class="nav-item"><span class="nav-link active" >Passagem</span></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/compras/comprar"> <i class="oi oi-plus"></i> <span>Comprar</span>
+						th:href="@{/compras/comprar}"> <i class="oi oi-plus"></i> <span>Comprar</span>
 					</a></li>
-					<!--<li class="nav-item"><a class="nav-link"
-						href="/compra/listar"> <i class="oi oi-spreadsheet"></i>
-							<span>Listar </span>
-					</a></li> -->
 					<li class="nav-item"><a class="nav-link"
-						href="/compra/listar"> <i class="oi oi-spreadsheet"></i>
-							<span>Detalhes </span>
+						th:href="@{/compras/detalhes}"> <i class="oi oi-spreadsheet"></i>
+							<span>Detalhes </span>  
 					</a></li>
 				</ul> 
 				
@@ -28,7 +24,7 @@
 				<ul class="nav nav-pills">
 					<li class="nav-item"><span class="nav-link active">Usuario</span></li>
 					<li class="nav-item"><a class="nav-link" 
-						href="/usuario/listar"> <i class="oi oi-plus"></i> <span>Dados Pessoais </span>
+						th:href="@{/user/detalhes}"> <i class="oi oi-plus"></i> <span>Dados Pessoais </span>
 				 </a></li>
 				</ul>
 			</nav>
