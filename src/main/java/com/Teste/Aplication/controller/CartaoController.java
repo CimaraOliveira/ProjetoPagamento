@@ -3,6 +3,8 @@ package com.Teste.Aplication.controller;
 
 
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 
@@ -18,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.model.Cartao;
 import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.repository.CompraRepository;
 import com.Teste.Aplication.service.CartaoService;
+import com.Teste.Aplication.service.UserService;
 
   
 
@@ -34,6 +38,8 @@ public class CartaoController {
 	private CompraRepository compraService;
 	
 	private Long id = null;
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/cartao") 
 	public String cartao(Cartao cartao, @RequestParam("id") String attr) { 
@@ -43,14 +49,18 @@ public class CartaoController {
 	
 			
 	@PostMapping("/salvarCartao") 
-	public String salvarCartao(@Valid Cartao cartao,BindingResult result, RedirectAttributes attr,String numero, String cvv) { 
+	public String salvarCartao(@Valid Cartao cartao,BindingResult result, Principal principal, RedirectAttributes attr,String numero, String cvv) { 
 		  Compra compra = compraService.getOne(id); // retorna o objeto do banco para poder manipular
 		  if(compra != null) { // se for diferente de nulo, continua o fluxo abaixo
-			   	cartaoService.salvarCartao(cartao);  // salva o cartão
-		    	compra.setCartao(cartao); // seta o cartão na compra
-		    	compraService.saveAndFlush(compra); // atualiza a compra
-		          
-		    	attr.addFlashAttribute("success", "Compra realizada com sucesso");
+			  User user = userService.getEmail(principal.getName());
+			  if(user != null) {
+				  System.out.println(user.getEmail());
+				  cartaoService.salvarCartao(cartao);  // salva o cartão
+				  compra.setUsuario(user);
+			      compra.setCartao(cartao); // seta o cartão na compra
+			      compraService.saveAndFlush(compra); // atualiza a compra
+			      attr.addFlashAttribute("success", "Compra realizada com sucesso");
+			  }
 		  }
 		   		
 		return "redirect:/home";		
@@ -59,3 +69,4 @@ public class CartaoController {
 	
 	    		
 }
+
