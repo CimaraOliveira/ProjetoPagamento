@@ -51,7 +51,7 @@ public class CompraController {
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
     	
     	compra.setDataCompra(new Date());
-    	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  			
+    	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  	  		
 			
 			compraService.saveAndFlush(compra); // salva a compra para poder enviar o id
 			attr.addAttribute("id", compra.getId()); // envia o id na requisição

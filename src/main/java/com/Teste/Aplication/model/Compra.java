@@ -46,6 +46,9 @@ public class Compra implements Serializable{
 	
 	private int quantidade;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataCompra;
+	
 	//@Enumerated(EnumType.STRING)
 	private TipoPagamento tipoPagamento;
 	
@@ -129,6 +132,12 @@ public class Compra implements Serializable{
 	}
 	public void setUsuario(User usuario) {
 		this.usuario = usuario;
+	}
+	public Date getDataCompra() {
+		return dataCompra;
+	}
+	public void setDataCompra(Date dataCompra) {
+		this.dataCompra = dataCompra;
 	}
 	
 	
