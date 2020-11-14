@@ -47,7 +47,7 @@ public class BoletoController {
 				  System.out.println(user.getEmail());
 				  boletoService.salvarBoleto(boleto);
 				  compra.setUsuario(user);
-			      compra.setBoleto(boleto);
+			      compra.setBoleto(boleto);   
 			      compraService.saveAndFlush(compra); 
 			      attr.addFlashAttribute("success", "Compra realizada com sucesso");
 			  }

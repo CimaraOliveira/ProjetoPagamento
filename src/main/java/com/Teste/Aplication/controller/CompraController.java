@@ -62,7 +62,7 @@ public class CompraController {
 
 		else if (tipoPagamento.equals(TipoPagamento.BOLETO)) {
 			
-			compraService.saveAndFlush(compra);
+			compraService.saveAndFlush(compra);   
 			//attr.addFlashAttribute("success", "Boleto gerado com sucesso!");
 			attr.addAttribute("id", compra.getId());
 			return "redirect:/boleto/boleto";

@@ -14,7 +14,7 @@ import com.Teste.Aplication.repository.BoletoRepository;
 @Service
 public class BoletoService {
  
-	@Autowired
+	@Autowired   
 	private  BoletoRepository repository;
 	
 	@Transactional(readOnly = false)
