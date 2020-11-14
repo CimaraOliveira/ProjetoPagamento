@@ -49,12 +49,10 @@ public class CompraController {
     @PostMapping("/salvar")
 	public String salvar(@Valid Compra compra, RedirectAttributes attr,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
-    	  
-		if (tipoPagamento.equals(TipoPagamento.CARTAO)) {  	
+    	
+    	compra.setDataCompra(new Date());
+    	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  			
 			
-			Date dataCompra = new Date();
-			GregorianCalendar dataCal = new GregorianCalendar();
-			dataCal.setTime(dataCompra);
 			compraService.saveAndFlush(compra); // salva a compra para poder enviar o id
 			attr.addAttribute("id", compra.getId()); // envia o id na requisição
 			return "redirect:/cartao/cartao"; 
