@@ -1,23 +1,57 @@
 package com.Teste.Aplication.controller;
 
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.User;
+import com.Teste.Aplication.repository.CompraRepository;
 import com.Teste.Aplication.service.BoletoService;
+import com.Teste.Aplication.service.UserService;
 
 @Controller
-@RequestMapping("/boletos") 
+@RequestMapping("/boleto") 
 public class BoletoController {
 
 	@Autowired
 	private BoletoService boletoService;
 	
-
-	@GetMapping("/ex")  
-	public String ex(Compra compra) { 
-		return "compra/ex";           
+	@Autowired
+	private CompraRepository compraService;
+	
+	@Autowired
+	private UserService userService;
+	
+	private Long id = null;
+	
+	@GetMapping("/boleto")  
+	public String boleto(@Valid Boleto boleto, @RequestParam("id") String attr) {
+		id = Long.parseLong(attr);
+		return "compra/boleto";           
 	} 
+	
+	public String salvarBoleto(@Valid Boleto boleto, Principal principal, RedirectAttributes attr) {
+		Compra compra = compraService.getOne(id);
+		 if(compra != null) { 
+			  User user = userService.getEmail(principal.getName());
+			  if(user != null) {
+				  System.out.println(user.getEmail());
+				  boletoService.salvarBoleto(boleto);
+				  compra.setUsuario(user);
+			      compra.setBoleto(boleto);
+			      compraService.saveAndFlush(compra); 
+			      attr.addFlashAttribute("success", "Compra realizada com sucesso");
+			  }
+		  }
+		return "redirect:/home";
+	}
 }

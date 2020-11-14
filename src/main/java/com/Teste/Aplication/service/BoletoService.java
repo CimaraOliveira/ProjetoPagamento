@@ -34,12 +34,6 @@ public class BoletoService {
 		
 	}
 	
-	/*public void realizarPagamentoComBoleto(PagamentoBoleto pagamento, Date dataDoPedido) {
-		Calendar calendario = Calendar.getInstance();
-		calendario.setTime(dataDoPedido);
-		calendario.add(Calendar.DAY_OF_MONTH, 7);
-		pagamento.setDataVencimento(calendario.getTime());
-	}*/
-	
+		
 	
 }

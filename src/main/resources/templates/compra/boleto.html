@@ -1,1 +1,30 @@
 <p>Boleto Gerado!</p>
+
+<div class="table-responsive">
+							<table>
+								<thead>
+									<tr>
+
+                                        <dd>Nome</dd>
+										<dd>Quantidade</dd>
+										<dd>Valor</dd>
+										<dd>Data Compra</dd>
+										<dd>Número</dd>
+										<dd>Validade</dd>
+										
+									</tr>
+								</thead>
+								<tbody> 
+								        <tr th:each="compra : ${compras}">
+								        <td th:text="${compra.nome}"></td>
+								        <td th:text="${compra.quantidade}"></td>
+										<td th:text="${compra.dataCompra}"></td>
+										<td th:text="${compra.valor}"></td>
+										<td th:text="${compra.validade}"></td> 
+										<td>
+											
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>		
