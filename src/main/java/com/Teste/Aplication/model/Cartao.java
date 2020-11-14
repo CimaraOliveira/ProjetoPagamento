@@ -39,22 +39,41 @@ public class Cartao implements Serializable {
 	private String cvv;
 	
 	//@DateTimeFormat(iso = ISO.DATE)
-	private LocalDate dataValidade;
+	//private LocalDate dataValidade;
+	
+	private int mes;
+	
+	private int ano;
 		
 	@OneToMany(mappedBy = "cartao")
 	@JsonIgnore
 	private List<Compra>compras;
 	
-	
-	public Cartao(Long id_cartao, String nome, String numero, LocalDate dataValidade, List<Compra> compras,
-			String cvv) {
+	public Cartao(Long id_cartao, String nome, String numero, String cvv, int mes, int ano, List<Compra> compras) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
 		this.numero = numero;
-		this.dataValidade = dataValidade;
-		this.compras = compras;
 		this.cvv = cvv;
+		this.mes = mes;
+		this.ano = ano;
+		this.compras = compras;
+	}
+
+	public int getMes() {
+		return mes;
+	}
+
+	public void setMes(int mes) {
+		this.mes = mes;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
 
 	public Cartao() {
@@ -85,14 +104,6 @@ public class Cartao implements Serializable {
 		this.numero = numero;
 	}
 
-	public LocalDate getDataValidade() {
-		return dataValidade;
-	}
-
-	public void setDataValidade(LocalDate dataValidade) {
-		this.dataValidade = dataValidade;
-	}
-	
 	public String getCvv() {
 		return cvv;
 	}
@@ -119,8 +130,8 @@ public class Cartao implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CartaoCredito [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", dataValidade="
-				+ dataValidade + ", cvv=" + cvv + "]";
+		return "CartaoCredito [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", mes="
+				+ mes + ", ano="+ano + ", cvv=" + cvv + "]";
 	}
 	
 	

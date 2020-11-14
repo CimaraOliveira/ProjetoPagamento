@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width">
+<script type="text/javascript">
+    
+</script>
+</head>
+
+<style>
+.checkout-card {
+	width: 210px;
+}
+</style>
+
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<span>Compra de Passagens</span></li>
+				</ul>
+				<a class="btn btn-primary btn-md" href="/compras/comprar"
+					role="button"> <span class="oi oi-plus" title="Cadastro"
+					aria-hidden="true"></span> <span>Detalhes</span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container">
+
+
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="container">
+				<div class="card card-register mx-auto mt-5">
+					<div class="card-header">
+						<i class="fa-fighter-jet"></i> Comprar Passagem : Cartão
+					</div>
+					<!-- <span class="fa-fighter-jet"></span> -->
+					<div class="card-body"></div>
+
+					<div th:replace="fragments/alert"></div>
+
+
+					<form class="form-signin was-validated" method="post"
+						th:object="${cartao}" th:action="@{/cartao/salvarCartao}">
+						<div class="text-center mb-4"></div>
+
+						<div class="col-md-6 mb-3">
+							<label for="numero">Número do cartão</label> <input
+								onkeyup="validateCardNumber(this, event)"
+								onfocus="validateCardNumber(this, event)"
+								onkeypress="validateCardNumber(this, event)"
+								type="text" id="numero"
+								class="form-control " name="numero" autofocus="autofocus"
+								placeholder="4111 1111 1111 1111" required>
+						</div>
+						<div id="invalid-card"></div>
+						<div class="invalid-feedback"></div>
+
+
+
+						<div class="col-md-6 mb-3">
+							<label for="nome">Nome</label> <input type="text" id="nome"
+								class="form-control" name="nome" autofocus="autofocus" required>
+						</div>
+						<div class="invalid-feedback"></div>
+
+
+                           <div class="form-row">
+							<div class="form-group col-md-2">
+								<label for="dataValidade">Data de Expiração</label> <input
+									type="date"  class="form-control" id="dataValidade"  th:field="*{dataValidade}"
+									min="2020-12-01" max="2025-12-01" required/>
+									<div class="invalid-feedback"></div>	
+							</div>
+
+							<div class="form-group col-md-2">
+								<label for="cvv">CVV</label> <input type="text" id="cvv"
+									class="form-control" name="cvv" autofocus="autofocus" required>
+							</div>
+							<div class="invalid-feedback"></div>
+						</div>
+
+
+						<button onclick="saveCard(this, event)" id="save-card" class="btn btn-primary btn-sm">Finalizar</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="table-responsive"></div>
+		
+		
+	</section>
+</body>
+</html>
