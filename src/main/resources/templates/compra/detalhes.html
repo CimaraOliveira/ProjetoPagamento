@@ -29,21 +29,22 @@
 								<thead>
 									<tr>
 
-                                        <th>Data da Compra</th>
+                                       <!--  <th>Data da Compra</th> -->
 										<th>Quantidade</th>
 										<th>Tipo de Pagamento</th>
 										<th>Valor</th>
-										<th>Status</th>
+										<!--<th>Status</th> -->
 										
 									</tr>
 								</thead>
 								<tbody> 
 								        <tr th:each="compra : ${compras}">
-								        <td th:text="${compra .data}"></td>
-									    <td th:text="${compra .quantidade}"></td>
+								        <!--  <td th:text="${compra.data}"></td> -->
+								        <!--<td>falta criar o atributo</td>-->
+									    <td th:text="${compra.quantidade}"></td>
 										<td th:text="${compra.tipoPagamento}"></td>
-										<td th:text="${compra .valor}"></td>
-										<td th:text="${compra .status}"></td>
+										<td th:text="${compra.valor}"></td>
+										<!-- <td th:text="${compra.status}"></td> -->
 										<td>
 											
 										</td>

@@ -1,5 +1,7 @@
 package com.Teste.Aplication.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 
@@ -42,24 +44,17 @@ public class CompraController {
 
 	}
 		
-	@GetMapping("/detalhes/id")  
-	public ModelAndView detalhes(@PathVariable("usuario_id") Long usuario_id) {
-		ModelAndView modelAndView = new ModelAndView("compra/detalhes");
-		Compra compra = compraService.findByIdCompra(usuario_id);
-	    modelAndView.addObject("compra", compraService.findById(usuario_id));
-		return modelAndView;
+    @GetMapping("/detalhes")  
+    public ModelAndView detalhes(Principal principal) {
+    	Long id_compra = userService.getEmail(principal.getName()).getId();
+    	ModelAndView modelAndView = new ModelAndView("compra/detalhes");		
+	    modelAndView.addObject("compras", compraService.findAllByIdUser(id_compra));
+    	return modelAndView;
 	}
-			
+				
     @PostMapping("/salvar")
 	public String salvar(@Valid Compra compra, RedirectAttributes attr,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
-
-    	/*User user = compra.getUsuario();
-    	user.setCompras(user.getCompras());
-    	userService.salvar(user);*/
-    	
-    	//User userSession = serverSession.getSession("logado");
-    	//User user = userService.findById(userSession.getId());   	
     	  
 		if (tipoPagamento.equals(TipoPagamento.CARTAO)) {  			
 			
