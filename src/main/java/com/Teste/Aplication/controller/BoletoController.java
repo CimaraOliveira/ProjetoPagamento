@@ -52,6 +52,6 @@ public class BoletoController {
 			      attr.addFlashAttribute("success", "Compra realizada com sucesso");
 			  }
 		  }
-		return "redirect:/home";
+		return "redirect:/home";   
 	}
 }

@@ -57,7 +57,7 @@ public class CompraController {
 			dataCal.setTime(dataCompra);
 			compraService.saveAndFlush(compra); // salva a compra para poder enviar o id
 			attr.addAttribute("id", compra.getId()); // envia o id na requisição
-			return "redirect:/cartao/cartao"; // redirect
+			return "redirect:/cartao/cartao"; 
 		}
 
 		else if (tipoPagamento.equals(TipoPagamento.BOLETO)) {
