@@ -1,6 +1,9 @@
 package com.Teste.Aplication.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -17,8 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.TipoPagamento;
+import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.repository.CompraRepository;
+import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.UserService;
 
 @Controller
@@ -31,7 +37,9 @@ public class CompraController {
 	@Autowired
 	private UserService userService;
 	
-	
+	@Autowired
+	private BoletoService boletoService;
+			
 	@GetMapping("/comprar")
 	public String comprar(Compra compra) {
 		return "compra/pagamento";
@@ -47,10 +55,11 @@ public class CompraController {
 	}
 				
     @PostMapping("/salvar")
-	public String salvar(@Valid Compra compra, RedirectAttributes attr,
+	public String salvar(@Valid Compra compra,User user, Boleto boleto, RedirectAttributes attr,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
     	
     	compra.setDataCompra(new Date());
+    	 	
     	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  	  		
 			
 			compraService.saveAndFlush(compra); // salva a compra para poder enviar o id
@@ -61,12 +70,10 @@ public class CompraController {
 		else if (tipoPagamento.equals(TipoPagamento.BOLETO)) {
 			
 			compraService.saveAndFlush(compra);   
-			//attr.addFlashAttribute("success", "Boleto gerado com sucesso!");
 			attr.addAttribute("id", compra.getId());
 			return "redirect:/boleto/boleto";
-
 		}
-
+			
 		attr.addFlashAttribute("success", "Operação realizada com sucesso!");
 		return "/home";
 

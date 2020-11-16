@@ -29,7 +29,7 @@ public class BoletoService {
 		Boleto boleto = new Boleto();
 		Random gerador = new Random();
 		boleto.setNumeroBoleto(gerador.nextInt(101) * 100);
-		boleto.setDataVencimento(LocalDate.now().plusDays(5));
+		boleto.setDataCompra(LocalDate.now().plusDays(5));
 	    return boleto;
 		
 	}

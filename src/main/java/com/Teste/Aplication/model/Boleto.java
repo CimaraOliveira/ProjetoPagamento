@@ -16,7 +16,8 @@ public class Boleto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idBoleto;
 	private Integer numeroBoleto;
-	private LocalDate dataValidade;
+	private LocalDate dataCompra;
+	
 	public Long getIdBoleto() {
 		return idBoleto;
 	}
@@ -29,15 +30,15 @@ public class Boleto {
 	public void setNumeroBoleto(Integer numeroBoleto) {
 		this.numeroBoleto = numeroBoleto;
 	}
-	public LocalDate getDataVencimento() {
-		return dataValidade;
+	public LocalDate getDataCompra() {
+		return dataCompra;
 	}
-	public void setDataVencimento(LocalDate dataVencimento) {
-		this.dataValidade = dataVencimento;
+	public void setDataCompra(LocalDate dataCompra) {
+		this.dataCompra = dataCompra;
 	}
 	@Override
 	public String toString() {
-		return "Boleto [idBoleto=" + idBoleto + ", numeroBoleto=" + numeroBoleto + ", dataVencimento=" + dataValidade
+		return "Boleto [idBoleto=" + idBoleto + ", numeroBoleto=" + numeroBoleto + ", dataVencimento=" + dataCompra
 				+ "]";
 	}
 	
