@@ -2,6 +2,7 @@ package com.Teste.Aplication.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import com.Teste.Aplication.model.Email;
 import com.Teste.Aplication.model.User;
@@ -12,6 +13,9 @@ public class EmailService {
 		
 	@Autowired
 	private UserService serviceUsuario;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	
 	public void sendNovaSenhaEmail(Email email, String novaSenha) {
@@ -27,7 +31,7 @@ public class EmailService {
 			message.setText("Nova senha: " + novaSenha);
 			message.setFrom(email.getFrom());
 			
-		   
+		    mailSender.send(message);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
