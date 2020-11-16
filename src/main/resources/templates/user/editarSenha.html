@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+<title>Recuperar Senha</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="clínica médica com agendamento de consultas online" />
+<link rel="icon" th:href="@{/image/favicon.ico}" />
+<!-- Icons fontawesome -->
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css(v=${version}) }" rel="stylesheet" />
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/style-login.css(v=${version})}" rel="stylesheet" />
+<script th:src="@{/webjars/jquery/jquery.min.js(v=${version}) }"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js(v=${version}) }"></script>
+</head>
+<body>
+
+		<div th:replace="fragments/alert"></div> 
+		<form th:action="@{/user/trocarSenha}" method="POST">		
+		     
+		<div class="text-center mb-4">
+			<img class="mb-4" th:src="@{/image/aviao.png}" alt=""
+				width="72" height="72">	
+				<h1 class="h3 mb-3 font-weight-normal">Recuperar Senha</h1>		
+		</div>
+				 						
+		<div class="form-group col-md-20">
+			<label for="email">Informe seu E-Mail</label> <input type="email"
+					class="form-control" id="email" name="email" placeholder="E-Mail"
+					autofocus="autofocus" required />
+			<div class="invalid-feedback"></div>
+		</div>
+				
+		<button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+		<hr>
+				
+	</form>
+</body>
+</html>
