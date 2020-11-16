@@ -32,9 +32,9 @@
 					</div>
 
 					<div class="card-body">
+					
+					<div th:replace="fragments/alert"></div>
 
-						<!-- th:object="${compra}" -->
-						<!--<form  th:action="@{/compras/salvarformaPagamento}"  th:object="${compra}" method="POST"> <form  th:action="@{/compras/formaPagamento}"  th:object="${compra}" method="POST"> -->
 						<form th:action="@{/compras/salvar}" th:object="${compra}"
 							method="POST">
 
@@ -55,11 +55,22 @@
 										Quantidade</small> <input type="text" id="quantidade"
 										onkeyup="keyNumber(this)" class="form-control"
 										name="quantidade" autofocus="autofocus" required>
-									
+									<!-- th:field="*{quantidade}" -->
 								</div>
 								<div class="invalid-feedback"></div>
 							</div>
 
+                           <!--  <div class="form-group">
+								<div class="col-md-6">
+									<small class="form-text text-muted">Data
+										</small> <input type="data" id="dataCompra"
+										 class="form-control"
+										name="dataCompra"  autofocus="autofocus" th:text="${compra.dataCompra}"  required>
+									
+								</div>
+								<div class="invalid-feedback"></div>
+							</div>  -->
+                            
 
 
 							<div class="col-md-8">
@@ -83,15 +94,20 @@
 									class="form-control">
 									<option value="BOLETO">Boleto</option>
 									<option value="CARTAO">Cartao</option>
-
 								</select>
 							</div>
 							<br>
-
-
-							<button type="submit" class="btn btn-primary btn-sm">Comprar</button>
+							<div>                            
+						<button type="submit" class="btn btn-primary btn-sm">Comprar</button>
+						</div>
+						<br>
 						</form>
+						</div>
+						<br>
+						
 					</div>
+					
+
 
 				</div>
 

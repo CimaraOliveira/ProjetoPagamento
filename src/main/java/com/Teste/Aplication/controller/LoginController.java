@@ -35,9 +35,5 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(path ="/editar/senha")
-	public String editarSenha() {
-		return "/editar-senha";
-	}	
 	
 }
