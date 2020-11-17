@@ -13,10 +13,14 @@ public interface CompraRepository extends JpaRepository<Compra, Long>{
 
 	@Query(value="select * from compras c\n" + 
 			"inner join usuario u on(c.usuario_id = u.id)\n" + 
-			"where u.id = id;", nativeQuery = true)
-	List<Compra> findAllByIdUser(@Param("id") Long id);
+			"where u.id = :id", nativeQuery = true)
+	public List<Compra> findAllByIdUser(@Param("id") Long id);
 	
 	Compra findByIdCompra(Long id);
+	
+	
+	
+	
 
 	
 

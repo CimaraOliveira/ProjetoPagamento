@@ -54,13 +54,12 @@ public class Compra implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
-	public User usuario;
-	
+	public User usuario;	
     
 	public Compra() {
-		super();
-		
+		super();		
 	}	
+	
 	public Compra(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade,
 			TipoPagamento tipoPagamento) {
 		super();
@@ -138,8 +137,6 @@ public class Compra implements Serializable{
 	}
 	public void setDataCompra(Date dataCompra) {
 		this.dataCompra = dataCompra;
-	}
-	
-	
+	}	
 				
 }

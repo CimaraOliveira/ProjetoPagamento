@@ -37,9 +37,6 @@ public class CompraController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private BoletoService boletoService;
-			
 	@GetMapping("/comprar")
 	public String comprar(Compra compra) {
 		return "compra/pagamento";
@@ -59,6 +56,7 @@ public class CompraController {
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
     	
     	compra.setDataCompra(new Date());
+    	compra.setValor(compra.getValor() * compra.getQuantidade());
     	 	
     	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  	  		
 			
