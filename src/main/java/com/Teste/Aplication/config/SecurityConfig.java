@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		   .antMatchers("/", "/user/detalhes").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/detalhes","/user/editar").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
+		   //.antMatchers("/user/editarSenha").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/compras/**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/compras/comprar/**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/cartao/**").hasAnyAuthority("USER","ADMIN")

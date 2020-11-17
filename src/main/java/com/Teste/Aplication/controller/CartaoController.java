@@ -49,7 +49,7 @@ public class CartaoController {
 	
 			
 	@PostMapping("/salvarCartao") 
-	public String salvarCartao(@Valid Cartao cartao,BindingResult result, Principal principal, RedirectAttributes attr,String numero, String cvv) { 
+	public String salvarCartao(@Valid Cartao cartao,BindingResult result, Principal principal, RedirectAttributes attr) { 
 		  Compra compra = compraService.getOne(id); // retorna o objeto do banco para poder manipular
 		  if(compra != null) { // se for diferente de nulo, continua o fluxo abaixo
 			  User user = userService.getEmail(principal.getName());
@@ -64,9 +64,7 @@ public class CartaoController {
 		  }
 		   		
 		return "redirect:/home";		
-	} 
-	
-	
+	}	
 	    		
 }
 

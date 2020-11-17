@@ -146,7 +146,7 @@ public class UserController{
 				view.addObject("error", "Email não está cadastrado no sistema!");
 		}else {
 			Random r = new Random();
-			String novaSenhaGerada = Integer.toString(Math.abs(r.nextInt()), 36).substring(0, 6);
+			String novaSenhaGerada = String.valueOf(Math.abs(r.nextInt()));
 			System.out.println(novaSenhaGerada);
 			user2.setSenha(novaSenhaGerada);
 			service.salvar(user2);
