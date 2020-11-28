@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.model.Cartao;
 import com.Teste.Aplication.model.Compra;
 import com.Teste.Aplication.model.User;
@@ -58,6 +59,7 @@ public class CartaoController {
 				  cartaoService.salvarCartao(cartao);  // salva o cartão
 				  compra.setUsuario(user);
 			      compra.setCartao(cartao); // seta o cartão na compra
+			      compra.setStatus(Status.CONCLUÍDA);
 			      compraService.saveAndFlush(compra); // atualiza a compra
 			      attr.addFlashAttribute("success", "Compra realizada com sucesso");
 			  }

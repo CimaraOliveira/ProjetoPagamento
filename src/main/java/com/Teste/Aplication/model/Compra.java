@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,8 +50,9 @@ public class Compra implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCompra;
 	
-	//@Enumerated(EnumType.STRING)
 	private TipoPagamento tipoPagamento;
+	
+	private Status status;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
@@ -60,18 +62,21 @@ public class Compra implements Serializable{
 		super();		
 	}	
 	
-	public Compra(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade,
-			TipoPagamento tipoPagamento) {
+	public Compra(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade, Date dataCompra,
+			TipoPagamento tipoPagamento, Status status, User usuario) {
 		super();
 		this.idCompra = idCompra;
 		this.cartao = cartao;
 		this.boleto = boleto;
 		this.valor = valor;
 		this.quantidade = quantidade;
+		this.dataCompra = dataCompra;
 		this.tipoPagamento = tipoPagamento;
+		this.status = status;
+		this.usuario = usuario;
 	}
 
-	public double getValor() {
+    public double getValor() {
 		return valor;
 	}
 
@@ -137,6 +142,15 @@ public class Compra implements Serializable{
 	}
 	public void setDataCompra(Date dataCompra) {
 		this.dataCompra = dataCompra;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}	
+	
 				
 }

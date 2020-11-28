@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Compra;
 import com.Teste.Aplication.model.User;
@@ -49,7 +50,8 @@ public class BoletoController {
 				  boleto.setDataCompra(LocalDate.parse("2020-10-16"));
 				  boletoService.salvarBoleto(boleto);
 				  compra.setUsuario(user);
-			      compra.setBoleto(boleto);   
+			      compra.setBoleto(boleto);    
+			      compra.setStatus(Status.ANDAMENTO);
 			      compraService.saveAndFlush(compra); 
 			      attrs.addFlashAttribute("success", "Compra realizada com sucesso");
 			      attrs.addAttribute("compras", compraService.findAllByIdUser(user.getId()));
