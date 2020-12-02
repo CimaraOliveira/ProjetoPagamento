@@ -24,6 +24,7 @@ public class BoletoService {
 		 
 	}
 	
+	
 	@Transactional(readOnly = false)
 	public Boleto gerarBoleto() {
 		Boleto boleto = new Boleto();

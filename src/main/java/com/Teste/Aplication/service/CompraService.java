@@ -2,6 +2,7 @@ package com.Teste.Aplication.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,5 +29,10 @@ public class CompraService {
 	public List<Compra> findAllByIdUser(Long id){
 		return repository.findAllByIdUser(id);
 	}
+	
+	public List<Compra> findByIdBoleto(Long id_boleto) {
+		return repository.findByIdBoleto(id_boleto);
+	}
+	
 	
 }

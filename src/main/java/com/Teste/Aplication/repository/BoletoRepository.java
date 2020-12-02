@@ -6,4 +6,6 @@ import com.Teste.Aplication.model.Boleto;
 
 public interface BoletoRepository extends JpaRepository<Boleto, Long>{
 
+	
+
 }

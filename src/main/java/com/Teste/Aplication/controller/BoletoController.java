@@ -5,14 +5,19 @@ package com.Teste.Aplication.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.buf.UDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.Status;
@@ -58,7 +63,17 @@ public class BoletoController {
 			  }
 		  }
 
-		return "compra/boleto";          
+		//return "compra/boleto";    
+		return "redirect:/boleto/detalhesBoleto/{id_boleto}";
 	} 
-		
+	
+	@GetMapping("/detalhesCompraIdBoleto/{id_boleto}")  
+	public ModelAndView detalhesBoleto(@PathVariable("id_boleto") Long id_boleto) {
+		ModelAndView modelAndView = new ModelAndView("compra/boleto");
+		modelAndView.addObject("compras", compraService.findByIdBoleto(id_boleto));
+		return modelAndView;
+	}
+	
+	
+	
 }

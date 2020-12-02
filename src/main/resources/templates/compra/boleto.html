@@ -1,32 +1,62 @@
-<p>Boleto Gerado!</p>
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Boleto</title>
 
-<div class="table-responsive">
-                             <div class="table-responsive">
-							<table class="table table-striped">
-								<thead>
-									<tr>
+</head>
 
-                                        <th>Nome</th>
+<body>
+
+	 <section class="layout-content" layout:fragment="corpo">
+		   <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Boleto</span>
+	                    </li>
+	                </ul>
+	               
+	            </div>
+	        </nav>	 
+					<div th:replace="fragments/alert"></div> 					
+					<br>
+					<div sec:authorize="hasAuthority('USER')"></div>
+					
+						
+						<table id="datatable-buttons"
+								class="table table-striped table-bordered">
+										<thead>
+										<tr>
+										<th>Cliente</th>			
 										<th>Quantidade</th>
 										<th>Valor</th>
 										<th>Data Compra</th>
-										<th>Número</th>
-										<th>Validade</th>
+										<th>Status</th>
 										
-									</tr>
-								</thead>
-								<tbody> 
-								        <tr th:each="compra : ${compras}">
-								        <td th:text="${compra.nome}"></td>
+										</tr>
+										</thead>
+
+										<tbody>
+											
+										<tr th:each="compra : ${compras}">
 								        <td th:text="${compra.quantidade}"></td>
 										<td th:text="${compra.dataCompra}"></td>
 										<td th:text="${compra.valor}"></td>
-										<td th:text="${compra.validade}"></td> 
-										<td>
-											
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>		
-						</div>
+										<td th:text="${compra.satus}"></td>
+										<td th:text="${compra.usuario.nome}"></td>
+										
+												
+										</tr>
+										</tbody>
+
+						</table>
+					
+			
+	</section>
+
+</body>
+</html> 
+
+
