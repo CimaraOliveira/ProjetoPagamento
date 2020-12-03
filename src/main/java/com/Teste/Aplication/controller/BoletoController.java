@@ -64,7 +64,7 @@ public class BoletoController {
 		  }
 
 		//return "compra/boleto";    
-		return "redirect:/boleto/detalhesBoleto/{id_boleto}";
+		return "redirect:/boleto/detalhesCompraIdBoleto/"+boleto.getIdBoleto();
 	} 
 	
 	@GetMapping("/detalhesCompraIdBoleto/{id_boleto}")  
@@ -73,7 +73,6 @@ public class BoletoController {
 		modelAndView.addObject("compras", compraService.findByIdBoleto(id_boleto));
 		return modelAndView;
 	}
-	
 	
 	
 }

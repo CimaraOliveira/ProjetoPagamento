@@ -29,7 +29,7 @@
 								class="table table-striped table-bordered">
 										<thead>
 										<tr>
-										<th>Cliente</th>			
+										<th>Cliente</h>		
 										<th>Quantidade</th>
 										<th>Valor</th>
 										<th>Data Compra</th>
@@ -41,18 +41,15 @@
 										<tbody>
 											
 										<tr th:each="compra : ${compras}">
-								        <td th:text="${compra.quantidade}"></td>
-										<td th:text="${compra.dataCompra}"></td>
-										<td th:text="${compra.valor}"></td>
-										<td th:text="${compra.satus}"></td>
 										<td th:text="${compra.usuario.nome}"></td>
-										
-												
+								        <td th:text="${compra.quantidade}"></td>
+										<td th:text="${compra.valor}"></td>
+										<td th:text="${compra.dataCompra}"></td>
+										<td th:text="${compra.status}"></td>
+																					
 										</tr>
 										</tbody>
-
-						</table>
-					
+						</table>					
 			
 	</section>
 

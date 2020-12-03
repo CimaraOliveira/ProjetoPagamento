@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -43,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		   .antMatchers("http://**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("https://**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/**").permitAll()
+		   .antMatchers("/api/**").permitAll()
 		   .antMatchers(HttpMethod.POST, "/user/salvar").permitAll()
 		   .antMatchers(HttpMethod.GET, "/").permitAll()
 		   .antMatchers(HttpMethod.GET, "/cadastrar").permitAll()
@@ -53,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		   .antMatchers("/resources/**").permitAll()
 		   .antMatchers("/css/**").permitAll()
 		   .antMatchers("/js/**").permitAll()
-		   .anyRequest().authenticated() 
+		   
+		   .anyRequest().authenticated()    
 		   
 		   //.antMatchers("/user/**").permitAll()///////////
 		   
@@ -90,12 +93,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return new BCryptPasswordEncoder();
     }
 	
-	/*@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**",  "/distribuition/**", "/fonts/**", "/vendor/**", "/img/**",  "/js/**",  "/scss/**", "/h2/**");
-		web.ignoring().antMatchers("/layout", "http::/**", "https::/**", "/http::/**", "/https::/**", "/template-login/**");
-  
- }*/
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
 	
 	
