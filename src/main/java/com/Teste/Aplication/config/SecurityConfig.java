@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		   .antMatchers("/compra/pagamento**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/cadastrar/cadastro").permitAll()
 		   .antMatchers("/user/cadastrar/").permitAll()
+		   .antMatchers("/api/**").permitAll()
 		   .antMatchers("/", "/user/detalhes").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/detalhes","/user/editar").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
@@ -44,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		   .antMatchers("http://**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("https://**").hasAnyAuthority("USER","ADMIN")
 		   .antMatchers("/user/**").permitAll()
-		   .antMatchers("/api/**").permitAll()
+		   
 		   .antMatchers(HttpMethod.POST, "/user/salvar").permitAll()
 		   .antMatchers(HttpMethod.GET, "/").permitAll()
 		   .antMatchers(HttpMethod.GET, "/cadastrar").permitAll()

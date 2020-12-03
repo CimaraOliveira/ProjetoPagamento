@@ -29,11 +29,12 @@ import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.RoleService;
 import com.Teste.Aplication.service.UserService;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = {"http://localhost:8080"})
+@CrossOrigin()
 public class UsuarioJson {
 	@Autowired
 	private JwtComponent jwtComponent;
@@ -90,6 +91,7 @@ public class UsuarioJson {
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
 		try {
+			System.out.println(id);
 			
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 
@@ -99,7 +101,7 @@ public class UsuarioJson {
 				}
 				return ResponseEntity.notFound().build();
 			}
-		} catch (SignatureException e) {
+		} catch (ExpiredJwtException | SignatureException e) {
 			return ResponseEntity.status(403).build();
 		}
 		return ResponseEntity.status(400).build();
