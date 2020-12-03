@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -22,8 +23,9 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Entity
 @Table(name = "compras")
 public class Compra implements Serializable{
@@ -37,6 +39,7 @@ public class Compra implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "idCartao")
+	//@NotBlank
 	private Cartao cartao;
 	
 	@ManyToOne
@@ -56,6 +59,7 @@ public class Compra implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnore
 	public User usuario;	
     
 	public Compra() {
