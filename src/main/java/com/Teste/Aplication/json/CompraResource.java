@@ -10,15 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Teste.Aplication.Enuns.TipoPagamento;
+import com.Teste.Aplication.jwt.JwtComponent;
 import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Cartao;
 import com.Teste.Aplication.model.Compra;
@@ -27,6 +35,9 @@ import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.CartaoService;
 import com.Teste.Aplication.service.CompraService;
 import com.Teste.Aplication.service.UserService;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 
 class TestBoleto { // Classe Auxiliar
 	public Boleto boleto;
@@ -42,6 +53,10 @@ class TestCartao{ // Classe Auxiliar
 @RequestMapping("/api/compras")
 @CrossOrigin()
 public class CompraResource {
+	@Autowired
+	private JwtComponent jwtComponent;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private CompraService compraService;
@@ -52,6 +67,9 @@ public class CompraResource {
 	private BoletoService boletoService;
 	@Autowired
 	private CartaoService cartaoService;
+	
+	@Autowired
+	private UserService serviceUsuario;
 
 	@PostMapping("/saveBoleto")
 	public ResponseEntity<Boleto> salvarBoleto(@RequestBody TestBoleto test) {
@@ -81,6 +99,30 @@ public class CompraResource {
 		
 		return ResponseEntity.status(400).build();
 	}
+	
+	@PostMapping("/detalhesCompra/{id}")
+	public ResponseEntity<Compra> detalhePorId(@PathVariable("id") Long id,
+			@RequestHeader(value = "Authorization", required = false) String Authorization) {
+        System.out.println(Authorization); 
+		try {
+			System.out.println(id);
+			
+			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
+			if (!isValid) { 
+				Compra compras = compraService.findByIdCompra(id);
+						//serviceUsuario.findById(id);
+				if (compras != null) {
+					return ResponseEntity.ok(compras);
+				}
+				return ResponseEntity.notFound().build();
+			}
+		} catch (ExpiredJwtException | SignatureException e) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.status(400).build();
+	}
+
+	
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Compra> salvar(@Valid Compra compra, User user,
