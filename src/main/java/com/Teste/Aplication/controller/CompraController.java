@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -11,8 +12,10 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +43,6 @@ public class CompraController {
 	@GetMapping("/comprar")
 	public String comprar(Compra compra) {
 		return "compra/pagamento";
-
 	}
 		
 	@GetMapping("/detalhes")  
@@ -50,15 +52,27 @@ public class CompraController {
 	    modelAndView.addObject("compras", compraService.findAllByIdUser(id_compra));
 		return modelAndView;
 	}
-				
-    @PostMapping("/salvar")
+		
+	@PostMapping("/salvar")
 	public String salvar(@Valid Compra compra,User user, Boleto boleto, RedirectAttributes attr,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
     	
-    	compra.setDataCompra(new Date());
+    	//compra.setDataCompra(new Date());
+    	
+    	Date data = new Date();
+		String formato = "dd/MM/yyyy";
+		SimpleDateFormat dataFormatada = new SimpleDateFormat(formato);
+		String dataAtual  = dataFormatada.format(data);
+		compra.setDataCompra(data);
+        
     	compra.setValor(compra.getValor() * compra.getQuantidade());
     	 	
-    	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  	  		
+    	if (tipoPagamento.
+    			
+    			
+    			
+    			
+    			equals(TipoPagamento.CARTAO)){  	  		
 			
 			compraService.saveAndFlush(compra); // salva a compra para poder enviar o id
 			attr.addAttribute("id", compra.getId()); // envia o id na requisição

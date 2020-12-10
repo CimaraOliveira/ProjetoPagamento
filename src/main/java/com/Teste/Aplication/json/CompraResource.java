@@ -24,7 +24,7 @@ import com.Teste.Aplication.service.UserService;
 
 @RestController
 @RequestMapping("/api/compras")
-@CrossOrigin(origins = {"http://localhost:8080"})
+@CrossOrigin()
 public class CompraResource {
 	
 	@Autowired
