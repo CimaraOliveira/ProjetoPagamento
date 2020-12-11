@@ -67,12 +67,7 @@ public class CompraController {
         
     	compra.setValor(compra.getValor() * compra.getQuantidade());
     	 	
-    	if (tipoPagamento.
-    			
-    			
-    			
-    			
-    			equals(TipoPagamento.CARTAO)){  	  		
+    	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  	  		
 			
 			compraService.saveAndFlush(compra); // salva a compra para poder enviar o id
 			attr.addAttribute("id", compra.getId()); // envia o id na requisição

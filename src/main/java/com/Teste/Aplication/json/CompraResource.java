@@ -11,10 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.Teste.Aplication.jwt.JwtComponent;
@@ -110,7 +107,7 @@ public class CompraResource {
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 
 				Compra compras = compraService.findByIdCompra(id);
-						//serviceUsuario.findById(id);
+						
 				if (compras != null) {
 					return ResponseEntity.ok(compras);
 				}
@@ -121,10 +118,18 @@ public class CompraResource {
 		}
 		return ResponseEntity.status(400).build();
 	}
-
 	
-
-	@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping("/saveCompra")
+	public ResponseEntity<Compra> salvarCompra(@RequestBody Compra compra,RedirectAttributes attr){
+		compra.setDataCompra(new Date());
+		compra.setValor(compra.getValor() * compra.getQuantidade());
+		compraService.salvarCompra(compra);
+		attr.addAttribute("id", compra.getId());
+		return new ResponseEntity<Compra>(compra, HttpStatus.CREATED);
+		
+	}
+	
+	/*@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Compra> salvar(@Valid Compra compra, User user,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
 
@@ -156,5 +161,5 @@ public class CompraResource {
 			return ResponseEntity.ok(compra);
 		}
 		return ResponseEntity.notFound().build();
-	}
+	}*/
 }
