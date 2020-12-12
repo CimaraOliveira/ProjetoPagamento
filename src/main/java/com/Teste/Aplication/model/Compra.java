@@ -59,7 +59,7 @@ public class Compra implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
-	@JsonIgnore
+	//@JsonIgnore
 	public User usuario;	
     
 	public Compra() {

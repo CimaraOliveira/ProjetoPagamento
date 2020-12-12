@@ -74,7 +74,7 @@ public class CompraResource {
 
 		if (compra != null) {
 			boletoService.salvarBoleto(test.boleto);
-			test.boleto.setDataCompra(LocalDate.now());
+			test.boleto.setDataCompra(new Date());
 			compra.setBoleto(test.boleto);
 			compraService.salvarCompra(compra);
 			return ResponseEntity.status(HttpStatus.CREATED).body(test.boleto);
@@ -97,7 +97,7 @@ public class CompraResource {
 		return ResponseEntity.status(400).build();
 	}
 	
-	@PostMapping("/detalhesCompra/{id}")
+	@GetMapping("/detalhesCompra/{id}")
 	public ResponseEntity<Compra> detalhePorId(@PathVariable("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
@@ -120,16 +120,19 @@ public class CompraResource {
 	}
 	
 	@PostMapping("/saveCompra")
-	public ResponseEntity<Compra> salvarCompra(@RequestBody Compra compra,RedirectAttributes attr){
+	public ResponseEntity<Compra> salvarCompra(@RequestBody Compra compra){
 		compra.setDataCompra(new Date());
 		compra.setValor(compra.getValor() * compra.getQuantidade());
+		System.out.println(compra.getUsuario());
+		User user = serviceUsuario.findById(compra.getUsuario().getId());
+		compra.setUsuario(user);
 		compraService.salvarCompra(compra);
-		attr.addAttribute("id", compra.getId());
+		//attr.addAttribute("id", compra.getId());
 		return new ResponseEntity<Compra>(compra, HttpStatus.CREATED);
 		
 	}
 	
-	/*@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Compra> salvar(@Valid Compra compra, User user,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
 
@@ -161,5 +164,5 @@ public class CompraResource {
 			return ResponseEntity.ok(compra);
 		}
 		return ResponseEntity.notFound().build();
-	}*/
+	}
 }
