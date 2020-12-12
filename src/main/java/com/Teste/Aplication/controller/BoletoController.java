@@ -5,7 +5,9 @@ package com.Teste.Aplication.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -52,7 +54,14 @@ public class BoletoController {
 			  User user = userService.getEmail(principal.getName());
 			  if(user != null) {
 				  System.out.println(user.getEmail());
-				  boleto.setDataCompra(LocalDate.parse("2020-10-16"));
+				  boleto.setDataCompra(new Date());
+				  //gerar codigo do boleto
+				  Random r = new Random();
+				  String codigo = String.valueOf(Math.abs(r.nextInt()*100000000));				  
+				  System.out.println(codigo);
+				  boleto.setNumeroBoleto(codigo);
+				  
+				  boleto.setDataVencimento(LocalDate.now().plusDays(5));
 				  boletoService.salvarBoleto(boleto);
 				  compra.setUsuario(user);
 			      compra.setBoleto(boleto);    

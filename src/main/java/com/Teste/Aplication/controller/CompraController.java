@@ -1,6 +1,7 @@
 package com.Teste.Aplication.controller;
 
 import java.security.Principal;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,14 +58,14 @@ public class CompraController {
 	public String salvar(@Valid Compra compra,User user, Boleto boleto, RedirectAttributes attr,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
     	
-    	//compra.setDataCompra(new Date());
-    	
-    	Date data = new Date();
-		String formato = "dd/MM/yyyy";
-		SimpleDateFormat dataFormatada = new SimpleDateFormat(formato);
-		String dataAtual  = dataFormatada.format(data);
-		compra.setDataCompra(data);
-        
+    	compra.setDataCompra(new Date());
+		
+		
+		/*Date data = new Date();
+    	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    	String dataCompra = formato.format(data);
+    	compra.setDataCompra(data);*/
+    	        
     	compra.setValor(compra.getValor() * compra.getQuantidade());
     	 	
     	if (tipoPagamento.equals(TipoPagamento.CARTAO)){  	  		

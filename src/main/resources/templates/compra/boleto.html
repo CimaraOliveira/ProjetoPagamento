@@ -14,7 +14,7 @@
 	.coluna2  {background:#F33;}
 	.coluna3  {background:#F99;}
 </style>
-<!--</head>
+<!--------------------------------</head>
 
 <body>
 
@@ -60,10 +60,15 @@
 										</tr>
 										</tbody>
 						</table>					
-			 ------------------------>
+			 -------------------------------------------------------------->
 			 
-			 <table>
-			 <caption>Boleto</caption>
+			 
+			 
+			
+			 
+			 
+			<table>
+			 
 					<thead>
 						<tr><th colspan="4">Boleto</th></tr>
 						<tr>
@@ -86,18 +91,27 @@
 						   </tr>
 						   
 						   <tr>
-						    <td>Data Vencimento</td>
+						    <td>Codigo</td>
 						   </tr>
 						    
-						    <tr th:each="boleto : ${boleto}">										
-								<td th:text="${boleto.id_boleto}"></td>																										
+						    <tr th:each="boletos : ${boleto}">										
+								<td th:text="${boleto.numeroBoleto}"></td>																										
+						   </tr>
+						   
+						    <tr>
+						    <td>Email</td>
+						   </tr>
+						    
+						    <tr th:each="user : ${usuario}">										
+								 <td th:text="${user.email}"></td>																									
 						   </tr>			
+								
 										
 						</tbody>
 		 </table>	
-	<!--</section>
+	<!-------------------------------</section>
 
 </body>
-</html>  -->
+</html>  ---------------------------------------->
 
 

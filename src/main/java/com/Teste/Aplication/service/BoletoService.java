@@ -24,17 +24,5 @@ public class BoletoService {
 		 
 	}
 	
-	
-	@Transactional(readOnly = false)
-	public Boleto gerarBoleto() {
-		Boleto boleto = new Boleto();
-		Random gerador = new Random();
-		boleto.setNumeroBoleto(gerador.nextInt(101) * 100);
-		boleto.setDataCompra(LocalDate.now().plusDays(5));
-	    return boleto;
 		
-	}
-	
-		
-	
 }
