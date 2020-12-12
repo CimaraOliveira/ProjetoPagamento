@@ -1,7 +1,6 @@
 package com.Teste.Aplication.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,18 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.Enuns.TipoPagamento;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -39,7 +33,6 @@ public class Compra implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "idCartao")
-	//@NotBlank
 	private Cartao cartao;
 	
 	@ManyToOne
@@ -50,7 +43,8 @@ public class Compra implements Serializable{
 	
 	private int quantidade;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
 	private Date dataCompra;
 	
 	private TipoPagamento tipoPagamento;

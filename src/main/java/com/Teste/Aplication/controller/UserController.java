@@ -93,12 +93,12 @@ public class UserController{
 	}	
 	
 	//não vamos excluir
-	@GetMapping("/excluir/{id}")
+	/*@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		service.excluir(id);
 		attr.addFlashAttribute("success", "Funcionário removido com sucesso.");
 		return "redirect:/usuario/listar";
-	}	
+	}*/	
 	
 	@GetMapping("/novo/cadastro")
 	public String novoCadastro(User user) {
@@ -148,7 +148,8 @@ public class UserController{
 			Random r = new Random();
 			String novaSenhaGerada = String.valueOf(Math.abs(r.nextInt()));
 			System.out.println(novaSenhaGerada);
-			user2.setSenha(novaSenhaGerada);
+			//user2.setSenha(novaSenhaGerada);			
+			user2.setSenha(new BCryptPasswordEncoder().encode(novaSenhaGerada));			
 			service.salvar(user2);
 			Email email2 = new Email();
 			email2.setTo(user2.getEmail());

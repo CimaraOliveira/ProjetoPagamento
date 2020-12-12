@@ -50,9 +50,7 @@ public class UserService implements UserDetailsService{
 	public void salvarCadastro(User user){
 		String crypt = new BCryptPasswordEncoder().encode(user.getSenha());
 		user.setSenha(crypt);
-		repository.save(user);	
-		
-		//emailDeConfirmacaoDeCadastro(user.getEmail());
+		repository.save(user);		
 	}
 	
 	public User findById(Long id) {
