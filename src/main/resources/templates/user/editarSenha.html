@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Recuperar Senha</title>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="clínica médica com agendamento de consultas online" />
+<meta name="description" content="Compras de passagens online" />
 <link rel="icon" th:href="@{/image/favicon.ico}" />
 <!-- Icons fontawesome -->
 <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />
-<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css(v=${version}) }" rel="stylesheet" />
 <style>
 .bd-placeholder-img {
 	font-size: 1.125rem;
@@ -32,13 +29,12 @@
 
 <!-- Custom styles for this template -->
 <link th:href="@{/css/style-login.css(v=${version})}" rel="stylesheet" />
-<script th:src="@{/webjars/jquery/jquery.min.js(v=${version}) }"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js(v=${version}) }"></script>
 </head>
 <body>
-
-		<div th:replace="fragments/alert"></div> 
-		<form th:action="@{/user/trocarSenha}" method="POST">		
+    <div th:replace="fragments/alert"></div> 
+	<form th:action="@{/user/trocarSenha}"class="form-signin was-validated" method="post"
+	      action="/"> 
+		<div class="text-center mb-4">	
 		     
 		<div class="text-center mb-4">
 			<img class="mb-4" th:src="@{/image/aviao.png}" alt=""
@@ -54,8 +50,11 @@
 		</div>
 				
 		<button type="submit" class="btn btn-primary btn-sm">Enviar</button>
-		<hr>
-				
+	
+		</div>
+		<p class="mt-5 mb-3 text-muted text-center">Sistema de Pagamento&copy; 2020</p>
 	</form>
 </body>
 </html>
+
+
