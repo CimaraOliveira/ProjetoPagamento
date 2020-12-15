@@ -39,8 +39,9 @@ public class Cartao implements Serializable {
 	@Column(length = 3)
 	private String cvv;
 	
-	//@DateTimeFormat(iso = ISO.DATE)
-	//private LocalDate dataValidade;
+	private int qtd_parcelas;
+	
+	double juros;
 	
 	private int mes;
 	
@@ -50,7 +51,8 @@ public class Cartao implements Serializable {
 	@JsonIgnore
 	private List<Compra>compras;
 	
-	public Cartao(Long id_cartao, String nome, String numero, String cvv, int mes, int ano, List<Compra> compras) {
+	public Cartao(Long id_cartao, String nome, String numero, String cvv, int mes, int ano, List<Compra> compras,
+			           int qtd_parcelas, double juros) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
@@ -59,6 +61,8 @@ public class Cartao implements Serializable {
 		this.mes = mes;
 		this.ano = ano;
 		this.compras = compras;
+		this.qtd_parcelas = qtd_parcelas;
+		this.juros = juros;
 	}
 
 	public int getMes() {
@@ -129,11 +133,29 @@ public class Cartao implements Serializable {
 		this.id_cartao = id_cartao;
 	}
 
+	public int getQtd_parcelas() {
+		return qtd_parcelas;
+	}
+
+	public void setQtd_parcelas(int qtd_parcelas) {
+		this.qtd_parcelas = qtd_parcelas;
+	}
+
+	public double getJuros() {
+		return juros;
+	}
+
+	public void setJuros(double juros) {
+		this.juros = juros;
+	}
+
 	@Override
 	public String toString() {
-		return "CartaoCredito [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", mes="
-				+ mes + ", ano="+ano + ", cvv=" + cvv + "]";
+		return "Cartao [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", cvv=" + cvv
+				+ ", qtd_parcelas=" + qtd_parcelas + ", mes=" + mes + ", ano=" + ano + ", compras=" + compras + "]";
 	}
+
+	
 	
 	
 }
