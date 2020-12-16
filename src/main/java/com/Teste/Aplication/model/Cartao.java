@@ -2,6 +2,7 @@ package com.Teste.Aplication.model;
 
 import java.io.Serializable;
 
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,9 +27,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "cartao")
 public class Cartao implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
+	private static final long serialVersionUID = 1L; 
+	  
+	@Id   
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_cartao;
 	private String nome;
@@ -41,28 +39,28 @@ public class Cartao implements Serializable {
 	
 	private int qtd_parcelas;
 	
-	double juros;
+	double juros = 0.02;
 	
 	private int mes;
 	
 	private int ano;
 		
-	@OneToMany(mappedBy = "cartao")
-	@JsonIgnore
-	private List<Compra>compras;
+	@ManyToOne
+	@JoinColumn(name = "id_compra")
+	private Compra compras;
 	
-	public Cartao(Long id_cartao, String nome, String numero, String cvv, int mes, int ano, List<Compra> compras,
-			           int qtd_parcelas, double juros) {
+	public Cartao(Long id_cartao, String nome, String numero, String cvv, int qtd_parcelas, double juros, int mes,
+			int ano, Compra compras) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
 		this.numero = numero;
 		this.cvv = cvv;
+		this.qtd_parcelas = qtd_parcelas;
+		this.juros = juros;
 		this.mes = mes;
 		this.ano = ano;
 		this.compras = compras;
-		this.qtd_parcelas = qtd_parcelas;
-		this.juros = juros;
 	}
 
 	public int getMes() {
@@ -117,14 +115,6 @@ public class Cartao implements Serializable {
 		this.cvv = cvv;
 	}
 
-	public List<Compra> getCompras() {
-		return compras;
-	}
-
-	public void setCompras(List<Compra> compras) {
-		this.compras = compras;
-	}
-
 	public Long getId_cartao() {
 		return id_cartao;
 	}
@@ -147,6 +137,14 @@ public class Cartao implements Serializable {
 
 	public void setJuros(double juros) {
 		this.juros = juros;
+	}
+
+	public Compra getCompras() {
+		return compras;
+	}
+
+	public void setCompras(Compra compras) {
+		this.compras = compras;
 	}
 
 	@Override

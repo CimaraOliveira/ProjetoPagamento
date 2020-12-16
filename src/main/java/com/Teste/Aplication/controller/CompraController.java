@@ -87,7 +87,7 @@ public class CompraController {
 
 	}
 	
-	//parcelamento com juros  compra de R$ 1.000, parcelada em 10x, com juros de 2% ao mês, 
+	//parcelamento com juros,  compra de R$ 1.000, parcelada em 10x, com juros de 2% ao mês, 
 	//por exemplo. Pagará em cada parcela, R$ 111,33, resultando no total de R$ 1.113,27. 
 	//O valor de R$ 113,27, foi o total que você pagou de juros só por parcelar a compra.
 }

@@ -52,18 +52,22 @@ public class CartaoController {
 			
 	@PostMapping("/salvarCartao") 
 	public String salvarCartao(@Valid Cartao cartao,BindingResult result, Principal principal, RedirectAttributes attr) { 
-		  Compra compra = compraService.getOne(id); // retorna o objeto do banco para poder manipular
+		
+		double parcelas_sem_juros;		
+		
+		Compra compra = compraService.getOne(id); // retorna o objeto do banco para poder manipular
 		  if(compra != null) { // se for diferente de nulo, continua o fluxo abaixo
 			  User user = userService.getEmail(principal.getName());
 			  if(user != null) {
 				  System.out.println(user.getEmail());
 				  cartaoService.salvarCartao(cartao);  // salva o cartão
-				  compra.setUsuario(user);
-			      compra.setCartao(cartao); // seta o cartão na compra
+				  compra.setUsuario(user);				  
+				  cartao.setCompras(compra);
+				  compra.setCartao(cartao); // seta o cartão na compra
 			      compra.setStatus(Status.CONCLUÍDA);
 			      compraService.saveAndFlush(compra); // atualiza a compra
 			      attr.addFlashAttribute("success", "Compra realizada com sucesso");
-			  }
+			  }  
 		  }
 		   		
 		return "redirect:/home";		
