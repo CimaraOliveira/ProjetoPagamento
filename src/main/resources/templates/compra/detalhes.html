@@ -34,6 +34,8 @@
 										<th>Tipo de Pagamento</th>
 										<th>Valor</th>
 										<th>Status</th>
+										<th>Parcelas de</th>
+										
 										
 									</tr>
 								</thead>
@@ -44,6 +46,8 @@
 										<td th:text="${compra.tipoPagamento}"></td>
 										<td th:text="${compra.valor}"></td>
 										<td th:text="${compra.status}"></td> 
+										<td th:text="${compra.cartao.qtd_parcelas}"></td> 
+										<td th:text="${compra.cartao.valor_parcelado}"></td>
 										<td>
 											
 										</td>

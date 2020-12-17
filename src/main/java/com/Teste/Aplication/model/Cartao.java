@@ -39,7 +39,9 @@ public class Cartao implements Serializable {
 	
 	private int qtd_parcelas;
 	
-	double juros = 0.02;
+	private double valor_parcelado;
+
+	private double juros = 0.02;
 	
 	private int mes;
 	
@@ -49,18 +51,19 @@ public class Cartao implements Serializable {
 	@JoinColumn(name = "id_compra")
 	private Compra compras;
 	
-	public Cartao(Long id_cartao, String nome, String numero, String cvv, int qtd_parcelas, double juros, int mes,
-			int ano, Compra compras) {
+	public Cartao(Long id_cartao, String nome, String numero, String cvv, int qtd_parcelas, double valor_parcelado, int mes,
+			int ano, Compra compras, double juros) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
 		this.numero = numero;
 		this.cvv = cvv;
 		this.qtd_parcelas = qtd_parcelas;
-		this.juros = juros;
+		this.valor_parcelado = valor_parcelado;
 		this.mes = mes;
 		this.ano = ano;
 		this.compras = compras;
+		this.juros = juros;
 	}
 
 	public int getMes() {
@@ -131,12 +134,12 @@ public class Cartao implements Serializable {
 		this.qtd_parcelas = qtd_parcelas;
 	}
 
-	public double getJuros() {
-		return juros;
+	public double getValor_parcelado() {
+		return valor_parcelado;
 	}
 
-	public void setJuros(double juros) {
-		this.juros = juros;
+	public void setValor_parcelado(double valor_parcelado) {
+		this.valor_parcelado = valor_parcelado;
 	}
 
 	public Compra getCompras() {
@@ -147,13 +150,21 @@ public class Cartao implements Serializable {
 		this.compras = compras;
 	}
 
+	public double getJuros() {
+		return juros;
+	}
+
+	public void setJuros(double juros) {
+		this.juros = juros;
+	}
+
 	@Override
 	public String toString() {
 		return "Cartao [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", cvv=" + cvv
-				+ ", qtd_parcelas=" + qtd_parcelas + ", mes=" + mes + ", ano=" + ano + ", compras=" + compras + "]";
+				+ ", qtd_parcelas=" + qtd_parcelas + ", valor_parcelado=" + valor_parcelado + ", juros=" + juros
+				+ ", mes=" + mes + ", ano=" + ano + ", compras=" + compras + "]";
 	}
 
 	
-	
-	
+		
 }
