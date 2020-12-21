@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,7 +56,10 @@ public class Compra implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
 	//@JsonIgnore
-	public User usuario;	
+	public User usuario;
+	
+	@OneToOne(mappedBy="compra")
+	private LogRegister logRegister;
     
 	public Compra() {
 		super();		

@@ -40,18 +40,23 @@
 									</tr>
 								</thead>
 								<tbody> 
+								
 								        <tr th:each="compra : ${compras}">
 								        <td th:text="${compra.dataCompra}"></td> 
 								        <td th:text="${compra.quantidade}"></td>
 										<td th:text="${compra.tipoPagamento}"></td>
 										<td th:text="${compra.valor}"></td>
 										<td th:text="${compra.status}"></td> 
+										<th:block th:if="${compra.cartao != null}">
 										<td th:text="${compra.cartao.qtd_parcelas}"></td> 
 										<td th:text="${compra.cartao.valor_parcelado}"></td>
+										</th:block>
 										<td>
 											
 										</td>
+										
 									</tr>
+								
 								</tbody>
 							</table>
 						</div>				

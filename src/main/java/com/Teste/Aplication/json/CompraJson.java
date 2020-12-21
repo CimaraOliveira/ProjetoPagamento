@@ -3,6 +3,7 @@ package com.Teste.Aplication.json;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import com.Teste.Aplication.jwt.JwtComponent;
 import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Cartao;
 import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.LogRegister;
 import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.CartaoService;
@@ -41,8 +43,8 @@ class TestCartao{ // Classe Auxiliar
 
 @RestController
 @RequestMapping("/api/compras")
-@CrossOrigin()
-public class CompraResource {
+@CrossOrigin(origins = {"*"})
+public class CompraJson {
 	@Autowired
 	private JwtComponent jwtComponent;
 	
@@ -59,9 +61,15 @@ public class CompraResource {
 	private UserService serviceUsuario;
 
 	@PostMapping("/saveBoleto")
-	public ResponseEntity<Boleto> salvarBoleto(@RequestBody TestBoleto test) {
+	public ResponseEntity<Boleto> salvarBoleto(HttpServletRequest request, @RequestBody TestBoleto test) {
 		Compra compra = compraService.findByIdCompra(test.idCompra);
 
+		String origin = request.getHeader("Origin");
+		
+		LogRegister logRegister = new LogRegister();
+		logRegister.setHostOrigin(origin);
+		logRegister.setDate(new Date()); 
+		
 		if (compra != null) {
 			boletoService.salvarBoleto(test.boleto);
 			test.boleto.setDataCompra(new Date());

@@ -1,4 +1,4 @@
-package com.Teste.Aplication.resource;
+package com.Teste.Aplication.json;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import com.Teste.Aplication.service.UserService;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserResource {
+public class UserJson {
 	@Autowired
 	private UserService userService;
 	

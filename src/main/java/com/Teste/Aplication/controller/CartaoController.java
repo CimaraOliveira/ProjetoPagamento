@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.Status;
@@ -60,9 +62,7 @@ public class CartaoController {
 	        double resultThree = resultOne / resultTwo;
 	        return pv / resultThree;
 	 }	
-			
-	
-	 
+			 
 	@PostMapping("/salvarCartao") 
 	public String salvarCartao(@Valid Cartao cartao,BindingResult result, Principal principal, RedirectAttributes attr) { 
 				
@@ -76,6 +76,7 @@ public class CartaoController {
 				  cartaoService.salvarCartao(cartao);  // salva o cartão
 				  compra.setUsuario(user);				  
 				  cartao.setCompras(compra);
+				  //compra.setQtd_parcelas(cartao);
 				  compra.setCartao(cartao); // seta o cartão na compra
 			      compra.setStatus(Status.CONCLUÍDA);
 			      compraService.saveAndFlush(compra); // atualiza a compra
@@ -87,8 +88,16 @@ public class CartaoController {
 			  }  
 		  }
 		   		
-		return "redirect:/home";		
+		//return "redirect:/cartao/detalhes";		
+		return "redirect:/cartao/detalhesCompraIdCartao/"+cartao.getId_Cartao();
 	}	
+	@GetMapping("/detalhesCompraIdCartao/{id_cartao}")  
+	public ModelAndView detalhesBoleto(@PathVariable("id_cartao") Long id_cartao) {
+		ModelAndView modelAndView = new ModelAndView("compra/cartao");
+		modelAndView.addObject("compras", compraService.findByIdBoleto(id_cartao));
+		return modelAndView;
+	}
+	
 	    		
 }
 
