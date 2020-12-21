@@ -3,8 +3,9 @@ package com.Teste.Aplication.controller;
 
 
 
+import java.math.RoundingMode;
 import java.security.Principal;
-
+import java.text.DecimalFormat;
 
 import javax.validation.Valid;
 
@@ -55,12 +56,19 @@ public class CartaoController {
 	} 
 	
 	 private double calPMT(double pv, int n, String i){
+		
+	      	
+	       // System.out.println( decimalFormat.format(valor) );
 	        String porcent [] = i.split("%");
 	        double taxa = Double.parseDouble(porcent[0]) / 100;
 	        double resultOne = (Math.pow((1 + taxa), n) - 1);
 	        double resultTwo = ((Math.pow(1 + taxa, n) * taxa));
 	        double resultThree = resultOne / resultTwo;
-	        return pv / resultThree;
+	        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		    decimalFormat.setRoundingMode(RoundingMode.DOWN);
+		    
+		    String valor[]=decimalFormat.format(pv/resultThree).split(",");
+	        return Double.parseDouble(valor[0]+"."+ valor[1]);
 	 }	
 			 
 	@PostMapping("/salvarCartao") 
@@ -72,6 +80,11 @@ public class CartaoController {
 		  if(compra != null) { // se for diferente de nulo, continua o fluxo abaixo
 			  User user = userService.getEmail(principal.getName());
 			  if(user != null) {
+				
+				  double total = calPMT(compra.getValor(), cartao.getQtd_parcelas(), "2%");
+				  
+				  cartao.setValor_parcelado(total); //  seta o valor das parcelas
+				  
 				  System.out.println(user.getEmail());
 				  cartaoService.salvarCartao(cartao);  // salva o cartão
 				  compra.setUsuario(user);				  
