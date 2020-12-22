@@ -34,5 +34,9 @@ public class CompraService {
 		return repository.findByIdBoleto(id_boleto);
 	}
 	
+	public List<Compra> findByIdcartao(Long id_cartao){
+		return repository.findByIdCartao(id_cartao);
+	}
+	
 	
 }

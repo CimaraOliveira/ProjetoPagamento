@@ -50,7 +50,7 @@
 
                         <div class="row">
                          <div class="form-group">
-                         <div class="col-md-11">						
+                         <div class="col-md-12">						
 							<label for="numero">Número do cartão</label> <input
 								onkeyup="validateCardNumber(this, event)"
 								onfocus="validateCardNumber(this, event)"
@@ -66,43 +66,54 @@
 						
 						
 						<div class="col-md-2">
-								<label for="cvv">CVV</label> <input type="text" id="cvv"
+							<label for="cvv">CVV</label> <input type="text" id="cvv"
 									class="form-control" textarea="3" name="cvv" autofocus="autofocus" required>
-							</div>
-							<div class="invalid-feedback"></div>
-							</div>
+						</div>
+						<div class="invalid-feedback"></div>
+						</div>
 
                       
-                        <div class="form-group">
+                                              
+                         <div class="col-md-18">
 							<label for="nome">Nome do Titular</label> <input type="text" id="nome"
 								class="form-control" name="nome" autofocus="autofocus" required>
-						
 						</div>
+						
 						<div class="invalid-feedback"></div>
 						
 
-
-                           <!-- <div class="form-row">
-							<div class="form-group col-md-2">
-								<label for="dataValidade">Data de Expiração</label> <input
-									type="date"  class="form-control" id="dataValidade"  th:field="*{dataValidade}"
-									min="2020-12-01" max="2025-12-01" required/>
-									<div class="invalid-feedback"></div>	
-							</div> -->
-							
 						 <div class="row"> 
 							<div class="col-md-2 mb-3">
 								<label for="mes">Mês</label> <input type="number" id="mes"
 									class="form-control" name="mes" autofocus="autofocus" min="01" max="12"required>
 							</div>
-							<div class="invalid-feedback"></div>
+							<div class="invalid-feedback">Informe Um Mês Válida</div>
 						   
 						   
 						   <div class="col-md-2 mb-3">
 								<label for="ano">Ano</label> <input type="number" id="ano"
 									class="form-control" name="ano" autofocus="autofocus" min="21" max="27" required>
 							</div>
-							<div class="invalid-feedback"></div>
+							<div class="invalid-feedback">Informe Um Ano Válido</div>
+							
+							<div class="col-md-4">
+								<label for="nome">Parcelamento</label> 
+								<select id="qtd_parcelas"  name="qtd_parcelas" class="form-control">
+									<option value="Avista">Ávista<p></p></option>
+									<option value="1">1<p>X Sem Juros </p></option>
+									<option value="2">2<p>X Sem Juros </p></option>
+									<option value="3">3<p>X Sem Juros </p></option>
+									<option value="4">4<p>X Sem Juros </p></option>
+									<option value="5">5<p>X Sem Juros </p></option>
+									<option value="6">6<p>X Sem Juros </p></option>
+									<option value="7">7<p>X Sem Juros </p></option>
+									<option value="8">8<p>X Sem Juros </p></option>
+									<option value="9">9<p>X Sem Juros </p></option>
+									<option value="10">10<p>X Sem Juros </p></option>
+									<option value="11">11<p>X Com Juros </p></option>
+									<option value="12">12<p>X Com Juros </p></option>
+								</select>
+						</div>
 						   </div>
 						   
 						   <button onclick="saveCard(this, event)" id="save-card" class="btn btn-primary btn-sm">Finalizar</button>

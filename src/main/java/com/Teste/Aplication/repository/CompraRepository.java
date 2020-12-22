@@ -22,5 +22,10 @@ public interface CompraRepository extends JpaRepository<Compra, Long>{
 			"inner join boleto b on(c.id_boleto = b.id_boleto) \n" + 
 			"where b.id_boleto = :id_boleto", nativeQuery = true)
 	public List<Compra> findByIdBoleto(@Param("id_boleto") Long id_boleto);
+	
+	@Query(value="select * from compras c\n" + 
+			"inner join cartao b on(c.id_cartao = b.id_cartao) \n" + 
+			"where b.id_cartao = :id_cartao", nativeQuery = true)
+	public List<Compra> findByIdCartao(@Param("id_cartao") Long id_cartao);
 
 }

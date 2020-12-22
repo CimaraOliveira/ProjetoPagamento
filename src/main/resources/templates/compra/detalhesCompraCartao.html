@@ -1,0 +1,65 @@
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<title>Minha Compra</title>
+
+</head>
+
+<body>
+
+	 <section class="layout-content" layout:fragment="corpo">
+		   <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Compra Realizada</span>
+	                    </li>
+	                </ul>
+	              
+	            </div>
+	        </nav>	 
+					<div th:replace="fragments/alert"></div> 					
+					<br>
+					<div sec:authorize="hasAuthority('USER')"></div>
+					
+						<div class="table-responsive">
+							<table class="table table-striped table-hover table-sm">
+								<thead>
+									<tr>
+
+                                        <th>Comprador </th>
+                                        <th>Quantidade</th>
+										<th>Valor</th>
+										<th>Data Compra</th>
+										<th>Parcelas de</th>
+										
+										
+										
+									</tr>
+								</thead>
+								<tbody> 
+								      																
+								<tr th:each="compra : ${compras}">										
+									<td th:text="${compra.usuario.nome}"></td>
+							        <td th:text="${compra.quantidade}"></td>
+									<td th:text="${compra.valor}"></td>
+									<td th:text="${compra.dataCompra}"></td>
+									<th:block th:if="${compra.cartao != null}">
+										<td th:text="${compra.cartao.qtd_parcelas}"></td> 
+										<td th:text="${compra.cartao.valor_parcelado}"></td>
+										</th:block>
+																	
+							</tr>									
+						  			
+									
+								</tbody>
+							</table>
+						</div>				
+						
+			<br>
+			
+	</section>
+
+</body>
+</html>

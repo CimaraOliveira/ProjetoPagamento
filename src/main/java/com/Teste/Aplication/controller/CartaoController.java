@@ -105,9 +105,9 @@ public class CartaoController {
 		return "redirect:/cartao/detalhesCompraIdCartao/"+cartao.getId_Cartao();
 	}	
 	@GetMapping("/detalhesCompraIdCartao/{id_cartao}")  
-	public ModelAndView detalhesBoleto(@PathVariable("id_cartao") Long id_cartao) {
-		ModelAndView modelAndView = new ModelAndView("compra/cartao");
-		modelAndView.addObject("compras", compraService.findByIdBoleto(id_cartao));
+	public ModelAndView detalhesCompraCartao(@PathVariable("id_cartao") Long id_cartao) {
+		ModelAndView modelAndView = new ModelAndView("compra/detalhesCompraCartao");
+		modelAndView.addObject("compras", compraService.findByIdCartao(id_cartao));
 		return modelAndView;
 	}
 	
