@@ -22,10 +22,16 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -38,6 +44,52 @@ public class User implements UserDetails{
 	 */
 	private static final long serialVersionUID = -8798096104982666697L;
 
+	private void consume() {
+	RestTemplate restTemplate = new RestTemplate();
+	String fooResourceUrl = "https:/api-test2020.herokuapp.com/api/user/findAll";
+	ResponseEntity<User[]> response = restTemplate.getForEntity(fooResourceUrl + "/1", User[].class);
+	
+	    for(User user : response.getBody()) {
+		    System.out.println(user);
+	    }
+	}
+	
+	private void consumeOne() {
+		RestTemplate restTemplate = new RestTemplate(); //passa  o nome no broswer 
+		String fooResourceUrl = "https://api-test2020.herokuapp.com/api/user/findByNome/";
+		ResponseEntity<User[]> response = restTemplate.getForEntity(fooResourceUrl , User[].class);
+		
+		    if(response.getStatusCode().is2xxSuccessful()) {
+		    	User[] user = response.getBody();
+			    System.out.println(user);
+		    }
+	}
+	
+	private void save() {
+		
+		RestTemplate restTemplate = new RestTemplate();  
+		String fooResourceUrl = "https://api-test2020.herokuapp.com/api/user/save";
+		User user = new User();
+		user.setNome("Mara");
+		user.setEmail("cimarinhaoliveira1@gmail.com");
+		user.setSenha("12345678");
+		
+		try {
+		HttpEntity<User> request = new 	HttpEntity<>(user);	
+		ResponseEntity<User> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, User.class);
+		
+		if(responseEntity.getStatusCode().is2xxSuccessful()) {
+			System.out.println("Criando Novo User");
+			User user2 = responseEntity.getBody();
+			System.out.println(user2);
+		}
+		
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+	
 	public User() {
 		this.enabled = true;
 		this.accountNonExpired = true;
@@ -58,6 +110,7 @@ public class User implements UserDetails{
 	@Column(nullable = false, length = 255)
 	private String senha;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	public List<Compra> compras;
 	
