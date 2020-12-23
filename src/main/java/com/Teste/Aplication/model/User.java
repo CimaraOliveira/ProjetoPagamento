@@ -46,7 +46,7 @@ public class User implements UserDetails{
 
 	private void consume() {
 	RestTemplate restTemplate = new RestTemplate();
-	String fooResourceUrl = "https:/api-test2020.herokuapp.com/api/user/findAll";
+	String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/findAll";
 	ResponseEntity<User[]> response = restTemplate.getForEntity(fooResourceUrl + "/1", User[].class);
 	
 	    for(User user : response.getBody()) {
@@ -56,7 +56,7 @@ public class User implements UserDetails{
 	
 	private void consumeOne() {
 		RestTemplate restTemplate = new RestTemplate(); //passa  o nome no broswer 
-		String fooResourceUrl = "https://api-test2020.herokuapp.com/api/user/findByNome/";
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/findByNome/";
 		ResponseEntity<User[]> response = restTemplate.getForEntity(fooResourceUrl , User[].class);
 		
 		    if(response.getStatusCode().is2xxSuccessful()) {
@@ -68,7 +68,7 @@ public class User implements UserDetails{
 	private void save() {
 		
 		RestTemplate restTemplate = new RestTemplate();  
-		String fooResourceUrl = "https://api-test2020.herokuapp.com/api/user/save";
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/save";
 		User user = new User();
 		user.setNome("Mara");
 		user.setEmail("cimarinhaoliveira1@gmail.com");
@@ -247,9 +247,5 @@ public class User implements UserDetails{
 
 	public void setCompras(List<Compra> compras) {
 		this.compras = compras;
-	}
-	
-	
-
-	
+	}	
 }
