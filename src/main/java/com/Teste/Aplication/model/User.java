@@ -91,8 +91,8 @@ public class User implements UserDetails{
 		RestTemplate restTemplate = new RestTemplate();  
 		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/save";
 		User user = new User();
-		user.setNome("Mara");
-		user.setEmail("cimarinhaoliveira1@gmail.com");
+		user.setNome("José");
+		user.setEmail("jose@gmail.com");
 		user.setSenha("12345678");
 		
 		try {
@@ -110,28 +110,6 @@ public class User implements UserDetails{
 		}		
 	}
 	
-	private void cadastrar() {
-		RestTemplate restTemplate = new RestTemplate();  
-		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/cadastrar";
-		User user = new User();
-		user.setNome(user.getNome());
-		user.setEmail(user.getEmail());
-		user.setSenha(user.getSenha());
-		
-		try {
-		HttpEntity<User> request = new 	HttpEntity<>(user);	
-		ResponseEntity<User> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, User.class);
-		
-		if(responseEntity.getStatusCode().is2xxSuccessful()) {
-			System.out.println("Criando Novo User");
-			User user2 = responseEntity.getBody();
-			System.out.println(user2);
-		}
-		
-		}catch (Exception e) {
-			// TODO: handle exception
-		}		
-	}
 	
 	  /*private  void login() {
 		
