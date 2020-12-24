@@ -22,12 +22,21 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.Teste.Aplication.jwt.JwtComponent;
+import com.Teste.Aplication.service.RoleService;
+import com.Teste.Aplication.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,6 +52,18 @@ public class User implements UserDetails{
 	 * 
 	 */
 	private static final long serialVersionUID = -8798096104982666697L;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private JwtComponent jwtComponent;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserService serviceUsuario;
 
 	private void consume() {
 	RestTemplate restTemplate = new RestTemplate();
@@ -86,8 +107,65 @@ public class User implements UserDetails{
 		
 		}catch (Exception e) {
 			// TODO: handle exception
+		}		
+	}
+	
+	private void cadastrar() {
+		RestTemplate restTemplate = new RestTemplate();  
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/cadastrar";
+		User user = new User();
+		user.setNome(user.getNome());
+		user.setEmail(user.getEmail());
+		user.setSenha(user.getSenha());
+		
+		try {
+		HttpEntity<User> request = new 	HttpEntity<>(user);	
+		ResponseEntity<User> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, User.class);
+		
+		if(responseEntity.getStatusCode().is2xxSuccessful()) {
+			System.out.println("Criando Novo User");
+			User user2 = responseEntity.getBody();
+			System.out.println(user2);
 		}
 		
+		}catch (Exception e) {
+			// TODO: handle exception
+		}		
+	}
+	
+	  /*private  void login() {
+		
+		  RestTemplate restTemplate = new RestTemplate();  
+		  String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/login";
+		  User user = new User();
+		  
+		  try {
+			authenticate(user.getEmail(), user.getPassword());
+		
+		  UserDetails userDB = serviceUsuario.loadUserByUsername(user.getUsername());
+		  
+		 
+				HttpEntity<User> request = new 	HttpEntity<>(user);	
+				ResponseEntity<User> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, User.class);
+				
+				if(responseEntity.getStatusCode().is2xxSuccessful()) {
+					String token = jwtComponent.generateToken(user);
+					System.out.println(token);
+				}
+				
+				}catch (Exception e) {
+					e.printStackTrace();
+			}			
+	}*/
+	
+	private void authenticate(String username, String password) throws Exception {
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		} catch (DisabledException e) {
+			throw new Exception("USER_DISABLED", e);
+		} catch (BadCredentialsException e) {
+			throw new Exception("INVALID_CREDENTIALS", e);
+		}
 	}
 	
 	public User() {
