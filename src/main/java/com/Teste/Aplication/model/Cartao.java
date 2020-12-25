@@ -49,10 +49,10 @@ public class Cartao implements Serializable {
 		
 	@ManyToOne
 	@JoinColumn(name = "id_compra")
-	private Compra compras;
+	private Pagameto compras;
 	
 	public Cartao(Long id_cartao, String nome, String numero, String cvv, int qtd_parcelas, double valor_parcelado, int mes,
-			int ano, Compra compras, double juros) {
+			int ano, Pagameto compras, double juros) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
@@ -142,11 +142,11 @@ public class Cartao implements Serializable {
 		this.valor_parcelado = valor_parcelado;
 	}
 
-	public Compra getCompras() {
+	public Pagameto getCompras() {
 		return compras;
 	}
 
-	public void setCompras(Compra compras) {
+	public void setCompras(Pagameto compras) {
 		this.compras = compras;
 	}
 

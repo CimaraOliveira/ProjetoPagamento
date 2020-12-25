@@ -33,7 +33,7 @@ public class LogRegister {
 
 	@OneToOne
 	@JoinColumn(name="compra_id")
-	private Compra compra;
+	private Pagameto compra;
 	
 	
 	public Long getId() {

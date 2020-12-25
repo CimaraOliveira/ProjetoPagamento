@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,24 +26,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.Teste.Aplication.model.Boleto;
-import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.User;
-import com.Teste.Aplication.repository.CompraRepository;
+import com.Teste.Aplication.repository.PagamentoRepository;
 import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.UserService;
 
 @Controller
 @RequestMapping("/compras")
-public class CompraController {
+public class PagamentoController {
 	
 	@Autowired
-	private CompraRepository compraService;
+	private PagamentoRepository compraService;
 	
 	@Autowired
 	private UserService userService;
 	
 	@GetMapping("/comprar")
-	public String comprar(Compra compra) {
+	public String comprar(Pagameto compra) {
 		return "compra/pagamento";
 	}
 		
@@ -55,11 +56,10 @@ public class CompraController {
 	}
 		
 	@PostMapping("/salvar")
-	public String salvar(@Valid Compra compra,User user, Boleto boleto, RedirectAttributes attr,
+	public String salvar(@Valid Pagameto compra,User user, Boleto boleto, RedirectAttributes attr,
 			@RequestParam("tipoPagamento") TipoPagamento tipoPagamento) {
     	
     	compra.setDataCompra(new Date());
-		
 		
 		/*Date data = new Date();
     	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

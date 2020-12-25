@@ -24,9 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.model.Boleto;
-import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.User;
-import com.Teste.Aplication.repository.CompraRepository;
+import com.Teste.Aplication.repository.PagamentoRepository;
 import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.UserService;
 
@@ -38,7 +38,7 @@ public class BoletoController {
 	private BoletoService boletoService;
 	
 	@Autowired
-	private CompraRepository compraService;
+	private PagamentoRepository compraService;
 	
 	@Autowired
 	private UserService userService;
@@ -49,7 +49,7 @@ public class BoletoController {
 	public String boleto(@Valid Boleto boleto, @RequestParam("id") String attr,
 			RedirectAttributes attrs, Principal principal) {
 		id = Long.parseLong(attr);
-		Compra compra = compraService.getOne(id);
+		Pagameto compra = compraService.getOne(id);
 		 if(compra != null) { 
 			  User user = userService.getEmail(principal.getName());
 			  if(user != null) {

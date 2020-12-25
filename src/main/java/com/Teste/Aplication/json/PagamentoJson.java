@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Teste.Aplication.jwt.JwtComponent;
 import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Cartao;
-import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.LogRegister;
 import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.BoletoService;
@@ -44,7 +44,7 @@ class TestCartao{ // Classe Auxiliar
 @RestController
 @RequestMapping("/api/compras")
 @CrossOrigin(origins = {"*"})
-public class CompraJson {
+public class PagamentoJson {
 	@Autowired
 	private JwtComponent jwtComponent;
 	
@@ -62,7 +62,7 @@ public class CompraJson {
 
 	@PostMapping("/saveBoleto")
 	public ResponseEntity<Boleto> salvarBoleto(HttpServletRequest request, @RequestBody TestBoleto test) {
-		Compra compra = compraService.findByIdCompra(test.idCompra);
+		Pagameto compra = compraService.findByIdCompra(test.idCompra);
 
 		String origin = request.getHeader("Origin");
 		
@@ -83,7 +83,7 @@ public class CompraJson {
 
 	@PostMapping("/saveCartao")
 	public ResponseEntity<Cartao> salvarCartao(@RequestBody TestCartao test){
-		Compra compra = compraService.findByIdCompra(test.idCompra);
+		Pagameto compra = compraService.findByIdCompra(test.idCompra);
 		
 		if(compra != null) {
 			cartaoService.salvarCartao(test.cartao);
@@ -96,7 +96,7 @@ public class CompraJson {
 	}
 	
 	@GetMapping("/detalhesCompra/{id}")
-	public ResponseEntity<Compra> detalhePorId(@PathVariable("id") Long id,
+	public ResponseEntity<Pagameto> detalhePorId(@PathVariable("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
 		try {
@@ -104,7 +104,7 @@ public class CompraJson {
 			
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 
-				Compra compras = compraService.findByIdCompra(id);
+				Pagameto compras = compraService.findByIdCompra(id);
 						
 				if (compras != null) {
 					return ResponseEntity.ok(compras);
@@ -118,14 +118,14 @@ public class CompraJson {
 	}
 	
 	@PostMapping("/saveCompra")
-	public ResponseEntity<Compra> salvarCompra(@RequestBody Compra compra){
+	public ResponseEntity<Pagameto> salvarCompra(@RequestBody Pagameto compra){
 		compra.setDataCompra(new Date());
 		compra.setValor(compra.getValor() * compra.getQuantidade());
 		System.out.println(compra.getUsuario());
 		User user = serviceUsuario.findById(compra.getUsuario().getId());
 		compra.setUsuario(user);
 		compraService.salvarCompra(compra);
-		return new ResponseEntity<Compra>(compra, HttpStatus.CREATED);
+		return new ResponseEntity<Pagameto>(compra, HttpStatus.CREATED);
 		
 	}
 	

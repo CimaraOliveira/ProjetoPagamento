@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Entity
 @Table(name = "compras")
-public class Compra implements Serializable{
+public class Pagameto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -61,11 +61,11 @@ public class Compra implements Serializable{
 	@OneToOne(mappedBy="compra")
 	private LogRegister logRegister;
     
-	public Compra() {
+	public Pagameto() {
 		super();		
 	}	
 	
-	public Compra(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade, Date dataCompra,
+	public Pagameto(Long idCompra, Cartao cartao, Boleto boleto, double valor, int quantidade, Date dataCompra,
 			TipoPagamento tipoPagamento, Status status, User usuario) {
 		super();
 		this.idCompra = idCompra;

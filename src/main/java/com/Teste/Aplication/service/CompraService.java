@@ -7,34 +7,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Teste.Aplication.model.Compra;
-import com.Teste.Aplication.repository.CompraRepository;
+import com.Teste.Aplication.model.Pagameto;
+import com.Teste.Aplication.repository.PagamentoRepository;
 
 @Service
 public class CompraService {
 
 	@Autowired
-	private CompraRepository repository;
+	private PagamentoRepository repository;
 	
 	@Transactional(readOnly = false)
-	public void salvarCompra(Compra compra) {
+	public void salvarCompra(Pagameto compra) {
 	 
 		 repository.save(compra);
 	}
 	
-	public Compra findByIdCompra(Long id) {
+	public Pagameto findByIdCompra(Long id) {
 		return repository.findByIdCompra(id);  
 	}
 	
-	public List<Compra> findAllByIdUser(Long id){
+	public List<Pagameto> findAllByIdUser(Long id){
 		return repository.findAllByIdUser(id);
 	}
 	
-	public List<Compra> findByIdBoleto(Long id_boleto) {
+	public List<Pagameto> findByIdBoleto(Long id_boleto) {
 		return repository.findByIdBoleto(id_boleto);
 	}
 	
-	public List<Compra> findByIdcartao(Long id_cartao){
+	public List<Pagameto> findByIdcartao(Long id_cartao){
 		return repository.findByIdCartao(id_cartao);
 	}
 	

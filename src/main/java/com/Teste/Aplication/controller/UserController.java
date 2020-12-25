@@ -123,13 +123,7 @@ public class UserController{
          return "login"; 
          
 	}
-	
-	/*@GetMapping("/cadastro/realizado")
-	public String cadastroRealizado() {
-
-	    return "fragments/mensagem";    
-	 } */ 
-	
+			
 	@GetMapping("/editarSenha")
 	public String editarSenha() {
 		return "user/editarSenha";

@@ -24,9 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.model.Cartao;
-import com.Teste.Aplication.model.Compra;
+import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.User;
-import com.Teste.Aplication.repository.CompraRepository;
+import com.Teste.Aplication.repository.PagamentoRepository;
 import com.Teste.Aplication.service.CartaoService;
 import com.Teste.Aplication.service.UserService;
 
@@ -40,7 +40,7 @@ public class CartaoController {
 	private CartaoService cartaoService;
 	
 	@Autowired
-	private CompraRepository compraService;
+	private PagamentoRepository compraService;
 	
 	private Long id = null;
 	
@@ -50,7 +50,7 @@ public class CartaoController {
 	@GetMapping("/cartao") 
 	public String cartao(Cartao cartao, @RequestParam("id") String attr) { 
 		id = Long.parseLong(attr); // recebe o id da compra
-		Compra compra = compraService.getOne(id);
+		Pagameto compra = compraService.getOne(id);
 		//compra.setValor(compra.getValor());
 		return "compra/cartao";           
 	} 
@@ -75,7 +75,7 @@ public class CartaoController {
 	public String salvarCartao(@Valid Cartao cartao,BindingResult result, Principal principal, RedirectAttributes attr) { 
 				
 		//System.out.println(cartao.getQtd_parcelas());
-		Compra compra = compraService.getOne(id); // retorna o objeto do banco para poder manipular
+		Pagameto compra = compraService.getOne(id); // retorna o objeto do banco para poder manipular
 		  System.out.println(cartao.getQtd_parcelas());			
 		  if(compra != null) { // se for diferente de nulo, continua o fluxo abaixo
 			  User user = userService.getEmail(principal.getName());
