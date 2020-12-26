@@ -74,12 +74,12 @@ public class PagamentoApi {
 		cartao.setQtd_parcelas(4);	
 		//cartao.setValor_parcelado(cartao.getValor_parcelado());
 				
-		ResponseEntity<Cartao> responseEntity = restTemplate.postForEntity(fooResourceUrl, cartao, Cartao.class);
+		/*ResponseEntity<Cartao> responseEntity = restTemplate.postForEntity(fooResourceUrl, cartao, Cartao.class);
 		if(responseEntity.getStatusCode().is2xxSuccessful()) {
 			System.out.println("Salvando cartao");
 			Cartao cartao1 = responseEntity.getBody();
 			System.out.println(cartao1);
-		}
+		}*/
 		
 		
 	}
