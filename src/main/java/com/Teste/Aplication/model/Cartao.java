@@ -3,10 +3,6 @@ package com.Teste.Aplication.model;
 import java.io.Serializable;
 
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,11 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.Teste.Aplication.Enuns.TipoPagamento;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -27,8 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "cartao")
 public class Cartao implements Serializable {
 
-	private static final long serialVersionUID = 1L; 
-	
+	private static final long serialVersionUID = 1L; 	
 	
 	@Id   
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,8 +33,6 @@ public class Cartao implements Serializable {
 	
 	private double valor_parcelado;
 
-	private double juros = 0.02;
-	
 	private int mes;
 	
 	private int ano;
@@ -53,7 +42,7 @@ public class Cartao implements Serializable {
 	private Pagameto compras;
 	
 	public Cartao(Long id_cartao, String nome, String numero, String cvv, int qtd_parcelas, double valor_parcelado, int mes,
-			int ano, Pagameto compras, double juros) {
+			int ano, Pagameto compras) {
 		super();
 		this.id_cartao = id_cartao;
 		this.nome = nome;
@@ -64,7 +53,7 @@ public class Cartao implements Serializable {
 		this.mes = mes;
 		this.ano = ano;
 		this.compras = compras;
-		this.juros = juros;
+		
 	}
 
 	public int getMes() {
@@ -151,18 +140,10 @@ public class Cartao implements Serializable {
 		this.compras = compras;
 	}
 
-	public double getJuros() {
-		return juros;
-	}
-
-	public void setJuros(double juros) {
-		this.juros = juros;
-	}
-
 	@Override
 	public String toString() {
 		return "Cartao [id_cartao=" + id_cartao + ", nome=" + nome + ", numero=" + numero + ", cvv=" + cvv
-				+ ", qtd_parcelas=" + qtd_parcelas + ", valor_parcelado=" + valor_parcelado + ", juros=" + juros
+				+ ", qtd_parcelas=" + qtd_parcelas + ", valor_parcelado=" + valor_parcelado 
 				+ ", mes=" + mes + ", ano=" + ano + ", compras=" + compras + "]";
 	}
 
