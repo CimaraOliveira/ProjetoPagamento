@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,7 +28,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Cartao implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
-	  
+	
+	
 	@Id   
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_cartao;

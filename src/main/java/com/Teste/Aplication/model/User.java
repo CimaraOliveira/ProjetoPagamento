@@ -74,8 +74,7 @@ public class User implements UserDetails{
 		    }
 	}
 	
-	private void save() {
-		
+	private void save() {		
 		RestTemplate restTemplate = new RestTemplate();  
 		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/save";
 		User user = new User();
@@ -96,6 +95,11 @@ public class User implements UserDetails{
 		}catch (Exception e) {
 			// TODO: handle exception
 		}		
+	}
+	
+	public void consumidoApi() {
+		RestTemplate restTemplate = new RestTemplate();  
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/";
 	}
 		
 	public User() {

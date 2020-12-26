@@ -25,7 +25,7 @@ import com.Teste.Aplication.model.LogRegister;
 import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.CartaoService;
-import com.Teste.Aplication.service.CompraService;
+import com.Teste.Aplication.service.PagamentoService;
 import com.Teste.Aplication.service.UserService;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -49,7 +49,7 @@ public class PagamentoJson {
 	private JwtComponent jwtComponent;
 	
 	@Autowired
-	private CompraService compraService;
+	private PagamentoService compraService;
 	
 	@Autowired
 	private BoletoService boletoService;

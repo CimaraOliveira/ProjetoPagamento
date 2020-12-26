@@ -1,6 +1,7 @@
 package com.Teste.Aplication.model;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,11 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.Enuns.TipoPagamento;
@@ -25,7 +31,78 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "compras")
 public class Pagameto implements Serializable{
+	
+		
+	public ResponseEntity<Pagameto>apiPagamento (@RequestBody Pagameto pagamento,@RequestParam("tipoPagamento") TipoPagamento tipoPagamento,@RequestParam("quantidade") int quantidade,
+			                        @RequestParam("id") long id,@RequestParam("valor") double valor ){
+		RestTemplate restTemplate = new RestTemplate();  
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/compras/salvar";
+		HttpEntity<Pagameto> request = new HttpEntity<>(pagamento);
+		ResponseEntity<Pagameto> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, Pagameto.class);
+		pagamento.setDataCompra(new Date());
+		pagamento.setValor(pagamento.getValor() * pagamento.getQuantidade());
+		User user = new User();
+		pagamento.setUsuario(user);
+		
+		if(tipoPagamento.equals(TipoPagamento.CARTAO)) {
+			pagamento.setIdCompra(id);
+			cartao();
+		}
+		
+		else if (tipoPagamento.equals(TipoPagamento.BOLETO)) {
+			pagamento.setIdCompra(id);
+			Boleto();
+		}
+		
+		if(responseEntity.getStatusCode().is2xxSuccessful()) {
+			Pagameto pag = responseEntity.getBody();			
+			System.out.println(pagamento);
+		}
+		
+		return ResponseEntity.status(400).build();
+	}
+	
+	
+	private void cartao() {
+		RestTemplate restTemplate = new RestTemplate();  
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/cartao/salvarCartao";
+		Cartao cartao = new Cartao();
+		cartao.setNumero("5142391129300290");
+		cartao.setCvv("123");
+		cartao.setMes(02);
+		cartao.setAno(2023);
+		cartao.setQtd_parcelas(4);	
+				
+		ResponseEntity<Cartao> responseEntity = restTemplate.postForEntity(fooResourceUrl, cartao, Cartao.class);
+		if(responseEntity.getStatusCode().is2xxSuccessful()) {
+			System.out.println("Salvando cartao");
+			Cartao cartao1 = responseEntity.getBody();
+			System.out.println(cartao1);
+		}
+		
+		
+	}
 
+	
+	private void Boleto() {
+		RestTemplate restTemplate = new RestTemplate();  
+		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/boleto/saveBoleto";
+		Boleto boleto = new Boleto();
+		boleto.setDataCompra(new Date());
+		boleto.setNumeroBoleto("3333333333");
+				
+		ResponseEntity<Boleto> responseEntity = restTemplate.postForEntity(fooResourceUrl ,boleto, Boleto.class);
+		
+		if(responseEntity.getStatusCode().is2xxSuccessful()) {
+			System.out.println("Salvando compra boleto");
+			Boleto boleto1 = responseEntity.getBody();
+			System.out.println(boleto1);
+		}
+				
+	}
+
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
