@@ -17,12 +17,16 @@ import com.Teste.Aplication.model.Cartao;
 import com.Teste.Aplication.model.LogRegister;
 import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.User;
+import com.Teste.Aplication.service.CartaoService;
 import com.Teste.Aplication.service.UserService;
 
 public class PagamentoApi {
 
 	@Autowired
     private UserService userSevice;
+	
+	@Autowired
+    private CartaoService cartaoService;
 	
 		
 	public ResponseEntity<Pagameto>apiPagamento (HttpServletRequest req,@RequestBody Pagameto pagamento,@RequestBody Cartao cartao,@RequestBody Boleto boleto,@RequestParam("tipoPagamento") TipoPagamento tipoPagamento,@RequestParam("quantidade") int quantidade,
@@ -72,6 +76,7 @@ public class PagamentoApi {
 		cartao.setMes(02);
 		cartao.setAno(2023);
 		cartao.setQtd_parcelas(4);	
+		cartaoService.salvarCartao(cartao);
 		//cartao.setValor_parcelado(cartao.getValor_parcelado());
 				
 		/*ResponseEntity<Cartao> responseEntity = restTemplate.postForEntity(fooResourceUrl, cartao, Cartao.class);
@@ -79,9 +84,7 @@ public class PagamentoApi {
 			System.out.println("Salvando cartao");
 			Cartao cartao1 = responseEntity.getBody();
 			System.out.println(cartao1);
-		}*/
-		
-		
+		}*/		
 	}
 
 	
