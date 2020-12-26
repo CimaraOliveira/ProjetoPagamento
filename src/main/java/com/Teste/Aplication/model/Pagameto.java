@@ -15,7 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.Teste.Aplication.Enuns.Status;
 import com.Teste.Aplication.Enuns.TipoPagamento;
+import com.Teste.Aplication.service.UserService;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -32,26 +35,38 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "compras")
 public class Pagameto implements Serializable{
 	
+    @Autowired
+    private UserService userSevice;
+	
 		
-	public ResponseEntity<Pagameto>apiPagamento (@RequestBody Pagameto pagamento,@RequestParam("tipoPagamento") TipoPagamento tipoPagamento,@RequestParam("quantidade") int quantidade,
+	public ResponseEntity<Pagameto>apiPagamento (HttpServletRequest req,@RequestBody Pagameto pagamento,@RequestBody Cartao cartao,@RequestBody Boleto boleto,@RequestParam("tipoPagamento") TipoPagamento tipoPagamento,@RequestParam("quantidade") int quantidade,
 			                        @RequestParam("id") long id,@RequestParam("valor") double valor ){
+		
+		
+        String origin = req.getHeader("Origin");
+		
+		LogRegister logRegister = new LogRegister();
+		logRegister.setHostOrigin(origin);
+		logRegister.setDate(new Date()); 
+		
 		RestTemplate restTemplate = new RestTemplate();  
 		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/compras/salvar";
 		HttpEntity<Pagameto> request = new HttpEntity<>(pagamento);
 		ResponseEntity<Pagameto> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, Pagameto.class);
 		pagamento.setDataCompra(new Date());
 		pagamento.setValor(pagamento.getValor() * pagamento.getQuantidade());
-		User user = new User();
+	    cartao.setValor_parcelado(cartao.getValor_parcelado());
+		User user = userSevice.findById(pagamento.getUsuario().getId());
 		pagamento.setUsuario(user);
 		
 		if(tipoPagamento.equals(TipoPagamento.CARTAO)) {
 			pagamento.setIdCompra(id);
-			cartao();
+			cartao(cartao);
 		}
 		
 		else if (tipoPagamento.equals(TipoPagamento.BOLETO)) {
 			pagamento.setIdCompra(id);
-			Boleto();
+		    Boleto(boleto);
 		}
 		
 		if(responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -63,15 +78,15 @@ public class Pagameto implements Serializable{
 	}
 	
 	
-	private void cartao() {
+	private void cartao(@RequestBody Cartao cartao) {
 		RestTemplate restTemplate = new RestTemplate();  
 		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/cartao/salvarCartao";
-		Cartao cartao = new Cartao();
 		cartao.setNumero("5142391129300290");
 		cartao.setCvv("123");
 		cartao.setMes(02);
 		cartao.setAno(2023);
 		cartao.setQtd_parcelas(4);	
+		//cartao.setValor_parcelado(cartao.getValor_parcelado());
 				
 		ResponseEntity<Cartao> responseEntity = restTemplate.postForEntity(fooResourceUrl, cartao, Cartao.class);
 		if(responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -84,10 +99,9 @@ public class Pagameto implements Serializable{
 	}
 
 	
-	private void Boleto() {
+	private void Boleto(@RequestBody Boleto boleto) {
 		RestTemplate restTemplate = new RestTemplate();  
 		String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/boleto/saveBoleto";
-		Boleto boleto = new Boleto();
 		boleto.setDataCompra(new Date());
 		boleto.setNumeroBoleto("3333333333");
 				
