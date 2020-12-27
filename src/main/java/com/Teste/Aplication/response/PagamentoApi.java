@@ -22,6 +22,7 @@ import com.Teste.Aplication.model.LogRegister;
 import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.CartaoService;
+import com.Teste.Aplication.service.LogRegisterService;
 import com.Teste.Aplication.service.PagamentoService;
 import com.Teste.Aplication.service.UserService;
 
@@ -42,17 +43,21 @@ public class PagamentoApi {
 	@Autowired
 	private PagamentoService pagamentoService;
 	
+	@Autowired
+	private LogRegisterService logService;
+	
 		
 	public ResponseEntity<Pagameto>apiPagamento (HttpServletRequest req,@RequestBody Pagameto pagamento,@RequestBody Cartao cartao,@RequestBody Boleto boleto,@RequestParam("tipoPagamento") TipoPagamento tipoPagamento,@RequestParam("quantidade") int quantidade,
 			                        @RequestParam("id") long id,@RequestParam("valor") double valor,
-			                        @RequestHeader(value = "Authorization", required = false) String Authorization){
-		
+			                        @RequestHeader(value = "Authorization", required = false) String Authorization){	
 		
         String origin = req.getHeader("Origin");
 		
 		LogRegister logRegister = new LogRegister();
 		logRegister.setHostOrigin(origin);
 		logRegister.setDate(new Date()); 
+		logService.save(logRegister);
+		
 		
 		  System.out.println(Authorization); 
 		  try {
@@ -70,7 +75,7 @@ public class PagamentoApi {
 				pagamento.setUsuario(user);
 				
 				if(tipoPagamento.equals(TipoPagamento.CARTAO)) {
-					pagamento.setIdCompra(id);
+					pagamento.setIdCompra(id);		
 					cartao(cartao);
 				}
 				
@@ -130,6 +135,8 @@ public class PagamentoApi {
 	
 	public ResponseEntity<Pagameto> detalhePorId( @RequestParam("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
+		
+		
 		System.out.println(Authorization); 
 		try {
 			System.out.println(id);

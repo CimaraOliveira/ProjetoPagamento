@@ -32,7 +32,7 @@ public class UserApi {
 			
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 
-				RestTemplate restTemplate = new RestTemplate(); //passa  o nome no broswer 
+				RestTemplate restTemplate = new RestTemplate();  
 				String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/user/findById/{id}";
 				ResponseEntity<User[]> response = restTemplate.getForEntity(fooResourceUrl , User[].class);
 				
