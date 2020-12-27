@@ -65,6 +65,8 @@ public class PagamentoJson {
 	@PostMapping("/saveBoleto")
 	public ResponseEntity<Boleto> salvarBoleto(HttpServletRequest request, @RequestBody TestBoleto test) {
 		Pagameto compra = compraService.findByIdCompra(test.idCompra);
+		
+		
 
 		String origin = request.getHeader("Origin");
 		
@@ -137,21 +139,22 @@ public class PagamentoJson {
 	public ResponseEntity<Pagameto> salvarCompra(@RequestBody Pagameto pagamento, @RequestHeader(value = "Authorization", required = false) String Authorization) {
 		// descomentar quando estiver usando token as linhas comentadas
 		if(Authorization == null) { // verifica se na requisição tem o token no header
-		//	return ResponseEntity.status(400).build();
+			return ResponseEntity.status(400).build();
 		}else if(Authorization.trim().isEmpty()) { // verifica se o token no header não é vazio
-			//return ResponseEntity.status(400).build();
+			return ResponseEntity.status(400).build();
 		}
 		
 		try {
-			//boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
-			//if(!isValid) { // verifica se o token é valido e não expirou
+			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
+			if(!isValid) { // verifica se o token é valido e não expirou
 				if(pagamento != null) { // verifica se o pagamento é diferente de nulo. Se for verdadeiro o fluxo continua...
 					if(pagamento.getTipoPagamento() != null) { // verifica se o tipo de pagamento existe, caso seja verdadeiro ele continua o fluxo...
 						User user = serviceUsuario.findById(pagamento.getUsuario().getId());
 						if(user != null) { // verifica se o usuario passado na requisição existe na base de dados. Se for verdadeiro o fluxo continua...
 							if(pagamento.getTipoPagamento().equals(TipoPagamento.BOLETO)) {
 								if(pagamento.getBoleto() != null) { // verifica se existe o boleto na requisição
-									
+									Boleto boleto = pagamento.getBoleto();
+									boletoService.salvarBoleto(boleto);
 								}else { // se não existe deve informar
 									return ResponseEntity.status(400).build(); 
 								}
@@ -173,7 +176,7 @@ public class PagamentoJson {
 						}
 					}
 				}
-			//}
+			}
 		} catch (ExpiredJwtException | SignatureException e) {
 			return ResponseEntity.status(403).build();// retorna caso o token não seja valido
 		} catch (NoSuchElementException e) {// retorna caso o id não se encontra na base de dados
@@ -181,30 +184,4 @@ public class PagamentoJson {
 		}
 		return ResponseEntity.status(400).build(); // retorna caso alguma condição acima seja falso
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
