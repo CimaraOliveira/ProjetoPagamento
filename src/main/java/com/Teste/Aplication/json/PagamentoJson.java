@@ -69,15 +69,14 @@ public class PagamentoJson {
 	@PostMapping("/saveBoleto")
 	public ResponseEntity<Boleto> salvarBoleto(HttpServletRequest request, @RequestBody TestBoleto test) {
 		Pagameto compra = compraService.findByIdCompra(test.idCompra);
-		
-		
+			
 
-		String origin = request.getHeader("Origin");
-		
+		String origin = request.getHeader("Origin");		
 		LogRegister logRegister = new LogRegister();
 		logRegister.setHostOrigin(origin);
 		logRegister.setDate(new Date()); 
-		logService.save(logRegister);
+		logService.save(logRegister);	
+		
 		
 		if (compra != null) {
 			boletoService.salvarBoleto(test.boleto);
@@ -141,8 +140,14 @@ public class PagamentoJson {
 	
 	
 	@PostMapping("/saveCompra")
-	public ResponseEntity<Pagameto> salvarCompra(@RequestBody Pagameto pagamento, @RequestHeader(value = "Authorization", required = false) String Authorization) {
+	public ResponseEntity<Pagameto> salvarCompra(HttpServletRequest request,@RequestBody Pagameto pagamento, @RequestHeader(value = "Authorization", required = false) String Authorization) {
 		// descomentar quando estiver usando token as linhas comentadas
+		
+		String origin = request.getHeader("Origin");		
+		LogRegister logRegister = new LogRegister();
+		logRegister.setHostOrigin(origin);
+		logRegister.setDate(new Date()); 
+		logService.save(logRegister);
 		if(Authorization == null) { // verifica se na requisição tem o token no header
 			return ResponseEntity.status(400).build();
 		}else if(Authorization.trim().isEmpty()) { // verifica se o token no header não é vazio
