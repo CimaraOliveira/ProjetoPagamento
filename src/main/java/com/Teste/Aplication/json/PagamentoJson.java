@@ -140,7 +140,8 @@ public class PagamentoJson {
 	
 	
 	@PostMapping("/saveCompra")
-	public ResponseEntity<Pagameto> salvarCompra(@RequestHeader(value="Origin", required = true) String origin,@RequestBody Pagameto pagamento, @RequestHeader(value = "Authorization", required =true) String Authorization) {
+	public ResponseEntity<Pagameto> salvarCompra(@RequestHeader(value="Origin", required = true) String origin,
+			@RequestBody Pagameto pagamento, @RequestHeader(value = "Authorization", required =true) String Authorization) {
 			
 		LogRegister logRegister = new LogRegister();
 		logRegister.setHostOrigin(origin);

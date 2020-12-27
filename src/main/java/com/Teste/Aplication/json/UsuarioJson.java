@@ -46,7 +46,7 @@ public class UsuarioJson {
 	@Autowired
 	private RoleService roleService;
 
-	
+	@PostMapping(value = "/login")
 	public ResponseEntity<?> login(@RequestBody User user) {
 		if (user == null) {
 			return ResponseEntity.status(400).build();
