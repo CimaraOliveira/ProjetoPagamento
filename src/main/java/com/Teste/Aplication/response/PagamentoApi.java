@@ -43,22 +43,13 @@ public class PagamentoApi {
 	@Autowired
 	private PagamentoService pagamentoService;
 	
-	@Autowired
-	private LogRegisterService logService;
 	
 		
 	public ResponseEntity<Pagameto>apiPagamento (HttpServletRequest req,@RequestBody Pagameto pagamento,@RequestBody Cartao cartao,@RequestBody Boleto boleto,@RequestParam("tipoPagamento") TipoPagamento tipoPagamento,@RequestParam("quantidade") int quantidade,
 			                        @RequestParam("id") long id,@RequestParam("valor") double valor,
 			                        @RequestHeader(value = "Authorization", required = false) String Authorization){	
 		
-        String origin = req.getHeader("Origin");
-		
-		LogRegister logRegister = new LogRegister();
-		logRegister.setHostOrigin(origin);
-		logRegister.setDate(new Date()); 
-		logService.save(logRegister);
-		
-		
+        
 		  System.out.println(Authorization); 
 		  try {
 		  System.out.println(id);

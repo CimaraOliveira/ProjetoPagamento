@@ -27,6 +27,7 @@ import com.Teste.Aplication.model.LogRegister;
 import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.CartaoService;
+import com.Teste.Aplication.service.LogRegisterService;
 import com.Teste.Aplication.service.PagamentoService;
 import com.Teste.Aplication.service.UserService;
 
@@ -61,6 +62,9 @@ public class PagamentoJson {
 	
 	@Autowired
 	private UserService serviceUsuario;
+	
+	@Autowired
+	private LogRegisterService logService;
 
 	@PostMapping("/saveBoleto")
 	public ResponseEntity<Boleto> salvarBoleto(HttpServletRequest request, @RequestBody TestBoleto test) {
@@ -73,6 +77,7 @@ public class PagamentoJson {
 		LogRegister logRegister = new LogRegister();
 		logRegister.setHostOrigin(origin);
 		logRegister.setDate(new Date()); 
+		logService.save(logRegister);
 		
 		if (compra != null) {
 			boletoService.salvarBoleto(test.boleto);
