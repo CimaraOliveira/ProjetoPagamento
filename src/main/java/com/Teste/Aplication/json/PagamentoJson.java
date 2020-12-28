@@ -1,6 +1,7 @@
 package com.Teste.Aplication.json;
 
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -33,6 +34,8 @@ import com.Teste.Aplication.service.UserService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 class TestBoleto { // Classe Auxiliar
 	public Boleto boleto;
@@ -46,6 +49,7 @@ class TestCartao{ // Classe Auxiliar
 
 @RestController
 @RequestMapping("/api/compras")
+@Api(value="API REST Pagamento")
 @CrossOrigin(origins = {"*"})
 public class PagamentoJson {
 	@Autowired
@@ -105,6 +109,7 @@ public class PagamentoJson {
 	}
 	
 	@GetMapping("/detalhesCompra/{id}")
+	@ApiOperation(value="Retorna os Pagamentos pelo id do usuario")
 	public ResponseEntity<Pagameto> detalhePorId(@PathVariable("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
@@ -126,20 +131,32 @@ public class PagamentoJson {
 		return ResponseEntity.status(400).build();
 	}
 	
-	/*@PostMapping("/saveCompra")
-	public ResponseEntity<Pagameto> salvarCompra(@RequestBody Pagameto compra){
-		compra.setDataCompra(new Date());
-		compra.setValor(compra.getValor() * compra.getQuantidade());
-		System.out.println(compra.getUsuario());
-		User user = serviceUsuario.findById(compra.getUsuario().getId());
-		compra.setUsuario(user);
-		compraService.salvarCompra(compra);
-		return new ResponseEntity<Pagameto>(compra, HttpStatus.CREATED);
+	@GetMapping("/detalhes")
+	@ApiOperation(value="Retorna todos os Pagamentos do Usuário")
+	public ResponseEntity<Pagameto> detalhes(@PathVariable("id") Long id, @RequestBody  Principal principal,
+			@RequestHeader(value = "Authorization", required = false) String Authorization) {
+        System.out.println(Authorization); 
+		try {
+			System.out.println(id);
+			
+			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
+			if (!isValid) { 
+				Long id_compra = serviceUsuario.getEmail(principal.getName()).getId();
+				Pagameto compras = (Pagameto) compraService.findAllByIdUser(id_compra);	
+						
+				if (compras != null) {
+					return ResponseEntity.ok(compras);
+				}
+				return ResponseEntity.notFound().build();
+			}
+		} catch (ExpiredJwtException | SignatureException e) {
+			return ResponseEntity.status(403).build();
+		}
+		return ResponseEntity.status(400).build();
+	}
 		
-	}*/
-	
-	
 	@PostMapping("/saveCompra")
+	@ApiOperation(value="Salva uma compra no cartao ou boleto se usuarip for autenticado")
 	public ResponseEntity<Pagameto> salvarCompra(@RequestHeader(value="Origin", required = true) String origin,
 			@RequestBody Pagameto pagamento, @RequestHeader(value = "Authorization", required =true) String Authorization) {
 			

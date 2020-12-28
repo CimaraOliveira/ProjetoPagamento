@@ -31,9 +31,12 @@ import com.Teste.Aplication.service.UserService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@Api(value="API REST Usuarios")
 @CrossOrigin()
 public class UsuarioJson {
 	@Autowired
@@ -46,7 +49,9 @@ public class UsuarioJson {
 	@Autowired
 	private RoleService roleService;
 
+	
 	@PostMapping(value = "/login")
+	@ApiOperation(value="Usuario faz login")
 	public ResponseEntity<?> login(@RequestBody User user) {
 		if (user == null) {
 			return ResponseEntity.status(400).build();
@@ -77,16 +82,18 @@ public class UsuarioJson {
 		}
 	}
 
-	@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	/*@PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<User> salvar(@Valid User user) {
 		User u = serviceUsuario.getEmail(user.getEmail());
 		String senha = user.getSenha();
 		user.setSenha(new BCryptPasswordEncoder().encode(senha));
 		serviceUsuario.salvar(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
-	}
+	}*/
 
+	
 	@GetMapping("/findById/{id}")
+	@ApiOperation(value="Detalhes do usuário pelo id")
 	public ResponseEntity<User> detalhePorId(@PathVariable("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
@@ -120,6 +127,7 @@ public class UsuarioJson {
 	}
 
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(value="Criando um novo usuário")
 	public ResponseEntity<User> salvarNovo(User user) {
 		Role role = roleService.getNome("USER");
 		if (role != null) {
