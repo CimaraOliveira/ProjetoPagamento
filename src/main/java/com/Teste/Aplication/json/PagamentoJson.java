@@ -2,8 +2,10 @@ package com.Teste.Aplication.json;
 
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -181,6 +183,12 @@ public class PagamentoJson {
 							if(pagamento.getTipoPagamento().equals(TipoPagamento.BOLETO)) {
 								if(pagamento.getBoleto() != null) { // verifica se existe o boleto na requisição
 									Boleto boleto = pagamento.getBoleto();
+									boleto.setDataCompra(new Date());
+									Random r = new Random();
+									String codigo = String.valueOf(Math.abs(r.nextInt()*100000000));
+									System.out.println(codigo);
+									boleto.setNumeroBoleto(codigo);
+									boleto.setDataVencimento(LocalDate.now().plusDays(5));
 									boletoService.salvarBoleto(boleto);
 								}else { // se não existe deve informar
 									return ResponseEntity.status(400).build(); 
