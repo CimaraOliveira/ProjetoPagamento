@@ -108,7 +108,7 @@ public class PagamentoJson {
 		return ResponseEntity.status(400).build();
 	}
 	
-	@GetMapping("/detalhesCompra")
+	@GetMapping("/detalhesCompra/{id}")
 	@ApiOperation(value="Retorna os Pagamentos pelo id do usuario")
 	public ResponseEntity<Pagameto> detalhePorId(@PathVariable("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
@@ -176,7 +176,7 @@ public class PagamentoJson {
 			if(!isValid) { // verifica se o token é valido e não expirou
 				if(pagamento != null) { // verifica se o pagamento é diferente de nulo. Se for verdadeiro o fluxo continua...
 					if(pagamento.getTipoPagamento() != null) { // verifica se o tipo de pagamento existe, caso seja verdadeiro ele continua o fluxo...
-						User user = serviceUsuario.findById(pagamento.getUsuario().getId());
+						User user = serviceUsuario.findByEmail(pagamento.getUsuario().getEmail());
 						if(user != null) { // verifica se o usuario passado na requisição existe na base de dados. Se for verdadeiro o fluxo continua...
 							if(pagamento.getTipoPagamento().equals(TipoPagamento.BOLETO)) {
 								if(pagamento.getBoleto() != null) { // verifica se existe o boleto na requisição

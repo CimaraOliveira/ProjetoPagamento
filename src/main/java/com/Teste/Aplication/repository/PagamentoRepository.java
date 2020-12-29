@@ -28,6 +28,10 @@ public interface PagamentoRepository extends JpaRepository<Pagameto, Long>{
 			"where b.id_cartao = :id_cartao", nativeQuery = true)
 	public List<Pagameto> findByIdCartao(@Param("id_cartao") Long id_cartao);
 	
-	
+
+	@Query(value="select * from compras c\n" + 
+			"inner join usuario u on(c.usuario_id = u.id)\n" + 
+			"where u.email = :email", nativeQuery = true)
+	public List<Pagameto> findByEmail(@Param("email") String email);
 
 }

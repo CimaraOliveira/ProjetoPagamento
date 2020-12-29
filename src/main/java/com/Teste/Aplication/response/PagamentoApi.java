@@ -62,7 +62,7 @@ public class PagamentoApi {
 				pagamento.setDataCompra(new Date());
 				pagamento.setValor(pagamento.getValor() * pagamento.getQuantidade());
 			    cartao.setValor_parcelado(cartao.getValor_parcelado());
-				User user = userSevice.findById(pagamento.getUsuario().getId());
+				User user = userSevice.findByEmail(pagamento.getUsuario().getEmail());
 				pagamento.setUsuario(user);
 				
 				if(tipoPagamento.equals(TipoPagamento.CARTAO)) {
@@ -124,17 +124,17 @@ public class PagamentoApi {
 				
 	}
 	
-	public ResponseEntity<Pagameto> detalhePorEmail( @RequestParam("email") String email,
+	public ResponseEntity<Pagameto> detalhePorId( @RequestParam("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
 		
 		
 		System.out.println(Authorization); 
 		try {
-			System.out.println(email);
+			System.out.println(id);
 			
 		boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 		if (!isValid) { 
-		Pagameto pagamento = pagamentoService.findByEmail(email);
+		Pagameto pagamento = pagamentoService.findByIdCompra(id);
 			if(pagamento != null) {
 				RestTemplate restTemplate = new RestTemplate(); 
 				String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/compras/detalhesCompra";
