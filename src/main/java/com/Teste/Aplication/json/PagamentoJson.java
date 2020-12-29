@@ -108,7 +108,7 @@ public class PagamentoJson {
 		return ResponseEntity.status(400).build();
 	}
 	
-	@GetMapping("/detalhesCompra/{id}")
+	@GetMapping("/detalhesCompra")
 	@ApiOperation(value="Retorna os Pagamentos pelo id do usuario")
 	public ResponseEntity<Pagameto> detalhePorId(@PathVariable("id") Long id,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
@@ -133,11 +133,11 @@ public class PagamentoJson {
 	
 	@GetMapping("/detalhes")
 	@ApiOperation(value="Retorna todos os Pagamentos do Usuário")
-	public ResponseEntity<Pagameto> detalhes(@PathVariable("id") Long id, @RequestBody  Principal principal,
+	public ResponseEntity<Pagameto> detalhes(@PathVariable("email") String email, @RequestBody  Principal principal,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
 		try {
-			System.out.println(id);
+			System.out.println(email);
 			
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 

@@ -92,17 +92,17 @@ public class UsuarioJson {
 	}*/
 
 	
-	@GetMapping("/findById/{id}")
-	@ApiOperation(value="Detalhes do usuário pelo id")
-	public ResponseEntity<User> detalhePorId(@PathVariable("id") Long id,
+	@GetMapping("/findById")
+	@ApiOperation(value="Detalhes do usuário pelo email")
+	public ResponseEntity<User> detalhePorId(@PathVariable("email") String email,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
 		try {
-			System.out.println(id);
+			System.out.println(email);
 			
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 
-				User user = serviceUsuario.findById(id);
+				User user = serviceUsuario.findByEmail(email);
 				if (user != null) {
 					return ResponseEntity.ok(user);
 				}

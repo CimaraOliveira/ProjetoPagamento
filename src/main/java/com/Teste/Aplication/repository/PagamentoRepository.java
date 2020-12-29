@@ -27,5 +27,7 @@ public interface PagamentoRepository extends JpaRepository<Pagameto, Long>{
 			"inner join cartao b on(c.id_cartao = b.id_cartao) \n" + 
 			"where b.id_cartao = :id_cartao", nativeQuery = true)
 	public List<Pagameto> findByIdCartao(@Param("id_cartao") Long id_cartao);
+	
+	
 
 }

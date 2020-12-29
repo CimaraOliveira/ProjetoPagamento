@@ -57,6 +57,10 @@ public class UserService implements UserDetailsService{
 		return repository.findById(id).get();  
 	}
 	
+	public User findByEmail(String email) {
+		return repository.findByEmail(email);  //aqui
+	}
+	
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}

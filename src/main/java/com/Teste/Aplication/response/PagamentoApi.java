@@ -124,20 +124,20 @@ public class PagamentoApi {
 				
 	}
 	
-	public ResponseEntity<Pagameto> detalhePorId( @RequestParam("id") Long id,
+	public ResponseEntity<Pagameto> detalhePorEmail( @RequestParam("email") String email,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
 		
 		
 		System.out.println(Authorization); 
 		try {
-			System.out.println(id);
+			System.out.println(email);
 			
 		boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 		if (!isValid) { 
-		Pagameto pagamento = pagamentoService.findByIdCompra(id);
+		Pagameto pagamento = pagamentoService.findByEmail(email);
 			if(pagamento != null) {
 				RestTemplate restTemplate = new RestTemplate(); 
-				String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/compras/detalhesCompra/{id}";
+				String fooResourceUrl = "https://api-projetopagamento.herokuapp.com/api/compras/detalhesCompra";
 				ResponseEntity<User[]> response = restTemplate.getForEntity(fooResourceUrl , User[].class);
 			
 			    if(response.getStatusCode().is2xxSuccessful()) {

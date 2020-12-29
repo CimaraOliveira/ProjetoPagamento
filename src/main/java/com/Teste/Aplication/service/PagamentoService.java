@@ -37,6 +37,9 @@ public class PagamentoService {
 	public List<Pagameto> findByIdcartao(Long id_cartao){
 		return repository.findByIdCartao(id_cartao);
 	}
+	public Pagameto findByEmail(String email) {
+		return repository.findByEmail(email);  
+	}
 	
 	
 }
