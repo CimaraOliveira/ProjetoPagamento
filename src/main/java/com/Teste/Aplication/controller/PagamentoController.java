@@ -52,6 +52,7 @@ public class PagamentoController {
 		Long id_compra = userService.getEmail(principal.getName()).getId();
 		ModelAndView modelAndView = new ModelAndView("compra/detalhes");
 	    modelAndView.addObject("compras", compraService.findAllByIdUser(id_compra));
+	    System.out.println(id_compra);
 		return modelAndView;
 	}
 		

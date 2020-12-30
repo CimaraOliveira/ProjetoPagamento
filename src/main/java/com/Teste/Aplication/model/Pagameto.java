@@ -45,11 +45,11 @@ public class Pagameto implements Serializable{
 
 	
 	@ManyToOne
-	@JoinColumn(name = "idCartao")
+	@JoinColumn(name = "id_Cartao")
 	private Cartao cartao;
 	
 	@ManyToOne
-	@JoinColumn(name = "idBoleto")
+	@JoinColumn(name = "id_Boleto")
 	private Boleto boleto;
 	
 	private double valor;

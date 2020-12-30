@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,6 +158,8 @@ public class PagamentoJson {
 			}
 		} catch (ExpiredJwtException | SignatureException e) {
 			return ResponseEntity.status(403).build();
+		}catch(EntityNotFoundException e) {
+			return ResponseEntity.status(404).build();
 		}
 		return ResponseEntity.status(400).build();
 	}
