@@ -114,7 +114,7 @@ public class UsuarioJson {
 		return ResponseEntity.status(400).build();
 	}
 
-	@PutMapping(value = "/{id}", produces = "application/json")
+	/*@PutMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<User> update(User user, @PathVariable Long id) {
 		user = serviceUsuario.findById(id);
 		if (user != null) {
@@ -124,7 +124,7 @@ public class UsuarioJson {
 			return ResponseEntity.ok(user);
 		}
 		return ResponseEntity.noContent().build();
-	}
+	}*/
 
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(value="Criando um novo usuário")
