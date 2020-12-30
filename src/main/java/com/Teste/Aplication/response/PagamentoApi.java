@@ -61,7 +61,7 @@ public class PagamentoApi {
 				ResponseEntity<Pagameto> responseEntity = restTemplate.postForEntity(fooResourceUrl ,request, Pagameto.class);
 				pagamento.setDataCompra(new Date());
 				pagamento.setValor(pagamento.getValor() * pagamento.getQuantidade());
-			    cartao.setValor_parcelado(cartao.getValor_parcelado());
+			   
 				User user = userSevice.findByEmail(pagamento.getUsuario().getEmail());
 				pagamento.setUsuario(user);
 				
