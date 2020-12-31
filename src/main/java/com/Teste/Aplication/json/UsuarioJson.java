@@ -92,7 +92,7 @@ public class UsuarioJson {
 	}*/
 
 	
-	@GetMapping("/findById")
+	@GetMapping("/findByEmail/{email}")
 	@ApiOperation(value="Detalhes do usuário pelo email")
 	public ResponseEntity<User> detalhePorId(@PathVariable("email") String email,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
