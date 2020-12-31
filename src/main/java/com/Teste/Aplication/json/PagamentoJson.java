@@ -1,13 +1,13 @@
 package com.Teste.Aplication.json;
 
 
-import java.math.RoundingMode;
-import java.security.Principal;
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Teste.Aplication.Enuns.Status;
@@ -30,14 +29,15 @@ import com.Teste.Aplication.Enuns.TipoPagamento;
 import com.Teste.Aplication.jwt.JwtComponent;
 import com.Teste.Aplication.model.Boleto;
 import com.Teste.Aplication.model.Cartao;
-import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.LogRegister;
+import com.Teste.Aplication.model.Pagameto;
 import com.Teste.Aplication.model.User;
 import com.Teste.Aplication.service.BoletoService;
 import com.Teste.Aplication.service.CartaoService;
 import com.Teste.Aplication.service.LogRegisterService;
 import com.Teste.Aplication.service.PagamentoService;
 import com.Teste.Aplication.service.UserService;
+
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -138,9 +138,9 @@ public class PagamentoJson {
 		return ResponseEntity.status(400).build();
 	}
 	
-	@GetMapping("/detalhes")
+	@GetMapping("/detalhes/{email}")
 	@ApiOperation(value="Retorna todos os Pagamentos do Usuário")
-	public ResponseEntity<Pagameto> detalhes(@PathVariable("email") String email, @RequestBody  Principal principal,
+	public ResponseEntity < List<Pagameto> > detalhes(@PathVariable("email") String email,
 			@RequestHeader(value = "Authorization", required = false) String Authorization) {
         System.out.println(Authorization); 
 		try {
@@ -148,10 +148,10 @@ public class PagamentoJson {
 			
 			boolean isValid = jwtComponent.isTokenExpired(Authorization.substring(7));
 			if (!isValid) { 
-				Long id_compra = serviceUsuario.getEmail(principal.getName()).getId();
-				Pagameto compras = (Pagameto) compraService.findAllByIdUser(id_compra);	
+				Long id_compra = serviceUsuario.getEmail(email).getId();
+				List<Pagameto> compras = compraService.findAllByIdUser(id_compra);	
 						
-				if (compras != null) {
+				if (!compras.isEmpty()) {
 					return ResponseEntity.ok(compras);
 				}
 				return ResponseEntity.notFound().build();
@@ -172,11 +172,17 @@ public class PagamentoJson {
 	        double resultOne = (Math.pow((1 + taxa), n) - 1);
 	        double resultTwo = ((Math.pow(1 + taxa, n) * taxa));
 	        double resultThree = resultOne / resultTwo;
-	        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-		    decimalFormat.setRoundingMode(RoundingMode.DOWN);
+	        //DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+	        //decimalFormat.setRoundingMode(RoundingMode.DOWN);
+	        BigDecimal bigDecimal = new BigDecimal(pv/resultThree,MathContext.DECIMAL32);
 		    
-		    String valor[]=decimalFormat.format(pv/resultThree).split(",");
-	        return Double.parseDouble(valor[0]+"."+ valor[1]);
+		    //String valor[]=decimalFormat.format(pv/resultThree).split(",");
+		    
+		    /*if(Double.parseDouble(valor[0]) >=1.000) {
+		    	return Double.parseDouble(valor[0]+valor[1]);
+		    }*/
+	        //return Double.parseDouble(valor[0]+"."+ valor[1]);
+	        return bigDecimal.doubleValue();
 	 }	
 	@PostMapping("/saveCompra")
 	@ApiOperation(value="Salva uma compra no cartao ou boleto se usuarip for autenticado")
@@ -219,7 +225,7 @@ public class PagamentoJson {
 								if(pagamento.getCartao() != null) {// verifica se existe o cartao na requisição
 									
 									Cartao cartao = pagamento.getCartao();
-									cartao.setValor_parcelado(calPMT(pagamento.getValor(), cartao.getQtd_parcelas(), "2%"));
+									cartao.setValor_parcelado(calPMT(pagamento.getValor() * pagamento.getQuantidade(), cartao.getQtd_parcelas(), "2%"));
 									//cartao.setValor_parcelado(cartao.getValor_parcelado());
 									pagamento.setStatus(Status.CONCLUÍDA);
 									cartaoService.salvarCartao(cartao);
