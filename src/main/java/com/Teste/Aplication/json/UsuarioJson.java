@@ -128,7 +128,7 @@ public class UsuarioJson {
 
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(value="Criando um novo usuário")
-	public ResponseEntity<User> salvarNovo(User user) {
+	public ResponseEntity<User> salvarNovo(@RequestBody User user) {
 		Role role = roleService.getNome("USER");
 		if (role != null) {
 			user.getRole().add(role);
