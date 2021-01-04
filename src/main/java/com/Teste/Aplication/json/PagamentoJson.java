@@ -189,11 +189,7 @@ public class PagamentoJson {
 	public ResponseEntity<Pagameto> salvarCompra(@RequestHeader(value="Origin", required = true) String origin,
 			@RequestBody Pagameto pagamento,@RequestHeader(value = "Authorization", required =true) String Authorization) {
 		
-		LogRegister logRegister = new LogRegister();
-		logRegister.setHostOrigin(origin);
-		logRegister.setDate(new Date()); 
-		logRegister.setCompra(pagamento);//aqui relacionamento
-		logService.save(logRegister);
+		
 		
 		if(Authorization == null) { // verifica se na requisição tem o token no header
 			return ResponseEntity.status(400).build();
@@ -238,8 +234,13 @@ public class PagamentoJson {
 							pagamento.setDataCompra(new Date());
 							pagamento.setValor(pagamento.getValor() * pagamento.getQuantidade());
 							pagamento.setUsuario(user);
-						
 							compraService.salvarCompra(pagamento);
+							LogRegister logRegister = new LogRegister();
+							logRegister.setHostOrigin(origin);
+							logRegister.setDate(new Date()); 
+							logRegister.setCompra(pagamento);//aqui relacionamento 
+							logService.save(logRegister);
+							
 							return new ResponseEntity<Pagameto>(pagamento, HttpStatus.CREATED);
 						}
 					}
