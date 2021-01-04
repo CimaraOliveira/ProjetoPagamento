@@ -60,4 +60,12 @@ public class LogRegister {
 		this.date = date;
 	}
 
+	public Pagameto getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Pagameto compra) {
+		this.compra = compra;
+	}
+
 }
