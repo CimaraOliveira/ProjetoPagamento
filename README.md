@@ -4,13 +4,34 @@ Projeto Integrador
 
 ### Características
 
-Pagamento API REST formas de Pagamento cartão ou boleto, Spring Boot REST API. Um  pequeno sistema de formas de pagamento que pode ser mantido por um banco de dados central e acessado por outros subsistemas utilizando uma api disponibilizada pelo módulo pagamento. 
+API REST Spring Boot REST API. O serviço de pagamento possui um serviço que os demais módulos devem consumir. Nesse serviço recebe um objeto no formato JSON que contem as informações, como, a forma de pagamento(Cartão ou Boleto), o email do usuário que deseja realizar o pagamento, valor, quantidade, tipo pagamento e enviar o token no header da requisição.
+
+
+### Descrição 
+
+**1 .** O cliente que deseja enviar uma requisição para o serviço, deve informar um objeto no formato JSON, se esse objeto não estver de acordo com as especificações da regra de negócio, o Serviço retornará ao status 400. Ex: Não passar o header na requisição.
+
+
+**2 .** O cliente deverá enviar um email do usuário. Caso o email não seja encontrado na base de dados, o Serviço retornará a um status 404.
+
+**3 .** Caso o cliente envie uma requisição com o token inválido, o serviço deverá retornar um status 403.
+
+**4 .** Caso a forma de pagamento seja cartão o cliente(os módulos) deverá envir um objeto que contenha as informações tais como nome, número, cvv, quantidade de parcelas, mês e ano. Após salvar, o serviço deve retornar a um status 202 e o objeto salvo.
 
 #### link para acesso a documentação da api:  https://api-projetopagamento.herokuapp.com/swagger-ui.html
 
 #### link para acesso ao sistema web: https://api-projetopagamento.herokuapp.com/
 
 
+### Como Funciona utilizando o Postman
+
+#### Salvando um usuário utilizando o Postman.
+
+Para salvar um usuário utilizando o postman, selecionamos o método POST e utilizamos a opção Body raw e informamos os dados de acordo com o modelo abaixo.
+
+
+
+### Como Funciona na documentação Swagger
 Acesso a documentação da Api disponibilizada  para os demais módulos que irão consumir do módulo pagamento.
 
 
@@ -67,6 +88,9 @@ O usuário poderá verificar seu pagamento relizado  pelo id, caso deseje. para 
 
 GET /api/compras/detalhesCompra/{id} Retorna os Pagamentos pelo id 
 ![documentacao](https://github.com/CimaraOliveira/ProjetoPagamento/blob/master/BUSCAPAGID.PNG)
+
+
+
 
 
 
