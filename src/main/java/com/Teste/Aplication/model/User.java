@@ -74,6 +74,8 @@ public class User implements UserDetails{
 	@Column(nullable = false, length = 255)
 	private String senha;
 	
+	private String token;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	public List<Pagameto> compras;
@@ -211,5 +213,14 @@ public class User implements UserDetails{
 
 	public void setCompras(List<Pagameto> compras) {
 		this.compras = compras;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}	
+	
 }
