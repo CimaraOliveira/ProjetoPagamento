@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Teste.Aplication.jwt.JwtComponent;
@@ -53,17 +52,16 @@ public class UsuarioJson {
 	
 	@PostMapping(value = "/login")
 	@ApiOperation(value="Usuario faz login")
-	public ResponseEntity<?> login(@RequestParam("email") String email,
-			@RequestParam("senha") String senha) {
-		if (email.trim().isEmpty() && senha.trim().isEmpty()) {
+	public ResponseEntity<?> login(@RequestBody User user) {
+		if (user == null) {
 			return ResponseEntity.status(400).build();
 		}
 		try {
-			authenticate(email, senha);
-			UserDetails userDB = serviceUsuario.loadUserByUsername(email);
+			authenticate(user.getEmail(), user.getPassword());
+			UserDetails userDB = serviceUsuario.loadUserByUsername(user.getUsername());
 			
 			if(userDB != null) { 
-				String token = jwtComponent.generateToken(userDB);
+				String token = jwtComponent.generateToken(user);
 				return ResponseEntity.ok(token);
 			}
 			 
@@ -130,12 +128,8 @@ public class UsuarioJson {
 
 	@PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(value="Criando um novo usuário")
-	public ResponseEntity<User> salvarNovo(@RequestParam("nome") String nome, @RequestParam("email") String email,
-			@RequestParam("senha") String senha) {
-		User user = new User();
-		user.setNome(nome);
-		user.setEmail(email);
-		user.setSenha(senha);
+	public ResponseEntity<User> salvarNovo(@RequestBody User user) {
+		
 		Role role = roleService.getNome("USER");
 		if (role != null) {
 			user.getRole().add(role);
