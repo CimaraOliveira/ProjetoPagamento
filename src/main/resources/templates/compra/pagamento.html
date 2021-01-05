@@ -4,7 +4,8 @@
 <meta charset="UTF-8" />
 </head>
 <body onload="render()">
-	<section class="layout-content" layout:fragment="corpo">
+
+	<section class="layout-content" layout:fragment="corpo" >
 		<nav class="navbar navbar-expand-md bg-light">
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
@@ -17,18 +18,22 @@
 				</a>
 			</div>
 		</nav>
+
 		<div class="container">
+
+
+
 			<div th:replace="fragments/alert"></div>
 
 			<div class="container">
 				<div class="card card-register mx-auto mt-4">
 					<div class="card-header">
-						<i class="fa-fighter-jet"></i> Comprar
+						<i class="fa-fighter-jet"></i> Comprar Passagem
 					</div>
 
 					<div class="card-body">
-
-						<div th:replace="fragments/alert"></div>
+					
+					<div th:replace="fragments/alert"></div>
 
 						<form th:action="@{/compras/salvar}" th:object="${compra}"
 							method="POST">
@@ -36,12 +41,14 @@
 							<div class="text-left col-md-8">
 								<p>Dados do Cliente</p>
 								<hr />
-								<div id="table-cliente"></div>
-								<p>Dados da Compra</p>
+								<div id="table-cliente">
+								</div>
+								<p>Dados da Passagem</p>
 								<hr />
-								<div id="table-passagem"></div>
-							</div>
-
+								<div id="table-passagem">
+								</div>
+							</div> 				
+														
 
 							<div class="form-group">
 								<div class="col-md-6">
@@ -54,16 +61,18 @@
 								<div class="invalid-feedback"></div>
 							</div>
 
-							<div class="form-group">
+                           <!--  <div class="form-group">
 								<div class="col-md-6">
-									<small class="form-text text-muted">Data </small> <input
-										type="data" id="dataCompra" class="form-control"
-										name="dataCompra" autofocus="autofocus"
-										th:text="${compra.dataCompra}" required>
-
+									<small class="form-text text-muted">Data
+										</small> <input type="data" id="dataCompra"
+										 class="form-control"
+										name="dataCompra"  autofocus="autofocus" th:text="${compra.dataCompra}"  required>
+									
 								</div>
 								<div class="invalid-feedback"></div>
-							</div>
+							</div>  -->
+                            
+
 
 							<div class="col-md-8">
 								<small class="form-text text-muted">Escolha o valor</small> <select
@@ -81,25 +90,40 @@
 
 							<div class="col-md-8">
 								<small class="form-text text-muted">Escolha Forma de
-									Pagamento</small> <select id="tipoPagamento" name="tipoPagamento"
+									Pagamento</small> <select id="tipoPagamento"
+									 name="tipoPagamento"
 									class="form-control">
 									<option value="BOLETO">Boleto</option>
 									<option value="CARTAO">Cartao</option>
-								</select> <br>
-								<div>
-									<button type="submit" class="btn btn-primary btn-sm">Comprar</button>
-								</div>
+								</select>
+								
 								<br>
+								<div>
+								<button type="submit" class="btn btn-primary btn-sm">Comprar</button>
 							</div>
 							<br>
+
+							</div>
+							<br>
+
 						</form>
+
+						</div>
+						<br>
+					
 					</div>
-					<br>
+					
+
+
 				</div>
+
+
 			</div>
-		</div>
+		
+
+
 
 		<div class="table-responsive"></div>
 	</section>
 </body>
-</html>
+</html>    
