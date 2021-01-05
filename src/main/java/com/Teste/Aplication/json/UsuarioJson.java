@@ -53,14 +53,14 @@ public class UsuarioJson {
 	
 	@PostMapping(value = "/login")
 	@ApiOperation(value="Usuario faz login")
-	public ResponseEntity<?> login(@RequestParam("nome") String nome, @RequestParam("email") String email,
+	public ResponseEntity<?> login( @RequestParam("email") String email,
 			@RequestParam("senha") String senha) {
 		if (email.trim().isEmpty() && senha.trim().isEmpty()) {
 			return ResponseEntity.status(400).build();
 		}
 		try {
 			authenticate(email, senha);
-			UserDetails userDB = serviceUsuario.loadUserByUsername(nome);
+			UserDetails userDB = serviceUsuario.loadUserByUsername(email);
 			
 			if(userDB != null) { 
 				String token = jwtComponent.generateToken(userDB);
